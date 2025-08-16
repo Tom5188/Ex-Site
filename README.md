@@ -11,6 +11,8 @@ sudo yum update -y
 putenv,pcntl_signal,pcntl_signal_dispatch,pcntl_fork,pcntl_wait,pcntl_alarm
 ### 安装扩展 
 fileinfo opcache memcache redis imap exif intl xsl
+### 拉取代码
+git clone https://github.com/Tom5188/Ex-Site.git
 ### 安装python3
 yum install -y python3 && pip3 install websocket-client redis
 ### 安装elasticsearch7
