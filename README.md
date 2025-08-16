@@ -75,7 +75,7 @@ service elasticsearch start
 开机自启
 sudo systemctl enable elasticsearch
 
-sudo systemctl daemon-reloadsudo & systemctl enable webmsgsender-client.service & sudo systemctl enable websocket-client.service & sudo systemctl enable elasticsearch
+sudo systemctl daemon-reload & sudo systemctl enable webmsgsender-client.service & sudo systemctl enable websocket-client.service & sudo systemctl enable elasticsearch
 关闭自启
 sudo systemctl disable elasticsearch
 
