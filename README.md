@@ -72,7 +72,7 @@ sudo systemctl enable websocket-client.service
 设置伪静态laravel5
 安装es,安装python3,设置反向代理
 ### 删除函数
-putenv,pcntl_signal,pcntl_signal_dispatch,pcntl_fork,pcntl_wait,pcntl_alarm
+putenv,symlink,pcntl_alarm,pcntl_fork,pcntl_wait,pcntl_signal,pcntl_signal_dispatch
 ### 安装扩展 
 fileinfo opcache memcache redis imap exif intl xsl
 ### 拉取代码

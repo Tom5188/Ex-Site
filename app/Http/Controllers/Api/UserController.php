@@ -251,7 +251,7 @@ class UserController extends Controller
         $result = compact('real_status','review_status','advanced_review_status',"real_data");
         return $this->success($result);
     }
-
+    
     public function saveUserReal(Request $request)
     {
         $user_id = Users::getUserId();
@@ -299,6 +299,8 @@ class UserController extends Controller
             $real->country = $country;
             $real->user_id = $user_id;
             $real->card_id = $card_id;
+            $real->front_pic = $front_pic;
+            $real->reverse_pic = $reverse_pic;
             $real->create_time = time();
             $real->save();
         }else{
@@ -319,6 +321,74 @@ class UserController extends Controller
         }
         return $this->success('认证成功，请等待审核');
     }
+
+    // public function saveUserReal(Request $request)
+    // {
+    //     $user_id = Users::getUserId();
+
+    //     $id_type = $request->post('id_type', 0); // 0身份证 1护照 2驾驶证
+    //     $country = $request->post('country', ''); // 0身份证 1护照 2驾驶证
+
+    //     // 接受参数
+    //     $real_type = $request->post('real_type'); // 1 初级认证  2 高级认证
+    //     if (!in_array($real_type,[1,2])){
+    //         return $this->error('认证类型错误');
+    //     }
+    //     $name = $request->post('name');
+    //     $card_id = $request->post('card_id');
+    //     $front_pic = $request->post('front_pic');
+    //     $reverse_pic = $request->post('reverse_pic');
+
+    //     $user = Users::find($user_id);
+    //     if (empty($user)) {
+    //         return $this->error("会员未找到");
+    //     }
+    //     if ($real_type == 1){
+    //         if (empty($name) || empty($card_id)){
+    //             return $this->error('请填写完整信息');
+    //         }
+    //         //校验  身份证号码合法性
+    //         // $idcheck = new IdCardIdentity();
+    //         // $res = $idcheck->check_id($card_id);
+    //         // if (!$res) {
+    //         //     return $this->error("请输入合法的身份证号码");
+    //         // }
+            
+    //         $userreal_number = UserReal::where("card_id",$card_id)->count();
+    //         if($userreal_number>0)
+    //         {
+    //             return $this->error("该身份证号已实名认证过!");
+    //         }
+    //         $real = UserReal::where('user_id',$user_id)->first();
+    //         if ($real){
+    //             return $this->error('已经审核过认证~');
+    //         }
+    //         $real = new UserReal;
+    //         $real->id_type = $id_type;
+    //         $real->name = $name;
+    //         $real->country = $country;
+    //         $real->user_id = $user_id;
+    //         $real->card_id = $card_id;
+    //         $real->create_time = time();
+    //         $real->save();
+    //     }else{
+    //         if (empty($front_pic) || empty($reverse_pic)){
+    //             return $this->error('请填写完整信息');
+    //         }
+    //         $real = UserReal::where('user_id',$user_id)->first();
+    //         if (empty($real)){
+    //             return $this->error('请先完成初级认证');
+    //         }
+    //         if ($real->review_status != 2){
+    //             return $this->error('初级认证审核中，请耐心等待');
+    //         }
+    //         $real->front_pic = $front_pic;
+    //         $real->reverse_pic = $reverse_pic;
+    //         $real->advanced_user = 1;
+    //         $real->save();
+    //     }
+    //     return $this->success('认证成功，请等待审核');
+    // }
 
     public function userWalletSave(Request $request)
     {

@@ -95,10 +95,10 @@
                                     , {field:'account',title: '用户账号',width: 280}
                                     , {field:'type',title: '证件类型',width: 100,align:'center',templet:'#idTypeTpl'}
                                     , {field:'name',title: '真实姓名',width: 150}
-                                    , {field:'card_id',title: '证件号码',width: 150}
+                                    , {field:'card_id',title: '证件号码'}
                                     , {field:'country',title: '国家',width: 150}
                                     , {field:'review_status', title:'是否审核', width:150, templet: '#switchTpl'}
-                                    , {field:'examine',title: '高级认证',width: 150, templet: '#switchTplAdvanced'}
+                                    // , {field:'examine',title: '高级认证',width: 150, templet: '#switchTplAdvanced'}
                                     , {field:'create_time',title:'申请时间', width:200} 
                                     , {fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barDemo'}
                                 ]]
