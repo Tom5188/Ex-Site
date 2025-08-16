@@ -1,18 +1,9 @@
-### 宝塔安装
-yum install -y wget && wget -O install.sh https://download.bt.cn/install/install_6.0.sh && sh install.sh ed8484bec
 ### 更新系统
 sudo yum update -y
-### 程序环境
-环境为 ng1.18+php7.3+MySQL 5.6.50+phpMyAdmin 4.9
-运行目录为/public
-设置伪静态laravel5
-安装es,安装python3,设置反向代理
-### 删除函数
-putenv,pcntl_signal,pcntl_signal_dispatch,pcntl_fork,pcntl_wait,pcntl_alarm
-### 安装扩展 
-fileinfo opcache memcache redis imap exif intl xsl
-### 拉取代码
-git clone https://github.com/Tom5188/Ex-Site.git
+### 宝塔安装
+if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_nearest.sh;else wget -O install_nearest.sh https://download.bt.cn/install/install_nearest.sh;fi;bash install_nearest.sh ed8484bec
+### 安装企业版
+curl http://download.api-bt.cn/update_panel.sh|bash
 ### 安装python3
 yum install -y python3 && pip3 install websocket-client redis
 ### 安装elasticsearch7
@@ -28,6 +19,64 @@ autorefresh=1
 type=rpm-md
 ----------------------------------------------------------------
 yum install elasticsearch -y
+### 运行自启
+sudo systemctl restart websocket-client.service & sudo systemctl restart webmsgsender-client.service
+sudo systemctl stop websocket-client.service & sudo systemctl stop webmsgsender-client.service
+sudo systemctl status websocket-client.service & sudo systemctl status webmsgsender-client.service
+
+### 1.webmsgsender
+sudo vi /etc/systemd/system/webmsgsender-client.service
+-----------------------------------------------------------------
+[Unit]
+Description=Web Message Sender Client
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/php /www/wwwroot/Ex-Site/public/vendor/webmsgsender/start.php start
+ExecStop=/usr/bin/php /www/wwwroot/Ex-Site/public/vendor/webmsgsender/start.php stop
+WorkingDirectory=/www/wwwroot/Ex-Site
+Restart=on-failure
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+------------------------------------------------------------------
+
+### 2.websocket
+sudo vi /etc/systemd/system/websocket-client.service
+-------------------------------------------------------------------
+[Unit]
+Description=Laravel WebSocket Client Restart
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/www/wwwroot/Ex-Site
+ExecStart=/usr/bin/php /www/wwwroot/Ex-Site/artisan websocket:client start
+ExecStop=/usr/bin/php /www/wwwroot/Ex-Site/artisan websocket:client stop
+Restart=on-failure
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+------------------------------------------------------------------
+sudo systemctl daemon-reload
+sudo systemctl enable elasticsearch
+sudo systemctl enable webmsgsender-client.service
+sudo systemctl enable websocket-client.service
+### 程序环境
+环境为 ng1.18+php7.3+MySQL 5.6.50+phpMyAdmin 4.9
+运行目录为/public
+设置伪静态laravel5
+安装es,安装python3,设置反向代理
+### 删除函数
+putenv,pcntl_signal,pcntl_signal_dispatch,pcntl_fork,pcntl_wait,pcntl_alarm
+### 安装扩展 
+fileinfo opcache memcache redis imap exif intl xsl
+### 拉取代码
+git clone https://github.com/Tom5188/Ex-Site.git
 ### 目录映射
 php artisan storage:link
 ### 清理缓存
@@ -39,7 +88,6 @@ location / {
 }
 ### 设置代理
 server_name ~^.*$;
-
 location ~/(wss|socket.io) {
 	# 此处改为 socket.io 后端的 ip 和端⼝即可 
 	proxy_pass http://0.0.0.0:2000; 
@@ -69,69 +117,7 @@ cd /www/wwwroot/Ex-Site
 php artisan follow
 
 n分钟 30分钟
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-### 1.elasticsearch
-service elasticsearch start
-开机自启
-sudo systemctl enable elasticsearch
 
-sudo systemctl daemon-reload & sudo systemctl enable webmsgsender-client.service & sudo systemctl enable websocket-client.service & sudo systemctl enable elasticsearch
-关闭自启
-sudo systemctl disable elasticsearch
-
-sudo systemctl restart websocket-client.service & sudo systemctl restart webmsgsender-client.service
-
-sudo systemctl stop websocket-client.service & sudo systemctl stop webmsgsender-client.service
-
-sudo systemctl status websocket-client.service & sudo systemctl status webmsgsender-client.service
-
-### 2.webmsgsender
-sudo vi /etc/systemd/system/webmsgsender-client.service
------------------------------------------------------------------
-[Unit]
-Description=Web Message Sender Client
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/php /www/wwwroot/Ex-Site/public/vendor/webmsgsender/start.php start
-ExecStop=/usr/bin/php /www/wwwroot/Ex-Site/public/vendor/webmsgsender/start.php stop
-WorkingDirectory=/www/wwwroot/Ex-Site
-Restart=on-failure
-User=root
-Group=root
-
-[Install]
-WantedBy=multi-user.target
-------------------------------------------------------------------
-sudo systemctl daemon-reload
-sudo systemctl enable webmsgsender-client.service
-sudo systemctl restart webmsgsender-client.service
-sudo systemctl status webmsgsender-client.service
-
-### 3.websocket
-sudo vi /etc/systemd/system/websocket-client.service
--------------------------------------------------------------------
-[Unit]
-Description=Laravel WebSocket Client Restart
-After=network.target
-
-[Service]
-Type=simple
-WorkingDirectory=/www/wwwroot/Ex-Site
-ExecStart=/usr/bin/php /www/wwwroot/Ex-Site/artisan websocket:client start
-ExecStop=/usr/bin/php /www/wwwroot/Ex-Site/artisan websocket:client stop
-Restart=on-failure
-User=root
-Group=root
-
-[Install]
-WantedBy=multi-user.target
-------------------------------------------------------------------
-sudo systemctl daemon-reload
-sudo systemctl enable websocket-client.service
-sudo systemctl restart websocket-client.service
-sudo systemctl status websocket-client.service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 <!-- robot
 cd /www/wwwroot/Site
 php artisan robot 4
