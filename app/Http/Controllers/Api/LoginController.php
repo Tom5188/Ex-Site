@@ -287,4 +287,106 @@ class LoginController extends Controller
         }
         return $this->success('验证成功');
     }
+
+    //钱包登录
+    public function walletRegister()
+    {
+        $type = Input::get('type', '');
+        $user_string = Input::get('user_string', null);
+        if (empty($user_string)) {
+            return $this->error('参数错误');
+        }
+
+
+        if (!strlen($user_string) == 42 && substr($user_string, 0, 2) == '0x' && $this->regex($user_string, '/^[A-Za-z0-9]+$/')) {
+            return $this->error('钱包地址不正确');
+        }
+
+
+        $extension_code = Input::get('extension_code', '');
+
+        $password = 123456;
+        if (mb_strlen($password) < 6 || mb_strlen($password) > 16) {
+            return $this->error('密码只能在6-16位之间');
+        }
+        $user = Users::getByString($user_string);
+
+        if (empty($user)) {
+
+            $parent_id = 0;
+
+            // if ($code != '9188') {
+            // }
+            // 2021-09-09  修改为 根据后台开关  验证邀请码是否必填
+            // $sharar_radio = DB::table('settings')->where('key', 'sharar_radio')->first();
+            // dump($sharar_radio);die;
+            // if ($sharar_radio->value == 1 && empty($extension_code)) {
+
+            //     return $this->error("请填写正确的邀请码");
+            // }
+            // 修改结束
+
+            // if (!empty($extension_code)) {
+            //     $p = Users::where("extension_code", $extension_code)->first();
+            //     if (empty($p)) {
+            //         return $this->error("请填写正确的邀请码");
+            //     } else {
+            //         $parent_id = $p->id;
+            //     }
+            // }
+            $users = new Users();
+            $users->password = Users::MakePassword($password);
+            $users->parent_id = $parent_id;
+            $users->email = $user_string;
+            $users->account_number = $user_string;
+            $users->phone = null;
+            $users->reg_type = 0;
+            $users->area_code_id = 0;
+
+            // 后台设置用户默认头像
+            $user_default_avatar = DB::table('settings')->where('key', 'user_default_avatar')->first();
+
+            $users->head_portrait = $user_default_avatar->value;
+            $users->time = time();
+            $users->extension_code = Users::getExtensionCode();
+            DB::beginTransaction();
+            try {
+                $users->parents_path = UserDAO::getRealParentsPath($users); // 生成parents_path tian add
+
+                // 代理商节点id。标注该用户的上级代理商节点。这里存的代理商id是agent代理商表中的主键，并不是users表中的id。
+                $users->agent_note_id = Agent::reg_get_agent_id_by_parentid($parent_id);
+                // 代理商节点关系
+                $users->agent_path = Agent::agentPath($parent_id);
+
+                $users->save(); // 保存到user表中
+                $test = UsersWallet::makeWallet($users->id);
+                // DB::rollBack();
+                //创建bank账号
+                LhBankAccount::newAccount($users->id, $parent_id);
+                // return $this->error('File:');
+                UserProfile::unguarded(function () use ($users) {
+                    $users->userProfile()->create([]);
+                });
+
+                DB::commit();
+
+                $user_id = $users->id;
+
+            } catch (\Exception $ex) {
+                DB::rollBack();
+                return $this->error('File:' . $ex->getFile() . ',Line:' . $ex->getLine() . ',Message:' . $ex->getMessage());
+            }
+
+        } else {
+            $user_id = $user->id;
+        }
+
+        //登录
+        Token::clearToken($user_id);
+        $token = Token::setToken($user_id);
+        $ip = request()->getClientIp();
+        DB::table('users')->where('id',$user_id)->update(['last_login_ip'=>$ip]);
+
+        return $this->success($token);
+    }
 }

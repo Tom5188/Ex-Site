@@ -123,7 +123,7 @@
                     ,{field: 'status', title: '交易状态', minWidth:100, templet: '#statustml'}
                     ,{field: 'created_at', title: '充币时间', minWidth:180}
                    
-                    ,{title:'操作',minWidth:180,templet: '#ophtml'}
+                    ,{title:'操作',minWidth:120,templet: '#ophtml'}
 
                 ]]
             });
