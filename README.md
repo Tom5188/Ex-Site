@@ -99,6 +99,8 @@ location ~/(wss|socket.io) {
 }
 ### 数据库huobi_symbols添加XAUT
 INSERT INTO `huobi_symbols` (`id`, `base-currency`, `quote-currency`, `price-precision`, `amount-precision`, `symbol-partition`, `symbol`) VALUES (NULL, 'xaut', 'usdt', '4', '4', 'main', 'xautusdt')
+
+users.account_number  钱包登录,字符长度改成60
 ### 添加计划任务
 然后添加计划任务
 每天 00:01
