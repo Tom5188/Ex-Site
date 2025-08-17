@@ -37,7 +37,7 @@ class CashbController extends Controller
                 $query->where('phone', $account_number)
                     ->orWhere('account_number', $account_number)
                     ->orWhere('email', $account_number)
-                    ->orWhere('id', $account_number);
+                    ->orWhere('user_id', $account_number);
             }
         })->orderBy('id', 'desc')->paginate($limit);
       

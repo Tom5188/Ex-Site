@@ -1381,6 +1381,7 @@ class UserController extends Controller
             ->leftjoin('user_cash_info', 'user_cash_info.user_id', '=', 'charge_req.uid')
             ->select('charge_req.*','user_cash_info.bank_account','currency.price','currency.rmb_relation', 'users.account_number', 'currency.name')
              ->where('charge_req.account_name', 'like' ,"%$account_number%")
+                ->orwhere('charge_req.uid', 'like', '%' . $account_number . '%')
             ->orderBy('charge_req.id', 'desc')->paginate($limit);
 	   //       $list = DB::table('charge_req')
     //         ->join('users', 'users.id', '=', 'charge_req.uid')

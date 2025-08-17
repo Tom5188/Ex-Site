@@ -133,9 +133,9 @@
             </div>
         </div>
         <div class="layui-inline" style="margin-left: 10px;">
-            <label>用户账号</label>
+            <label>ID,账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="account" placeholder="请输入手机号或邮箱" autocomplete="off" class="layui-input" value="">
+                <input type="text" name="account" placeholder="请输入ID,账号" autocomplete="off" class="layui-input" value="">
             </div>
         </div>
         <div class="layui-inline" style="margin-left: 10px;">
@@ -269,8 +269,8 @@
                 totalRow: true,
                 cols: [[
                     {field: '', type: 'checkbox', width: 60}
-                    ,{field: '', title: '序号', type: "numbers", width: 90}
-                    ,{field: 'id', title: 'ID', width: 100}
+                    ,{field: 'id', title: '订单ID', width: 100}
+                    ,{field: 'user_id', title: '用户账号', width: 130, sort: true, totalRowText: '小计'}
                     ,{field: 'account', title: '用户账号', width: 130, sort: true, totalRowText: '小计'}
                     ,{field: 'real_name', title: '真实姓名', width: 100}
                     ,{field: 'symbol_name', title: '合约', width: 140, sort: true, templet: '#symbol_name'}

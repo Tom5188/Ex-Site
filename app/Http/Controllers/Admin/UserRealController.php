@@ -33,7 +33,8 @@ class UserRealController extends Controller
         $list = new UserReal();
         if (!empty($account)) {
             $list = $list->whereHas('user', function ($query) use ($account) {
-                $query->where("phone", 'like', '%' . $account . '%')->orwhere('email', 'like', '%' . $account . '%');
+                $query->where("account_number", 'like', '%' . $account . '%')
+                ->orwhere('users.id', 'like', '%' . $account . '%');
             });
         }
         if(!empty($review_status_s)){

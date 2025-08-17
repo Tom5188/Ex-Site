@@ -22,9 +22,8 @@
         <form class="layui-form layui-form-pane layui-inline" action="">
 
             <div class="layui-inline">
-                <label class="layui-form-label">用户名</label>
-                <div class="layui-input-inline" style="margin-left: 10px">
-                    <input type="text" name="account_name" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" placeholder="ID,账号" name="account_name" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline" style="margin-left: 10px">
@@ -98,6 +97,7 @@
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
                     {field: 'id', title: 'ID', width:80, sort: true}
+                    ,{field: 'uid', title: '用户ID', width:200}
                     ,{field: 'account_name', title: '用户名', width:200}
                     ,{field: 'currency_name', title: '虚拟币', width:80}
                     // ,{field: 'user_account', title: '支付账号', minWidth:110}

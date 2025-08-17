@@ -224,7 +224,7 @@ class MicroController extends Controller
                 $query->where('profit_result', $profit_result);
             })->when($account != '' || $name != '', function ($query) use ($account, $name) {
                 $query->whereHas('user', function ($query) use ($account, $name) {
-                    $account != '' && $query->where("phone", 'like', '%' . $account . '%')->orwhere('email', 'like', '%' . $account . '%');
+                    $account != '' && $query->where("account_number", 'like', '%' . $account . '%')->orwhere('id', 'like', '%' . $account . '%');
                     $query->when($name != '', function ($query) use ($name) {
                         $query->whereHas('userReal', function ($query) use ($name) {
                             $query->where("name", 'like', '%' . $name . '%');

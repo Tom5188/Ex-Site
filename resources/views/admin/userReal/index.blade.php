@@ -18,9 +18,10 @@
     }
 </style>
     <div class="layui-inline">
-        <label class="layui-form-label">用户帐号</label>
-        <div class="layui-input-inline">
-            <input type="text" name="account" placeholder="用户手机号或邮箱" autocomplete="off" class="layui-input" value="">
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" placeholder="ID,账号" name="account" autocomplete="off" class="layui-input" value="">
+            </div>
         </div>
         <div class="layui-inline" style="margin-left: 10px;">
             <label>审核状态</label>
@@ -91,7 +92,8 @@
                                 , page: true
                                 ,limit: 20
                                 , cols: [[
-                                    { field: 'id', title: 'ID', width: 100}
+                                    { field: 'id', title: '订单ID', width: 100}
+                                    , {field:'user_id',title: '用户ID',width: 280}
                                     , {field:'account',title: '用户账号',width: 280}
                                     , {field:'type',title: '证件类型',width: 100,align:'center',templet:'#idTypeTpl'}
                                     , {field:'name',title: '真实姓名',width: 150}

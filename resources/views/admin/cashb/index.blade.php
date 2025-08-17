@@ -17,14 +17,10 @@
     }
 </style>
     <div style="margin-top: 10px;width: 100%;">
-        
-
         <form class="layui-form layui-form-pane layui-inline" action="">
-
             <div class="layui-inline">
-                <label class="layui-form-label">用户名</label>
-                <div class="layui-input-inline" style="margin-left: 10px">
-                    <input type="text" name="user_name" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <input type="text" placeholder="ID,账号" name="user_name" autocomplete="off" class="layui-input" value="">
                 </div>
             </div>
             <div class="layui-inline" style="margin-left: 10px">
@@ -32,10 +28,6 @@
                     <button class="layui-btn" lay-submit="" lay-filter="mobile_search"><i class="layui-icon">&#xe615;</i></button>
                 </div>
             </div>
-            
-
-
-
         </form>
         <button class="layui-btn layui-btn-normal" style="margin-left: 10px" onclick="javascrtpt:window.location.href='{{url('/admin/cashb/csv')}}'">导出提币记录</button>
     </div>
@@ -72,7 +64,8 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
+                    {field: 'id', title: '订单ID', width:80, sort: true}
+                    ,{field: 'user_id', title: '用户ID', width:220}
                     ,{field: 'user_name', title: '用户名', width:220}
                     ,{field: 'currency_name', title: '虚拟币', width:80}
                     ,{field: 'number', title: '提币数量', minWidth:110}
