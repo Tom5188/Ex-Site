@@ -125,63 +125,68 @@ class MicroOrderController extends Controller
             'seconds' => '到期时间',
             'number' => '投资数额',
         ]);
-
-        //进行基本验证
-        throw_if($validator->fails(), new \Exception($validator->errors()->first()));
-        $insurance_start = Setting::getValueByKey('insurance_start','09:00');
-        $insurance_end = Setting::getValueByKey('insurance_end','12:00');
-
-        $insurance_start_datetime = Carbon::parse(date("Y-m-d {$insurance_start}:00"));
-        $insurance_end_datetime = Carbon::parse(date("Y-m-d {$insurance_end}:00"));
-        $use_insurance = 0;//是否使用受保金额
-        $currency = Currency::find($currency_id);
-        //在受保时间段的话
-        if (Carbon::now()->gte($insurance_start_datetime) && Carbon::now()->lte($insurance_end_datetime)) {
-            if($currency->insurancable == 1){
-                $can_order = $this->canOrder($user_id, $currency_id, $number);
-                if($can_order !== true){
-                    throw new \Exception("下单失败：{$can_order}");
+        try {
+            //进行基本验证
+            throw_if($validator->fails(), new \Exception($validator->errors()->first()));
+            $insurance_start = Setting::getValueByKey('insurance_start','09:00');
+            $insurance_end = Setting::getValueByKey('insurance_end','12:00');
+    
+            $insurance_start_datetime = Carbon::parse(date("Y-m-d {$insurance_start}:00"));
+            $insurance_end_datetime = Carbon::parse(date("Y-m-d {$insurance_end}:00"));
+            $use_insurance = 0;//是否使用受保金额
+            $currency = Currency::find($currency_id);
+            //在受保时间段的话
+            if (Carbon::now()->gte($insurance_start_datetime) && Carbon::now()->lte($insurance_end_datetime)) {
+                if($currency->insurancable == 1){
+                    $can_order = $this->canOrder($user_id, $currency_id, $number);
+                    if($can_order !== true){
+                        throw new \Exception("下单失败：{$can_order}");
+                    }
+                    $user_insurance = UsersInsurance::where('user_id', $user_id)
+                        ->whereHas('insurance_type', function ($query) use ($currency_id) {
+                            $query->where('currency_id', $currency_id);
+                        })
+                        ->where('status', 1)
+                        ->where('claim_status', 0)
+                        ->first();
+                    $use_insurance = $user_insurance->insurance_type->type;//1,正向。2,反向。
                 }
-                $user_insurance = UsersInsurance::where('user_id', $user_id)
-                    ->whereHas('insurance_type', function ($query) use ($currency_id) {
-                        $query->where('currency_id', $currency_id);
-                    })
-                    ->where('status', 1)
-                    ->where('claim_status', 0)
-                    ->first();
-                $use_insurance = $user_insurance->insurance_type->type;//1,正向。2,反向。
             }
+            if (
+                ($currency->insurancable != 1 || $use_insurance == 0) //如果当前不在受保时间段内或者所返币种不支持保险
+                && $currency->micro_holdtrade_max > 0 
+                && $this->getExistingOrderNumber($user_id, $currency_id) >= $currency->micro_holdtrade_max
+            ) {
+                throw new \Exception('下单失败:超过最大持仓笔数限制');
+            }
+            $currency_match = CurrencyMatch::find($match_id);
+            $currency_quotation = CurrencyQuotation::where('match_id', $match_id)->first();
+            throw_unless($currency_quotation, new \Exception('当前未获取到行情'));
+            $market = MarketHour::getLastEsearchMarket($currency_match->currency_name, $currency_match->legal_name, '1min');
+            $price = $market['close'] ?? $currency_quotation->now_price;
+            // if (mt_rand(0, 1)) {
+            //     $price = bc_add($price, $float_diff);
+            // } else {
+            //     $price = bc_sub($price, $float_diff);
+            // } 
+            // var_dump($price);exit;
+            $order_data = [
+                'user_id' => $user_id,
+                'type' => $type,
+                'match_id' => $match_id,
+                'currency_id' => $currency_id,
+                'seconds' => $seconds,
+                'price' => $price,
+                'number' => $number,
+                'use_insurance' => $use_insurance,
+            ];
+            $order = MicroTradeLogic::addOrder($order_data);
+            return $this->success($order);
+        } catch (\Throwable $th) {
+            // throw $th;
+            //return $this->error('File:' . $th->getFile() . ',Line:' . $th->getLine() . ',Message:' . $th->getMessage());
+            return $this->error($th->getMessage());
         }
-        if (
-            ($currency->insurancable != 1 || $use_insurance == 0) //如果当前不在受保时间段内或者所返币种不支持保险
-            && $currency->micro_holdtrade_max > 0 
-            && $this->getExistingOrderNumber($user_id, $currency_id) >= $currency->micro_holdtrade_max
-        ) {
-            throw new \Exception('下单失败:超过最大持仓笔数限制');
-        }
-        $currency_match = CurrencyMatch::find($match_id);
-        $currency_quotation = CurrencyQuotation::where('match_id', $match_id)->first();
-        throw_unless($currency_quotation, new \Exception('当前未获取到行情'));
-        $market = MarketHour::getLastEsearchMarket($currency_match->currency_name, $currency_match->legal_name, '1min');
-        $price = $market['close'] ?? $currency_quotation->now_price;
-        // if (mt_rand(0, 1)) {
-        //     $price = bc_add($price, $float_diff);
-        // } else {
-        //     $price = bc_sub($price, $float_diff);
-        // } 
-        // var_dump($price);exit;
-        $order_data = [
-            'user_id' => $user_id,
-            'type' => $type,
-            'match_id' => $match_id,
-            'currency_id' => $currency_id,
-            'seconds' => $seconds,
-            'price' => $price,
-            'number' => $number,
-            'use_insurance' => $use_insurance,
-        ];
-        $order = MicroTradeLogic::addOrder($order_data);
-        return $this->success($order);
     }
 
     public function lists(Request $request)
