@@ -1381,7 +1381,6 @@ class UserController extends Controller
             ->leftjoin('user_cash_info', 'user_cash_info.user_id', '=', 'charge_req.uid')
             ->select('charge_req.*','user_cash_info.bank_account','currency.price','currency.rmb_relation', 'users.account_number', 'currency.name')
              ->where('charge_req.account_name', 'like' ,"%$account_number%")
-                ->orwhere('charge_req.uid', 'like', '%' . $account_number . '%')
             ->orderBy('charge_req.id', 'desc')->paginate($limit);
 	   //       $list = DB::table('charge_req')
     //         ->join('users', 'users.id', '=', 'charge_req.uid')
@@ -1446,13 +1445,16 @@ class UserController extends Controller
         }
         $redis = Redis::connection();
         $lock = new RedisLock($redis,'manual_charge'.$req->id,10);
+        
+        //到账钱包
+        $charge_balance_type = Setting::getValueByKey('charge_balance_type', 2);
+        
 		DB::beginTransaction();
 		try{
-
             DB::table('charge_req')->where('id',$id)->update(['status'=>2,'updated_at'=>date('Y-m-d H:i:s')]);
             change_wallet_balance(
                 $legal,
-                2,
+                $charge_balance_type,
                 $req->amount,
                 AccountLog::WALLET_CURRENCY_IN,
                 '充值',
@@ -1475,7 +1477,7 @@ class UserController extends Controller
             if($user->give_level < $user->user_level && $user->give_num > 0){
                 change_wallet_balance(
                     $legal,
-                    2,
+                    $charge_balance_type,
                     $givenum,
                     AccountLog::WALLET_CURRENCY_IN,
                     '会员充值赠送',

@@ -273,7 +273,7 @@ function change_wallet_balance(&$wallet, $balance_type, $change, $account_log_ty
             $after = bc_add($before, $change);
             //判断余额是否充足
             if (bc_comp($after, 0) < 0 && !$overflow) {
-                throw new \Exception('Insufficient wallet balance');//钱包余额不足
+                throw new \Exception('您的余额不足');//钱包余额不足
             }
             $now = time();
             AccountLog::unguard();
@@ -305,7 +305,7 @@ function change_wallet_balance(&$wallet, $balance_type, $change, $account_log_ty
             $wallet->$field = $after;
             $result = $wallet->save();
             if (!$result) {
-                throw new \Exception('Wallet change balance is abnormal');//钱包变更余额异常
+                throw new \Exception('订单异常');//钱包变更余额异常
             }
         });
         return true;

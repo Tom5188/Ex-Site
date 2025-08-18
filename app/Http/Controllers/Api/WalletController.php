@@ -557,14 +557,26 @@ class WalletController extends Controller
         if (empty($user_name)) {
             $user_name =  $user['phone'];
         }
+        
+        //扣款钱包
+        $cashb_balance_type = Setting::getValueByKey('cashb_balance_type', 2);
+        
         try {
             DB::beginTransaction();
             $wallet = UsersWallet::where('user_id', $user_id)->where('currency', $currency_id)->lockForUpdate()->first();
-
-            if ($number > $wallet->change_balance) {
+            $fields = [
+                '',
+                'legal_balance',
+                'change_balance',
+                'lever_balance',
+                'micro_balance',
+            ];
+            $field = $fields[$cashb_balance_type];
+            if ($number > $wallet->$field) {
                 DB::rollBack();
                 return $this->error('余额不足');
             }
+            
             $real_number = $number  - $rate;
             $walletOut = new UsersWalletOut();
             $walletOut->type = $type;
@@ -579,7 +591,7 @@ class WalletController extends Controller
             $walletOut->status = 1;
             $walletOut->save();
 
-            $result = change_wallet_balance($wallet, 2, -$number, AccountLog::WALLETOUT, '申请提币扣除余额');
+            $result = change_wallet_balance($wallet, $cashb_balance_type, -$number, AccountLog::WALLETOUT, '申请提币扣除余额');
             if ($result !== true) {
                 throw new \Exception($result);
             }

@@ -282,6 +282,32 @@
                                        value="@if(isset($setting['open_url'])){{$setting['open_url'] ?? ''}}@endif">
                             </div>
                         </div>
+                        
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">充值到账钱包</label>
+                            <div class="layui-input-block">
+                                <select name="charge_balance_type" lay-verify="required" lay-filter="charge_balance_type">
+                                    <!--1.法币,2.币币交易,3.杠杆交易,4.期权-->
+                                    <option value="1" {{ ($setting['charge_balance_type']?? 0) == 1 ? 'selected' : '' }} >法币</option>
+                                    <option value="2" {{ ($setting['charge_balance_type']?? 0) == 2 ? 'selected' : '' }} >币币</option>
+                                    <option value="3" {{ ($setting['charge_balance_type']?? 0) == 3 ? 'selected' : '' }} >合约</option>
+                                    <option value="4" {{ ($setting['charge_balance_type']?? 0) == 4 ? 'selected' : '' }} >期权</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">提现扣款钱包</label>
+                            <div class="layui-input-block">
+                                <select name="cashb_balance_type" lay-verify="required" lay-filter="cashb_balance_type">
+                                    <!--1.法币,2.币币交易,3.杠杆交易,4.期权-->
+                                    <option value="1" {{ ($setting['cashb_balance_type']?? 0) == 1 ? 'selected' : '' }} >法币</option>
+                                    <option value="2" {{ ($setting['cashb_balance_type']?? 0) == 2 ? 'selected' : '' }} >币币</option>
+                                    <option value="3" {{ ($setting['cashb_balance_type']?? 0) == 3 ? 'selected' : '' }} >合约</option>
+                                    <option value="4" {{ ($setting['cashb_balance_type']?? 0) == 4 ? 'selected' : '' }} >期权</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">邀请码是否必填</label>
