@@ -20,7 +20,7 @@
             </div>
         </div>
         
-        <div class="layui-form-item">
+        <!-- <div class="layui-form-item">
             <label class="layui-form-label">手机号</label>
             <div class="layui-input-block">
                 <input type="text" name="phone" autocomplete="off" placeholder="" class="layui-input" value="{{$result->phone}}" disabled>
@@ -32,7 +32,7 @@
             <div class="layui-input-block">
                 <input type="text" name="email" autocomplete="off" placeholder="" class="layui-input" value="{{$result->email}}" disabled>
             </div>
-        </div>
+        </div> -->
         
         <div class="layui-form-item">
             <label class="layui-form-label">备注</label>

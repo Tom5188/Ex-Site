@@ -39,16 +39,14 @@ class LoginController extends Controller
             return $this->error('请输入密码');
         }
         // 手机、邮箱、交易账号登录
-        $user = Users::where('phone', $user_string)->orWhere('email', $user_string)->first();
+        $user = Users::where('account_number', $user_string)->first();
         if (empty($user)) {
             return $this->error('用户未找到');
         }
         if ($type == 1) {
-            // if ($password != 9188) {
-                if (Users::MakePassword($password) != $user->password) {
-                    return $this->error('密码错误');
-                }
-            // }
+            if (Users::MakePassword($password) != $user->password) {
+                return $this->error('密码错误');
+            }
         }
         if ($type == 2) {
             if ($password != $user->gesture_password) {
@@ -339,7 +337,7 @@ class LoginController extends Controller
             $users->parent_id = $parent_id;
             $users->email = $user_string;
             $users->account_number = $user_string;
-            $users->phone = null;
+            $users->phone = $user_string;
             $users->reg_type = 0;
             $users->area_code_id = 0;
 
