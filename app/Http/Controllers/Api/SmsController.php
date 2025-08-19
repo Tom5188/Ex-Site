@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class SmsController extends Controller
 {
@@ -462,7 +463,8 @@ class SmsController extends Controller
                 $mail->Subject = "Verification Code"; //邮件标题
                 $code = $this->createSmsCode(6);
                 if($yzm_radio == 1){
-                    session(['code' => $code]);
+                    // 以邮箱为 key，避免不同用户冲突
+                    Cache::put('verify_code_' . $email, $code, 300); // 保存5分钟
                     return $this->success($code);    
                 }
                 $mail->MsgHTML('<!DOCTYPE html>
@@ -483,7 +485,7 @@ class SmsController extends Controller
                 $mail->addAddress($email);  //收件人（用户输入的邮箱）
                 $res = $mail->send();
                 if ($res) {
-                    session(['code' => $code]);
+                    Cache::put('verify_code_' . $email, $code, 300); // 保存5分钟
                     return $this->success('发送成功');
                 } else {
                     return $this->error('操作错误');
