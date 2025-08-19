@@ -14,23 +14,33 @@
 @section('page-content')
     <form class="layui-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户手机号</label>
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="account_number" autocomplete="off" placeholder="" class="layui-input" value="{{$result->account_number}}" disabled>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
             <div class="layui-input-block">
                 <input type="text" name="phone" autocomplete="off" placeholder="" class="layui-input" value="{{$result->phone}}" disabled>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-                <input type="text" name="common" autocomplete="off" placeholder="" class="layui-input" value="{{$result->common}}">
-            </div>
-        </div>
+        
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-block">
                 <input type="text" name="email" autocomplete="off" placeholder="" class="layui-input" value="{{$result->email}}" disabled>
             </div>
         </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" name="common" autocomplete="off" placeholder="" class="layui-input" value="{{$result->common}}">
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">用户等级</label>
             <div class="layui-input-block">

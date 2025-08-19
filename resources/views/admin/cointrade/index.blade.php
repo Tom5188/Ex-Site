@@ -23,8 +23,8 @@
                     <!--</div>-->
                     <div class="layui-inline">
                         <label class="layui-form-label">用户</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="mobile" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <div class="layui-input-inline"  style="width:150px;">
+                            <input type="text" placeholder="请输入用户ID,账号" name="account_number" autocomplete="off" class="layui-input" value="">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -87,8 +87,8 @@
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
                     {field: 'id', title: 'ID', width:80, sort: true}
-                    
-                    ,{field: 'account_number', title: '用户', width:200}
+                    ,{field: 'u_id', title: '用户ID'}
+                    ,{field: 'account_number', title: '用户名', width:200}
                     ,{ title: '交易类型', width:200,templet:function(d){
                         if(d.type==1){
                              return "<span style='color:#00c087'>买</span>";
@@ -128,13 +128,14 @@
                 var account_number = data.field.mobile,
                     type = data.field.type,
                     status = data.field.status;
+                    account_number = data.field.account_number,
                     // ,currency_id = $('#currency_id').val()
 
                 table.reload('mobileSearch',{
                     where:{
                         type:type,
                         status:status,
-                        search:account_number,
+                        account_number:account_number,
                         // currency_id:currency_id,
                     },
                     page: {curr: 1}         //重新从第一页开始

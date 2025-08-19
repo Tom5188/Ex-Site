@@ -239,7 +239,14 @@
                     });
                 });
             } else if (layEvent === 'edit') { //编辑
-                layer_show('编辑会员','/admin/user/edit?id=' + data.id);
+                var index = layer.open({
+                    title: '编辑会员'
+                    ,type: 2
+                    ,content: '/admin/user/edit?id=' + data.id
+                    ,maxmin: true
+                    ,area:["100%", "100%"],
+                });
+                layer.full(index);
             } else if (layEvent === 'users_wallet') {
                 var index = layer.open({
                     title: '钱包管理'

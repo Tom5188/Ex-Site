@@ -13,10 +13,10 @@ class CoinTradeController extends Controller
 {
     public function tradeList(Request $request){
         $where = [];
-        $account = $request->get('search','');
         $limit = $request->get('limit', 20);
         $status = $request->get('status');
         $type  = $request->get('type');
+        $account = $request->input("account_number", "");
         if($status){
             $where['coin_trade.status'] = $status;
         }
@@ -26,10 +26,9 @@ class CoinTradeController extends Controller
         $res = CoinTrade::join('users as u','u_id','=','u.id')
             ->join('currency as c','currency_id' ,'=','c.id')
             ->join('currency as l','legal_id','=','l.id')
-            ->where($where)
             ->where(function($q)use($account){
                 if($account){
-                    $q->where('u.account_number','=',$account)->orWhere('u.email','=',$account);
+                    $q->where('u.account_number','=',$account)->orWhere('u_id','=',$account);
                 }})
             ->select(['u.id','u.account_number','coin_trade.*','l.name as legal_name','c.name as currency_name'])
             ->orderBy('coin_trade.id','desc')
