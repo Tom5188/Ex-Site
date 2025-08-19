@@ -464,7 +464,7 @@ class SmsController extends Controller
                 $code = $this->createSmsCode(6);
                 if($yzm_radio == 1){
                     // 以邮箱为 key，避免不同用户冲突
-                    Cache::put('verify_code_' . $email, $code, 300); // 保存5分钟
+                    Cache::put('verify_code_' . $email, $code, 600); // 保存10分钟
                     return $this->success($code);    
                 }
                 $mail->MsgHTML('<!DOCTYPE html>
@@ -485,7 +485,7 @@ class SmsController extends Controller
                 $mail->addAddress($email);  //收件人（用户输入的邮箱）
                 $res = $mail->send();
                 if ($res) {
-                    Cache::put('verify_code_' . $email, $code, 300); // 保存5分钟
+                    Cache::put('verify_code_' . $email, $code, 600); // 保存5分钟
                     return $this->success('发送成功');
                 } else {
                     return $this->error('操作错误');
