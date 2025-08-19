@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\Api;
 
-
+use App\Setting;
 use App\AccountLog;
 use App\CurrencyDepositOrder;
 use App\CurrencyProjectOrder;
@@ -106,6 +106,7 @@ class CurrencyProjectController extends Controller
             ->orderBy('start_at','desc')
             ->get();
 //        bc_sub($project->amount,$project->total_sell)
+        $imageServerUrl = Setting::getValueByKey('image_server_url', '');
         foreach ($list as &$item) {
             $total_sell = $item->total_sell;
             if (empty($total_sell)){
@@ -124,6 +125,7 @@ class CurrencyProjectController extends Controller
             $day = strtotime($item->end_at) - strtotime($item->start_at);
             $day = intval($day / 24 / 3600);
             $item->day = $day > 0 ? $day : 1;
+            $item->logo = $imageServerUrl . $item->logo;
         }
         unset($item);
 
