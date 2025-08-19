@@ -235,9 +235,22 @@ class BankController extends Controller
     }
 
     public function config(Request $request){
-        $list = DB::table('lh_deposit_config')->join('currency','currency.id','=','currency_id')
-        ->select(['currency.name as currency_name','currency.logo as currency_logo','lh_deposit_config.*'])
-        ->get();
+        $imageServerUrl = Setting::getValueByKey('image_server_url', '');
+
+        $list = DB::table('lh_deposit_config')
+            ->join('currency','currency.id','=','currency_id')
+            ->select([
+                'currency.name as currency_name',
+                'currency.logo as currency_logo',
+                'lh_deposit_config.*'
+            ])
+            ->get()
+            ->map(function($item) use ($imageServerUrl) {
+                $item->currency_logo = $imageServerUrl . $item->currency_logo;
+                return $item;
+            });
+
+
         return $this->success($list);
     }
     
