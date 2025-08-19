@@ -78,9 +78,18 @@ class MicroOrderController extends Controller
      */
     public function getSeconds()
     {
-        $seconds = MicroSecond::where('status', 1)
-            ->get();
-        return $seconds->count() > 0 ? $this->success($seconds) : $this->error($seconds);
+        $user = Users::getAuthUser();
+        $seconds = MicroSecond::where('status', 1)->get();
+        if(!empty($user->seconds)){
+            foreach($seconds as &$item){
+                $data = $user->seconds[$item->seconds];
+                if(!empty($data)){
+                    $item->min_amount = $data;
+                }
+            }
+        }
+        
+        return $this->success($seconds);
     }
 
 

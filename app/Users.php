@@ -44,6 +44,10 @@ class Users extends Model
         'usdt_mic',
     ];
 
+    protected $casts = [
+        'seconds' => 'array',  // 或者 'json' 具体看你的需求
+    ];
+
     protected static $roleList = [
         MicroOrder::RESULT_LOSS => '亏损',
         MicroOrder::RESULT_BALANCE => '无',

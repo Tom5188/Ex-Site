@@ -83,6 +83,29 @@
             </div>
         </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">提款最小金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="min_withdraw" autocomplete="off" placeholder="" class="layui-input" value="{{$result->min_withdraw}}" >
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">提款最大金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="max_withdraw" autocomplete="off" placeholder="" class="layui-input" value="{{$result->max_withdraw}}" >
+            </div>
+        </div>
+        
+        @foreach($seconds as $k => $v)
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{ $k }}秒最小金额</label>
+                <div class="layui-input-block">
+                    <input type="text" name="seconds[]" autocomplete="off" placeholder="" class="layui-input" value="{{ $v }}">
+                </div>
+            </div>
+        @endforeach
+
         <!--<div class="layui-form-item">-->
         <!--    <label class="layui-form-label">法币交易账号</label>-->
         <!--    <div class="layui-input-block">-->
