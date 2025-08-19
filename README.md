@@ -20,9 +20,14 @@ type=rpm-md
 ----------------------------------------------------------------
 yum install elasticsearch -y
 ### 运行自启
-sudo systemctl restart websocket-client.service & sudo systemctl restart webmsgsender-client.service
-sudo systemctl stop websocket-client.service & sudo systemctl stop webmsgsender-client.service
-sudo systemctl status websocket-client.service & sudo systemctl status webmsgsender-client.service
+sudo systemctl restart websocket-client.service
+sudo systemctl restart webmsgsender-client.service
+
+sudo systemctl stop websocket-client.service
+sudo systemctl stop webmsgsender-client.service
+
+sudo systemctl status websocket-client.service
+sudo systemctl status webmsgsender-client.service
 
 ### 1.webmsgsender
 sudo vi /etc/systemd/system/webmsgsender-client.service
