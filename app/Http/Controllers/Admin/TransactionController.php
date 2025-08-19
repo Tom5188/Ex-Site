@@ -133,7 +133,7 @@ class TransactionController extends Controller
 		$start = $request->input("start", "");
 		$end = $request->input("end", "");
 		$_var_26 = LeverTransaction::whereHas("user", function ($query) use($username) {
-			$username != "" && $query->where("account_number", $username)->orWhere("id", $username);
+			$username != "" && $query->where("account_number", $username)->orWhere("user_id", $username);
 		})->where(function ($query) use($id, $status, $type, $legal_id) {
 			$id != 0 && $query->where("id", $id);
 			$legal_id != -1 && $query->where("legal", $legal_id);

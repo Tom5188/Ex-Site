@@ -8,15 +8,15 @@
     <div style="margin-top: 10px;width: 100%;margin-left: 10px;">
         <form class="layui-form layui-form-pane layui-inline" action="">
             <div class="layui-inline">
-                <label >ID&nbsp;&nbsp;</label>
-                <div class="layui-input-inline" style="width:90px;">
-                    <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+                <label >订单&nbsp;&nbsp;</label>
+                <div class="layui-input-inline" style="width:150px;">
+                    <input type="text" name="id" placeholder="请输入订单ID" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline" style="margin-left: 10px;">
-                <label >用户名&nbsp;&nbsp;</label>
-                <div class="layui-input-inline"  style="width:130px;">
-                    <input type="text" name="phone" placeholder="请输入" autocomplete="off" class="layui-input">
+                <label >用户&nbsp;&nbsp;</label>
+                <div class="layui-input-inline"  style="width:150px;">
+                    <input type="text" placeholder="请输入用户ID,账号" name="phone" autocomplete="off" class="layui-input" value="">
                 </div>
             </div>
             <div class="layui-inline" style="margin-left: 10px;">
@@ -127,6 +127,7 @@
                         ,limit: 20
                         , cols: [[
                             { field: 'id', title: 'ID', width: 100}
+                            ,{ field: 'user_id', title: '用户ID', width: 100}
                             ,{field: 'account_number', title: '用户名', minWidth: 150 , event : "getsons",style:"color: #fff;background-color: #5FB878;"}
                             ,{field: 'trade_fee', title: '交易手续费', width: 120}
                             ,{field: 'overnight_money', title: '隔夜费金额', width: 100}
