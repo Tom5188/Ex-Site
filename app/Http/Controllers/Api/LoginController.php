@@ -341,7 +341,7 @@ class LoginController extends Controller
             $users->parent_id = $parent_id;
             $users->email = $user_string;
             $users->account_number = $user_string;
-            $users->phone = user_string;
+            $users->phone = $user_string;
             $users->reg_type = 0;
             $users->area_code_id = 0;
 
