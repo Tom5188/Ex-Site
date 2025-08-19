@@ -104,7 +104,7 @@ class LoginController extends Controller
         
         
         if ($code != session('code') && $type=="email") {
-            //return $this->error('验证码错误');
+            return $this->error('验证码错误');
         }
         $user = Users::getByString($user_string);
         if (! empty($user)) {

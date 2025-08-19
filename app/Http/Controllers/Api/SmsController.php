@@ -459,13 +459,27 @@ class SmsController extends Controller
                 $mail->Password = $password;//去开通的qq或163邮箱中找,这里用的不是邮箱的密码，而是开通之后的一个token
                 //$mail->SMTPDebug = 2; //用于debug PHPMailer信息
                 $mail->setFrom($username, $mail_from_name);//设置邮件来源  //发件人
-                $mail->Subject = "Verification code"; //邮件标题
+                $mail->Subject = "Verification Code"; //邮件标题
                 $code = $this->createSmsCode(6);
                 if($yzm_radio == 1){
                     session(['code' => $code]);
                     return $this->success($code);    
                 }
-                $mail->MsgHTML('Your verification code is' . '【' . $code . '】');   //邮件内容
+                $mail->MsgHTML('<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Email verification code</title>
+                    </head>
+                    <body>
+                    <div>
+                        <p style="text-align: left;font-weight: bold;font-size: 20px;">Dear user：</p>
+                        <p style="font-size: 18px;">    Hello! You are currently undergoing email verification, and the verification code for this request is：</p>
+                        <p style="font-size: 50px;font-weight: 900;text-align: center">'.$code.'</p>
+                        <p style="font-size: 18px;">    The validity period of this verification code is 10 minutes.</p>
+                    </div>
+                    </body>
+                </html>');   //邮件内容
                 $mail->addAddress($email);  //收件人（用户输入的邮箱）
                 $res = $mail->send();
                 if ($res) {
