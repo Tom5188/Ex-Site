@@ -103,7 +103,7 @@ class CurrencyDepositController extends Controller
         $list = $model->join('users','users.id','=','user_id')->join('currency','currency.id','=','currency_id')
             ->where(function($q)use($account){
                 if($account){
-                    $q->where('users.account_number','=',$account)->orWhere('users.email','=',$account);
+                    $q->where("users.account_number", 'like', '%' . $account . '%')->orwhere('users.id', $account);
                 }
             })->where($where)->orderBy('lh_deposit_order.created_at','desc')
             ->select(['currency.name as currency_name','users.account_number','lh_deposit_order.*'])

@@ -33,7 +33,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">用户</label>
                         <div class="layui-input-block" style="margin-left: 10px;">
-                            <input type="text" name="mobile" placeholder="请输入" autocomplete="off" class="layui-input">
+                            <input type="text" name="mobile" placeholder="请输入ID,账号" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline" style="margin-left: 10px;">
@@ -83,8 +83,8 @@
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
                     {field: 'id', title: 'ID', width:80, sort: true}
-                    
-                    ,{field: 'account_number', title: '用户', width:250}
+                    ,{field: 'user_id', title: '用户ID', width:110}
+                    ,{field: 'account_number', title: '用户账号', width:250}
                      ,{field: 'currency_name', title: '币种', width:100}
                     ,{field:'day_rate',title: '日利率', width:100}
                     // ,{field: 'total_rate', title: '总利率(%)', width:100}
