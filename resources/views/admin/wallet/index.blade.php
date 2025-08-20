@@ -78,8 +78,8 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">账号</label>
-            <div class="layui-input-inline" style="width: 120px">
-                <input class="layui-input" name="account_number" type="text" value="" placeholder="请输入会员账号">
+            <div class="layui-input-inline" style="width: 150px">
+                <input class="layui-input" name="account_number" type="text" value="" placeholder="请输入ID,账号">
             </div>
         </div>
         <div class="layui-inline">
@@ -181,8 +181,8 @@
             ,totalRow: false
             ,cols: [
                 [
-                    {field: 'id', title: 'id', width: 70, rowspan: 2}
-                    ,{field: 'account_number', title: '账号', width: 120, rowspan: 2}
+                    {field: 'user_id', title: '用户ID', width: 120, rowspan: 2}
+                    ,{field: 'account_number', title: '账号', width: 200, rowspan: 2}
                     ,{field: 'currency_name', title: '币种', width: 100, totalRowText: '小计', rowspan: 2}
                     // ,{field: 'old_balance', title: '链上余额', width: 150, totalRow: true, rowspan: 2}
                     ,{title: '币币', width: 380, colspan: 2, rowspan: 1, align: "center"}

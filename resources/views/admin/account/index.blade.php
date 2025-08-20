@@ -6,9 +6,8 @@
 
 @section('page-content')
    <div class="layui-inline">
-        <label class="layui-form-label">用户账号</label>
         <div class="layui-input-inline" >
-            <input type="datetime" name="account" placeholder="请输入手机号或邮箱" autocomplete="off" class="layui-input" value="">
+            <input type="datetime" name="account" placeholder="请输入ID,账号" autocomplete="off" class="layui-input" value="">
         </div>
        <div class="layui-input-inline date_time111" style="margin-left: 50px;">
            <input type="text" name="start_time" id="start_time" placeholder="请输入开始时间" autocomplete="off" class="layui-input" value="">
@@ -111,8 +110,8 @@
                                 ,height: 'full-100'
                                 ,toolbar: true
                                 ,cols: [[
-                                    {field: 'id', title: 'ID',  width: 110}
-                                    ,{field:'account',title: '用户账号',width: 130}
+                                    {field: 'user_id', title: '用户ID',  width: 110}
+                                    ,{field:'account',title: '用户账号'}
                                     ,{field:'account_number',title: '交易账号',width: 150, hide: true}
                                     ,{field:'before',title:'变动前', width:150}
                                     ,{field:'value',title:'变动量', minWidth:160}

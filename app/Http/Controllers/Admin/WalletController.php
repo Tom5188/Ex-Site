@@ -21,7 +21,7 @@ class WalletController extends Controller
         $limit = $request->input('limit', 10);
         $query = UsersWallet::whereHas('user', function ($query) use ($request) {
                 $account_number = $request->input('account_number', '');
-                $account_number != '' && $query->where('account_number', $account_number)->orWhere('phone', $account_number)->orWhere('email', $account_number)->orWhere('id', $account_number);
+                $account_number != '' && $query->where('account_number', $account_number)->orWhere('phone', $account_number)->orWhere('email', $account_number)->orWhere('user_id', $account_number);
             })->where(function ($query) use ($request) {
                 $currency = $request->input('currency', -1);
                 $address = $request->input('address', '');
