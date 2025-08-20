@@ -596,6 +596,11 @@ class WalletController extends Controller
                 throw new \Exception($result);
             }
 
+            $result = change_wallet_balance($wallet, $cashb_balance_type, $number, AccountLog::WALLETOUT, '申请提币锁定余额', true);
+            if ($result !== true) {
+                throw new \Exception($result);
+            }
+
             // $result = change_wallet_balance($wallet, 2, $number, AccountLog::WALLETOUT, '申请提币锁定余额', true);
             // if ($result !== true) {
             //     throw new \Exception($result);
