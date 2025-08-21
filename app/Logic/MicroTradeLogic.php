@@ -543,26 +543,26 @@ class MicroTradeLogic
             $now = Carbon::now();
             $risk_advance_seconds = self::getRiskAdvanceSeconds();
             $risk_mode = Setting::getValueByKey('risk_mode', 0);
-            switch ($risk_mode) {
-                case 1:
-                    self::riskByUser($currency_match, $risk_advance_seconds, $now);
-                    break;
-                case 2:
-                    self::riskByGroup($currency_match, $risk_advance_seconds, $now);
-                    break;
-                case 3:
-                    self::riskByMoney($currency_match, $risk_advance_seconds, $now);
-                    break;
-                case 4:
-                    self::riskByOrders($currency_match, $risk_advance_seconds, $now);
-                    break;
-                case 5:
-                    self::riskByGroup($currency_match, $risk_advance_seconds, $now, 1);
-                    break;
-
-                default:
-                    break;
-            }
+            //GG 注释
+            // switch ($risk_mode) {
+            //     case 1:
+            //         self::riskByUser($currency_match, $risk_advance_seconds, $now);
+            //         break;
+            //     case 2:
+            //         self::riskByGroup($currency_match, $risk_advance_seconds, $now);
+            //         break;
+            //     case 3:
+            //         self::riskByMoney($currency_match, $risk_advance_seconds, $now);
+            //         break;
+            //     case 4:
+            //         self::riskByOrders($currency_match, $risk_advance_seconds, $now);
+            //         break;
+            //     case 5:
+            //         self::riskByGroup($currency_match, $risk_advance_seconds, $now, 1);
+            //         break;
+            //     default:
+            //         break;
+            // }
             self::riskByProbability($currency_match, $risk_advance_seconds, $now);
 
         } catch (\Throwable $th) {
