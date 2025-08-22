@@ -254,7 +254,7 @@ function change_wallet_balance(&$wallet, $balance_type, $change, $account_log_ty
 
     try {
         if (!in_array($balance_type, [1, 2, 3, 4, 5])) {
-            throw new \Exception('Incorrect currency type');//货币类型不正确
+            throw new \Exception('货币类型不正确');
         }
         DB::transaction(function () use (&$wallet, $param) {
             extract($param);
@@ -273,7 +273,11 @@ function change_wallet_balance(&$wallet, $balance_type, $change, $account_log_ty
             $after = bc_add($before, $change);
             //判断余额是否充足
             if (bc_comp($after, 0) < 0 && !$overflow) {
-                throw new \Exception('您的余额不足');//钱包余额不足
+                if($is_lock){
+                    throw new \Exception('锁定余额不足');
+                }else{
+                    throw new \Exception('您的余额不足');
+                }
             }
             $now = time();
             AccountLog::unguard();
