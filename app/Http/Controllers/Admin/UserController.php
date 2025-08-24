@@ -917,17 +917,17 @@ class UserController extends Controller
                 ->first();
             DB::beginTransaction();
             try{
-                $result = change_wallet_balance(
-                    $legal,
-                    2,
-                    $amount,
-                    AccountLog::TRANSFER_TO_LH_ACCOUNT,
-                    '质押冻结|'.date('Y-m-d'),
-                    true,
-                    0,
-                    0,
-                    serialize([])
-                );
+                // $result = change_wallet_balance(
+                //     $legal,
+                //     2,
+                //     $amount,
+                //     AccountLog::TRANSFER_TO_LH_ACCOUNT,
+                //     '质押冻结|'.date('Y-m-d'),
+                //     true,
+                //     0,
+                //     0,
+                //     serialize([])
+                // );
                 $result = change_wallet_balance(
                     $legal,
                     2,

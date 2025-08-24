@@ -192,17 +192,17 @@ class LhDepositOrder extends Model
             //最后一天 退钱
             if($model->end_at <= date('Y-m-d')){
                 //结单 退钱操作
-                change_wallet_balance(
-                    $legal,
-                    2,
-                    -$model->lock_amount,
-                    AccountLog::MINING_BUY,
-                    '质押解冻|'.date('Y-m-d'),
-                    true,
-                    0,
-                    0,
-                    serialize([])
-                );
+                // change_wallet_balance(
+                //     $legal,
+                //     2,
+                //     -$model->lock_amount,
+                //     AccountLog::MINING_BUY,
+                //     '质押解冻|'.date('Y-m-d'),
+                //     true,
+                //     0,
+                //     0,
+                //     serialize([])
+                // );
                 change_wallet_balance(
                     $legal,
                     2,
