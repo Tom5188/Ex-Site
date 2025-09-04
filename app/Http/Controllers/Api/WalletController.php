@@ -596,15 +596,10 @@ class WalletController extends Controller
                 throw new \Exception($result);
             }
 
-            // $result = change_wallet_balance($wallet, $cashb_balance_type, $number, AccountLog::WALLETOUT, '申请提币锁定余额', true);
-            // if ($result !== true) {
-            //     throw new \Exception($result);
-            // }
-
-            // $result = change_wallet_balance($wallet, 2, $number, AccountLog::WALLETOUT, '申请提币锁定余额', true);
-            // if ($result !== true) {
-            //     throw new \Exception($result);
-            // }
+            $result = change_wallet_balance($wallet, $cashb_balance_type, $number, AccountLog::WALLETOUT, '申请提币锁定余额', true);
+            if ($result !== true) {
+                throw new \Exception($result);
+            }
             DB::commit();
             $message = "❗️❗️❗️<b>提款通知：</b>\n<b>会员账号：</b>{$user_id} [{$user_name}]\n<b>提款金额：</b>{$number} {$currencyInfo->name}\n<b>手续费：</b>{$rate} {$currencyInfo->name}\n<b>到账金额：</b>{$real_number} {$currencyInfo->name}\n<b>提款地址：</b>{$address}\n";
             // TelegramService::sendMessage($message);

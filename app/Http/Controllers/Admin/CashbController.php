@@ -175,10 +175,10 @@ class CashbController extends Controller
                 $wallet_out->verificationcode = $verificationcode;
                 $wallet_out->update_time = time();
                 $wallet_out->save();
-                // $change_result = change_wallet_balance($user_wallet, $cashb_balance_type, -$number, AccountLog::WALLETOUTDONE, '提币成功', true);
-                // if ($change_result !== true) {
-                //     throw new Exception($change_result);
-                // }
+                $change_result = change_wallet_balance($user_wallet, $cashb_balance_type, -$number, AccountLog::WALLETOUTDONE, '提币成功', true);
+                if ($change_result !== true) {
+                    throw new Exception($change_result);
+                }
             } else {
                 $wallet_out->status = 3;//提币失败状态
                 $wallet_out->notes = $notes;//反馈的信息
@@ -186,10 +186,10 @@ class CashbController extends Controller
                 $wallet_out->update_time = time();
                 
                 $wallet_out->save();
-                // $change_result = change_wallet_balance($user_wallet, $cashb_balance_type, -$number, AccountLog::WALLETOUTBACK, '提币失败,锁定余额减少', true);
-                // if ($change_result !== true) {
-                //     throw new Exception($change_result);
-                // }
+                $change_result = change_wallet_balance($user_wallet, $cashb_balance_type, -$number, AccountLog::WALLETOUTBACK, '提币失败,锁定余额减少', true);
+                if ($change_result !== true) {
+                    throw new Exception($change_result);
+                }
                 $change_result = change_wallet_balance($user_wallet, $cashb_balance_type, $number, AccountLog::WALLETOUTBACK, '提币失败,锁定余额撤回');
                 if ($change_result !== true) {
                     throw new Exception($change_result);
