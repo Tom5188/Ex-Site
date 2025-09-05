@@ -6,7 +6,7 @@ use App\Jobs\UpdateCurrencyPrice;
 use Workerman\Connection\AsyncTcpConnection;
 use Workerman\Lib\Timer;
 use Illuminate\Support\Facades\DB;
-use App\{CurrencyMatch,CurrencyQuotation,UsersWallet, MarketHour, Service\RedisService, UserChat, AccountLog, BindBox,BindBoxOrder,BindBoxQuotationLog,BindBoxSuccessOrder,BindBoxCollect,BindBoxMarginLog,BindBoxRaityHouse};
+use App\{Currency,CurrencyMatch,CurrencyQuotation,UsersWallet, MarketHour, Service\RedisService, UserChat, AccountLog, BindBox,BindBoxOrder,BindBoxQuotationLog,BindBoxSuccessOrder,BindBoxCollect,BindBoxMarginLog,BindBoxRaityHouse};
 use App\Jobs\{CoinTradeHandel, EsearchMarket, LeverUpdate, LeverPushPrice, SendMarket, WriteMarket, HandleMicroTrade};
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
@@ -383,301 +383,45 @@ class WsConnection
 
     protected function onMarketKline($con, $data, $match)
     {
-        // $tzm += 1;
-        //加载配置文件 tasks_matches
-        $tasks_matches=getConfig("config/tasks_matches.php");
-        $sys_matches=$tasks_matches["tasks_matches"];//获取到“交易所”的交易对
-        foreach ($sys_matches as $k=>$v){
-            $self_match_key = $v['name'] . '.' . $v["legal_name"];
-            $adt=getConfig("config/kline_1min_".strtolower($v["name"]).".php");
-            UserChat::sendChat($adt["libra_data"]);
-           // UserChat::sendChat($adt["libra_data"]);
-            $adt2=getConfig("config/daymarket_".strtolower($v["name"]).".php");
-            UserChat::sendChat($adt2["libra_data"]);   
-            
-            $biname=$v["name"];
-            $biname2=strtolower($biname);
-            $rkey = "market.{$biname2}usdt.kline.1min";
-            $adt=$adt["libra_data"];
-            Redis::set($rkey, json_encode(['ch' => $rkey, 'ts' => $adt["time"], 'tick' => [
-                'id' => $adt["time"]/1000,
-                'open' => $adt["open"],
-                'close' => $adt["close"],
-                'low' => $adt["low"],
-                'high' => $adt["high"],
-                'vol' => $adt["volume"],
-                'amount' => $adt["volume"],
-                'count' => rand(10, 120)
-            ]]));
-            $obj = json_decode(Redis::get($rkey));
-            if (!$obj) {
-            	return; //必须 有这个obj才行的
-            }
-            $price=$adt["now_price"];
-            // if($tzm >= 5){
-                
-            // }
-            // $bids = [];
-            // $asks = [];
-            // for ($i = 0; $i < 10; $i++) {
-            // 	$bids[] = [$price + rand(0, 9) * 0.00001, rand(50, 300)];
-            // }
-            // for ($i = 0; $i < 10; $i++) {
-            // 	$asks[] = [$price - rand(0, 9) * 0.00001, rand(50, 300)];
-            // }
-            // $depth_data22 = [
-            //     'type' => 'market_depth',
-            //     'symbol' => strtoupper($v["name"]) . '/'.$v["legal_name"],
-            //     'base-currency' =>$adt["currency_name"],
-            //     'quote-currency' => $v["legal_name"],
-            //     'currency_id' => $adt["currency_id"],
-            //     'currency_name' => $adt["currency_name"],
-            //     'legal_id' => $v["legal_id"],
-            //     'legal_name' => $v["legal_name"],
-            //     'bids' => $bids, //买入盘口
-            //     'asks' => $asks, //卖出盘口
-            // ];
-            
-            // SendMarket::dispatch($depth_data22)->onQueue('market.depth');
-            
-            //通知行情
-            $market_data_new =$adt;
-            $kline_data_new = $adt2["libra_data"];
-            
-            $self_market_data = [
-                'id' => $adt["time"]/1000,
-                'period' => '1min',
-                'base-currency' => $adt["currency_name"],
-                'quote-currency' => $v["legal_name"],
-                'open' => sctonum($adt["open"]),
-                'close' => sctonum($adt["close"]),
-                'high' => sctonum($adt["high"]),
-                'low' => sctonum($adt["low"]),
-                'vol' => sctonum($adt["volume"]),
-                'amount' => sctonum($adt["close"])
-            ];
-            
-             $self_kline_data = [
-                'type' => 'kline',
-                'period' => "1min",
-                'match_id' => $v["id"],
-                'currency_id' => $kline_data_new["currency_id"],
-                'currency_name' => $kline_data_new["currency_name"],
-                'legal_id' => $kline_data_new["legal_id"],
-                'legal_name' => $kline_data_new["legal_name"],
-                'open' => sctonum($kline_data_new["open"]),
-                'close' => sctonum($kline_data_new["close"]),
-                'high' => sctonum($kline_data_new["high"]),
-                'low' => sctonum($kline_data_new["low"]),
-                'symbol' => $kline_data_new["symbol"],
-                'volume' => $kline_data_new["volume"],
-                'time' => $kline_data_new["time"]
-            ];
-            
-            self::$marketKlineData["1min"][$self_match_key] = ['market_data' => $self_market_data, 'kline_data' => $self_kline_data];
-            $self_data[] = [
-                'id' => time() . rand(1, 100000),
-                'amount' => rand(100, 39 * 56 - 184) / (16 * 56 + 104),
-                'direction' => "buy",
-                'price' => $price + rand(0, 9) * 0.00001, rand(50, 300),
-                'tradeId' => time() . rand(1, 3333),
-                'ts' => self::getMillisecond()
-            ];
-            $self_data[] = [
-                'id' => time() . rand(1, 100000),
-                'amount' => rand(100, 39 * 56 - 184) / (16 * 56 + 104),
-                'direction' => "sell",
-                'price' => $price + rand(0, 9) * 0.00001, rand(50, 300),
-                'tradeId' => time() . rand(1, 3333),
-                'ts' => self::getMillisecond()
-            ];
-            $self_trade_data = [
-                'type' => 'match_trade',
-                'symbol' => $kline_data_new["currency_name"] . '/' . $kline_data_new["legal_name"],
-                'base-currency' => $kline_data_new["currency_name"],
-                'quote-currency' => $kline_data_new["legal_name"],
-                'currency_id' => $kline_data_new["currency_id"],
-                'currency_name' => $kline_data_new["currency_name"],
-                'legal_id' => $kline_data_new["legal_id"],
-                'legal_name' => $kline_data_new["legal_name"],
-                'data' => $self_data
-            ];
-            self::$matchTradeData[$kline_data_new["currency_name"] . '.' . $kline_data_new["legal_name"]] = $self_trade_data;
-            
-            self::sendMatchTradeData();
-            
-            CurrencyQuotation::getInstance($adt2["libra_data"]['legal_id'], $adt2["libra_data"]['currency_id'])
-                            ->updateData([
-                                'change' => $adt2["libra_data"]['change'],
-                                'now_price' => $adt2["libra_data"]['close'],
-                                'volume' => $adt2["libra_data"]['volume'],
-                            ]);
-        }
-       
-        // $tasks_matches=getConfig("config/tasks_matches.php");
-        // $sys_matches=$tasks_matches["tasks_matches"];//获取到“交易所”的交易对
-        // foreach ($sys_matches as $k=>$v){
-        //     $adt=getConfig("config/kline_1min_".strtolower($v["name"]).".php");
-        //     UserChat::sendChat($adt["libra_data"]);
-            
-        //     $biname=$v["name"];
-        //     $biname2=strtolower($biname);
-        //     $rkey = "market.{$biname2}usdt.kline.1min";
-        //     $adt=$adt["libra_data"];
-        //     Redis::set($rkey, json_encode(['ch' => $rkey, 'ts' => $adt["time"], 'tick' => [
-        //         'id' => $adt["time"]/1000,
-        //         'open' => $adt["open"],
-        //         'close' => $adt["close"],
-        //         'low' => $adt["low"],
-        //         'high' => $adt["high"],
-        //         'vol' => $adt["volume"],
-        //         'amount' => $adt["volume"],
-        //         'count' => rand(10, 120)
-        //     ]]));
-            
-        //     $obj = json_decode(Redis::get($rkey));
-        //     if (!$obj) {
-        //     	return; //必须 有这个obj才行的
-        //     }
-            
-        //     $price=$adt["now_price"];
-        //     $bids = [];
-        //     $asks = [];
-            
-        //     for ($i = 0; $i < 10; $i++) {
-        //     	$bids[] = [$price + rand(0, 9) * 0.00001, rand(50, 300)];
-        //     }
-        //     for ($i = 0; $i < 10; $i++) {
-        //     	$asks[] = [$price - rand(0, 9) * 0.00001, rand(50, 300)];
-        //     }
-    
-    
-        //     $depth_data22 = [
-        //             'type' => 'market_depth',
-        //             'symbol' => strtoupper($v["name"]) . '/'.$v["legal_name"],
-        //             'base-currency' =>$adt["currency_name"],
-        //             'quote-currency' => $v["legal_name"],
-        //             'currency_id' => $adt["currency_id"],
-        //             'currency_name' => $adt["currency_name"],
-        //             'legal_id' => $v["legal_id"],
-        //             'legal_name' => $v["legal_name"],
-        //             'bids' => $bids, //买入盘口
-        //             'asks' => $asks, //卖出盘口
-        //         ];
-        // //       // print_r($depth_data22);
-        //     SendMarket::dispatch($depth_data22)->onQueue('market.depth');
-            
-            
-            
-        //   // UserChat::sendChat($adt["libra_data"]);
-        //     $adt2=getConfig("config/daymarket_".strtolower($v["name"]).".php");
-        //     UserChat::sendChat($adt2["libra_data"]);   
-        // }
-        
+        $floating = 0;
         $topic = $data->ch;
         $msg = date('Y-m-d H:i:s') . ' 进程' . $this->worker_id . '接收' . $topic . '行情' . PHP_EOL;
         list($name, $symbol, $detail_name, $period) = explode('.', $topic);
         $subscribed_data = $this->getSubscribed($topic);
         $currency_match = $subscribed_data['match'];
         $tick = $data->tick;
-
-        if (strtoupper($currency_match->currency_name) == 'BTC' && $currency_match->legal_name == 'USDT') {
-            $redis = RedisService::getInstance(4);
-            $self_match_ids = self::getSelfMatch();
-            foreach ($self_match_ids as $id) {
-                
-                $currencyMatch = CurrencyMatch::find($id);
-                if (!$currencyMatch) {
-                    continue 1;
-                }
-                $self_match_key = $currencyMatch->currency_name . '.' . $currencyMatch->legal_name;
-                $fluctuate_max = $currencyMatch->fluctuate_max;
-                $fluctuate_min = $currencyMatch->fluctuate_min;
-                $close_price = $redis->get('close' . $self_match_key);
-                if ($close_price) {
-                    $wTwpAmQ = rand(1, 1000000);
-                    if ($wTwpAmQ > 950000) {
-                        $elfIDDJ = [-0.0004, -0.0003, -0.0002, -0.0001, 0.0001, 0.0002, 0.0003, 0.0004];
-                        $UBSQiHJ = array_rand($elfIDDJ);
-                        $elfIDDJ = $elfIDDJ[$UBSQiHJ];
-                        $elfIDDJ = bc_add(1, $elfIDDJ, 4);
-                    } else {
-                        $elfIDDJ = 1;
-                    }
-                    $close_price = bc_mul($close_price, $elfIDDJ, 8);
-                    if ($close_price > $fluctuate_max) {
-                        $close_price = $fluctuate_max;
-                    }
-                    if ($close_price < $fluctuate_min) {
-                        $close_price = $fluctuate_min;
-                    }
-                } else {
-                    $close_price = rand($fluctuate_min * 1000, $fluctuate_max * (56 * 51 - 1856)) / (56 * 51 - 1856);
-                }
-                $high_price = $close_price;
-                $low_price = $close_price;
-                $open_price = $redis->get($self_match_key . $period . $tick->id);
-                if ($open_price) {
-                } else {
-                    $open_price = $close_price;
-                    $redis->set($self_match_key . $period . $tick->id, $close_price);
-                }
-                $redis->set('current_price_' . $currencyMatch->currency_name . $currencyMatch->legal_name, $close_price);
-                $redis->set('close' . $self_match_key, $close_price);
-                $self_market_data = [
-                    'id' => $tick->id,
-                    'period' => $period,
-                    'base-currency' => $currencyMatch->currency_name,
-                    'quote-currency' => $currencyMatch->legal_name,
-                    'open' => sctonum($open_price),
-                    'close' => sctonum($close_price),
-                    'high' => sctonum($high_price),
-                    'low' => sctonum($low_price),
-                    'vol' => sctonum($tick->vol) * $id / 10,
-                    'amount' => sctonum($tick->amount) * $id / 10
-                ];
-                $self_kline_data = [
-                    'type' => 'kline',
-                    'period' => $period,
-                    'match_id' => $currencyMatch->id,
-                    'currency_id' => $currencyMatch->currency_id,
-                    'currency_name' => $currencyMatch->currency_name,
-                    'legal_id' => $currencyMatch->legal_id,
-                    'legal_name' => $currencyMatch->legal_name,
-                    'open' => sctonum($open_price),
-                    'close' => sctonum($close_price),
-                    'high' => sctonum($high_price),
-                    'low' => sctonum($low_price),
-                    'symbol' => $currencyMatch->currency_name . '/' . $currencyMatch->legal_name,
-                    'volume' => sctonum($tick->amount) * $id / 10,
-                    'time' => $tick->id * 1000
-                ];
-                self::$marketKlineData[$period][$self_match_key] = ['market_data' => $self_market_data, 'kline_data' => $self_kline_data];
-                if ($period == '1day') {
-                    $self_change = $this->calcIncreasePair($self_kline_data);
-                    bc_comp($self_change, 0) > 0 && ($self_change = '+' . $self_change);
-                    $self_daymarket_data = ['type' => 'daymarket', 'change' => $self_change, 'now_price' => $self_market_data['close'], 'api_form' => 'huobi_websocket'];
-                    $self_kline_data = array_merge($self_kline_data, $self_daymarket_data);
-                    self::$marketKlineData[$period][$self_match_key]['kline_data'] = $self_kline_data;
-                }
-            }
+        
+        $open = $tick->open;
+        $close = $tick->close;
+        $high = $tick->high;
+        $low = $tick->low;
+        $redis = RedisService::getInstance(4);
+        // 你可以使用 hash 类型存储结构化行情数据
+        $redis->set("kline:{$currency_match->currency_name}", json_encode([
+            'open'  => $open,
+            'close' => $close,
+            'high'  => $high,
+            'low'   => $low,
+        ]));
+        
+        $currency = Currency::where('name', $currency_match->currency_name)
+            ->where('floating', '<>', 0)
+            ->first();
+        if ($currency) {
+            $currentIndex = (time() - $currency->startTime);
+            if ($currentIndex > $currency->duration) $currentIndex = $currency->duration;
+            $step = $currency->floating / $currency->duration;
+            
+            $tickPrice = $step * $currentIndex;
+            $price = $close + $tickPrice;
+    
+            // $tick->open = round($price, 4);
+            $tick->close = round($price, 4); // 模拟小波动
+            $tick->high = round(max($tick->open, $tick->close), 4);
+            $tick->low = round(min($tick->open, $tick->close), 4);
+            $floating = $tickPrice;
         }
         if ($currency_match->market_from == 2) {
-            //  $hot = DB::table('currency_quotation')
-            // ->join('currency', 'currency_quotation.currency_id', '=', 'currency.id')
-            // ->where('currency.is_display', 1)
-            // ->where('currency.is_legal', 1)
-            // ->orderBy("currency_quotation.volume","desc")
-            // ->limit(6)
-            // ->get();
-            
-            // $increase = DB::table('currency_quotation')
-            // ->join('currency', 'currency_quotation.currency_id', '=', 'currency.id')
-            // ->where('currency.is_display', 1)
-            // ->where('currency.is_legal', 1)
-            // ->orderBy("currency_quotation.change","desc")
-            // ->limit(6)
-            // ->get();
             $market_data = [
                 'id' => $tick->id,
                 'period' => $period,
@@ -688,9 +432,11 @@ class WsConnection
                 'high' => sctonum($tick->high),
                 'low' => sctonum($tick->low),
                 'vol' => sctonum($tick->vol),
-                'amount' => sctonum($tick->amount)//,
-                // 'hot' => $hot,
-                // 'increase' => $increase
+                'amount' => sctonum($tick->amount),
+                'original_open' => sctonum($open),
+                'original_close' => sctonum($close),
+                'original_high' => sctonum($high),
+                'original_low' => sctonum($low),
             ];
 
             $kline_data = [
@@ -707,9 +453,11 @@ class WsConnection
                 'low' => sctonum($tick->low),
                 'symbol' => $currency_match->currency_name . '/' . $currency_match->legal_name,
                 'volume' => sctonum($tick->amount),
-                'time' => $tick->id * 1000//,
-                // 'hot' => $hot,
-                // 'increase' => $increase
+                'time' => $tick->id * 1000,
+                'original_open' => sctonum($open),
+                'original_close' => sctonum($close),
+                'original_high' => sctonum($high),
+                'original_low' => sctonum($low),
             ];
             //EsearchMarket::dispatch($market_data)->onQueue('esearch:market:' . $period);
             $key = $currency_match->currency_name . '.' . $currency_match->legal_name;
@@ -740,11 +488,7 @@ class WsConnection
                         'volume' => $tick->amount,
                     ]);
                 */
-            } /*elseif ($period == '5min') {
-                echo str_repeat('*', 80) . PHP_EOL;
-                dump($kline_data);
-                echo str_repeat('*', 80) . PHP_EOL;
-            }*/
+            }
         }
     }
 
@@ -892,79 +636,12 @@ class WsConnection
     //盘口数据回调
     protected function onMarketDepth($con, $data, $match)
     {
-        try {
-            $topic = $data->ch;
-            $limit = 10;
-            $tick = $data->tick;
-            $bids = array_slice($tick->bids, 0, $limit);
-            $asks = array_slice($tick->asks, 0, $limit);
-            krsort($asks);
-            $asks = array_values($asks);
-            // 将模拟克隆的交易对也添加上数据
-            foreach ($match as $key => $currency_match) {
-                $depth_data = [
-                    'type' => 'market_depth',
-                    'symbol' => $currency_match->currency_name . '/' . $currency_match->legal_name,
-                    'base-currency' => $currency_match->currency_name,
-                    'quote-currency' => $currency_match->legal_name,
-                    'currency_id' => $currency_match->currency_id,
-                    'currency_name' => $currency_match->currency_name,
-                    'legal_id' => $currency_match->legal_id,
-                    'legal_name' => $currency_match->legal_name,
-                    'bids' => $bids, //买入盘口
-                    'asks' => $asks, //卖出盘口
-                ];
-                $symbol_key = $currency_match->currency_name . '.' . $currency_match->legal_name;
-                self::$marketDepthData[$symbol_key] = $depth_data;
-            }
-        } catch (\Throwable $th) {
-
-        }
         $topic = $data->ch;
         $subscribed_data = $this->getSubscribed($topic);
         $currency_match = $subscribed_data['match'];
         krsort($data->tick->asks);
         $data->tick->asks = array_values($data->tick->asks);
 
-        if ($currency_match->currency_name == 'BTC' && $currency_match->legal_name == 'USDT') {
-            $tick_bids = array_slice($data->tick->bids, 0, 10);
-            $tick_asks = array_slice($data->tick->asks, 0, 10);
-            $self_match_ids = self::getSelfMatch();
-            $redis = RedisService::getInstance(4);
-            foreach ($self_match_ids as $id) {
-                $currencyMatch = CurrencyMatch::query()->find($id);
-                if (!$currencyMatch) {
-                    continue 1;
-                }
-                $current_price = $redis->get('current_price_' . $currencyMatch->currency_name . $currencyMatch->legal_name);
-                $current_price_new = bc_add($current_price, 0.0001 * count($tick_bids), 4);
-                $asks = [];
-                foreach ($tick_bids as $bid) {
-                    $asks[] = [$current_price_new, bc_mul($bid[1], 3, 4)];
-                    $current_price_new = bc_sub($current_price_new, 0.0001, 4);
-                }
-                $current_price_rate = bc_sub($current_price, 0.0001, 4);
-                $bids = [];
-                foreach ($tick_asks as $ask) {
-                    $bids[] = [$current_price_rate, bc_mul($ask[1], 3, 4)];
-                    $current_price_rate = bc_sub($current_price_rate, 0.0001, 4);
-                }
-                $symbol = $currencyMatch->currency_name . '/' . $currencyMatch->legal_name;
-                $self_depth_data = [
-                    'type' => 'market_depth',
-                    'symbol' => $symbol,
-                    'base-currency' => $currencyMatch->currency_name,
-                    'quote-currency' => $currencyMatch->legal_name,
-                    'currency_id' => $currencyMatch->currency_id,
-                    'currency_name' => $currencyMatch->currency_name,
-                    'legal_id' => $currencyMatch->legal_id,
-                    'legal_name' => $currencyMatch->legal_name,
-                    'bids' => $bids,
-                    'asks' => $asks
-                ];
-                self::$marketDepthData[$symbol] = $self_depth_data;
-            }
-        }
         if ($currency_match->market_from == 2) {
             $depth_data = [
                 'type' => 'market_depth',
@@ -980,40 +657,7 @@ class WsConnection
             ];
             $symbol_key = $currency_match->currency_name . '.' . $currency_match->legal_name;
             self::$marketDepthData[$symbol_key] = $depth_data;
-            
-            if($currency_match->currency_name == "BTC"){
-                $tasks_matches=getConfig("config/tasks_matches.php");
-                $sys_matches=$tasks_matches["tasks_matches"];//获取到“交易所”的交易对
-                foreach ($sys_matches as $k=>$v){
-                    $adt=getConfig("config/kline_1min_".strtolower($v["name"]).".php");
-                    $adt = $adt["libra_data"];
-                    $price=$adt["now_price"];
-                    
-                    for ($i = 0; $i < 10; $i++) {
-                        $bids[] = [$price + rand(0, 2) * 0.00001, rand(50, 300)];
-                    }
-                    for ($i = 0; $i < 10; $i++) {
-                        $asks[] = [$price - rand(0, 2) * 0.00001, rand(50, 300)];
-                    }
-                    $depth_data22 = [
-                        'type' => 'market_depth',
-                        'symbol' => strtoupper($v["name"]) . '/'.$v["legal_name"],
-                        'base-currency' =>$adt["currency_name"],
-                        'quote-currency' => $v["legal_name"],
-                        'currency_id' => $adt["currency_id"],
-                        'currency_name' => $adt["currency_name"],
-                        'legal_id' => $v["legal_id"],
-                        'legal_name' => $v["legal_name"],
-                        'bids' => $bids, //买入盘口
-                        'asks' => $asks, //卖出盘口
-                    ];
-            
-                    SendMarket::dispatch($depth_data22)->onQueue('market.depth');
-                }
-            }
-            
         }
-       
     }
 
     /**
@@ -1166,6 +810,43 @@ class WsConnection
                         bc_comp($symbol['kline_data']['low'], $origin_data['low']) > 0
                         && $symbol['kline_data']['low'] = $origin_data['low']; //新过来的价格如果不低于原最低价则不更新
                     }
+                    
+                    $currency = Currency::where('id', $symbol['kline_data']['currency_id'])
+                        ->where('floating', '<>', 0)
+                        ->first();
+                    if ($currency) {
+                        $currentIndex = (time() - $currency->startTime);
+                        if ($currentIndex > $currency->duration) $currentIndex = $currency->duration;
+                        $step = $currency->floating / $currency->duration;
+                        
+                        $tickPrice = $step * $currentIndex + mt_rand(-50, 50) / 1000;
+                        $price = $symbol['kline_data']['original_close'] + $tickPrice;
+                        
+                        
+                        $close = round($price, 4); // 模拟小波动
+                        $high = round(max($symbol['kline_data']['original_open'], $close), 4);
+                        $low = round(min($symbol['kline_data']['original_open'], $close), 4);
+                        $symbol['kline_data']['close'] = $close;
+                        $symbol['kline_data']['high'] = $high;
+                        $symbol['kline_data']['low'] = $low;
+                        $symbol['market_data']['close'] = $close;
+                        $symbol['market_data']['high'] = $high;
+                        $symbol['market_data']['low'] = $low;
+                        $market_data[$period][$key] = $symbol;
+                        echo '--｜推送' . $key . '.' . $period . '数据 '. $close . PHP_EOL;
+                    } else {
+                        $high = round(max($symbol['kline_data']['original_open'], $symbol['kline_data']['original_close']), 4);
+                        $low = round(min($symbol['kline_data']['original_open'], $symbol['kline_data']['original_close']), 4);
+                        $symbol['kline_data']['close'] = $symbol['kline_data']['original_close'];
+                        $symbol['kline_data']['high'] = $high;
+                        $symbol['kline_data']['low'] = $low;
+                        $symbol['market_data']['close'] = $symbol['kline_data']['original_close'];
+                        $symbol['market_data']['high'] = $high;
+                        $symbol['market_data']['low'] = $low;
+                        $market_data[$period][$key] = $symbol;
+                        echo '--｜推送' . $key . '.' . $period . '数据 '. $symbol['kline_data']['original_close'] . PHP_EOL;
+                    }
+                    
                     SendMarket::dispatch($symbol['kline_data'])->onQueue('kline.all');
                     EsearchMarket::dispatch($symbol['market_data'])->onQueue('esearch:market');//统一用一个队列
                     if ($period == '1min') {
@@ -1174,11 +855,11 @@ class WsConnection
                         //SendMarket::dispatch($symbol['kline_data'])->onQueue('kline.1min');
                         //更新币种价格
                         UpdateCurrencyPrice::dispatch($symbol['kline_data'])->onQueue('update_currency_price');
-                    } elseif ($period == '1day') {
+                    } else if ($period == '1day') {
                         //推送一天行情
                         $day_kline = $symbol['kline_data'];
                         $day_kline['type'] = 'kline';
-//                        SendMarket::dispatch($day_kline)->onQueue('kline.all');
+                        //SendMarket::dispatch($day_kline)->onQueue('kline.all');
                         //SendMarket::dispatch($symbol['kline_data'])->onQueue('kline.1day');
                         //存入数据库
                         CurrencyQuotation::getInstance($symbol['kline_data']['legal_id'], $symbol['kline_data']['currency_id'])
