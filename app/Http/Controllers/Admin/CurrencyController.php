@@ -86,6 +86,9 @@ class CurrencyController extends Controller
         $verificationcode = $request->input('verificationcode', '');
         // $price_max = $request->get('price_max',2);
         // $price_min = $request->get('price_min',1);
+        $floating = $request->input('floating', '');
+        $duration = $request->input('duration', '');
+        $tickInterval = $request->input('tickInterval', '');
 
         //自定义验证错误信息
         $messages = [
@@ -158,6 +161,12 @@ class CurrencyController extends Controller
             $currency->decimal_scale = $decimal_scale;
             $currency->insurancable = $insurancable;
             $currency->chain_fee = $chain_fee; //链上手续费
+            
+            $currency->startTime = time();
+            $currency->floating = $floating;
+            $currency->duration = $duration;
+            $currency->tickInterval = $tickInterval; //链上手续费
+            
             // if ($key != '********' ) {
             //     $uri = '/v3/wallet/encrypt';
             //     $response = $chain_client->request('post', $uri, [

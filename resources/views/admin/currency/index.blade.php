@@ -65,7 +65,7 @@
                 ,cols: [[ //表头
                     {field: 'id', title: 'id', width:60, sort: true}
                     ,{field: 'name', title: '名称', width:90}
-                    ,{field: 'min_number', title: '最少提币量', width:60}
+                    ,{field: 'min_number', title: '最少提币量', width:100}
                     ,{field: 'rate', title: '提币费率', width:100}
                     ,{field: 'get_address', title: '合约地址', width:150, hide: true}
                     ,{field: 'sort', title: '排序', width:60}
@@ -75,11 +75,13 @@
                     ,{field: 'is_micro', title: '期权交易', width: 90, templet: '#micro'}
                     ,{field: 'is_match', title: '币币', width: 90, templet: '#match'}
                     ,{field: 'is_transfer', title: '币币划转', width: 110, templet: '#is_transfer'}
-                    
-                    ,{field: 'insurancable', title: '是否购买保险', minWidth: 40, templet: '#insurancable'}
+                    ,{field: 'floating', title: '涨幅金额', width:160}
+                    ,{field: 'duration', title: '涨幅时间', width:100}
+                    ,{field: 'tickInterval', title: '涨幅时间间隔', width:100}
+                    // ,{field: 'insurancable', title: '是否购买保险', minWidth: 40, templet: '#insurancable'}
                     ,{field:'is_display', title:'显示', width:85, templet: '#switchTpl', unresize: true}
                     //,{field: 'create_time', title: '添加时间', width:160}
-                    ,{title:'操作',width:340,toolbar: '#barDemo'}
+                    ,{title:'操作',toolbar: '#barDemo'}
                 ]]
             });
             //监听是否显示操作

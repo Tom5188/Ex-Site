@@ -16,6 +16,7 @@
                 <li>期权参数</li>
                 <li>提币参数</li>
                 <li>充币参数</li>
+                <li>拉取涨幅</li>
                 <!--<li>链上参数</li>-->
             </ul>
             <div class="layui-tab-content">
@@ -159,6 +160,26 @@
                         <label class="layui-form-label">二级密码</label>
                         <div class="layui-input-block">
                             <input type="password" class="layui-input" id="second_pwd" name="second_pwd" value="" placeholder="二级密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">涨幅金额</label>
+                        <div class="layui-input-block">
+                            <input type="number" class="layui-input" id="floating" name="floating" value="{{$result->floating}}" placeholder="涨幅金额">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">调控涨幅时间</label>
+                        <div class="layui-input-block">
+                            <input type="number" class="layui-input" id="duration" name="duration" value="{{$result->duration}}" placeholder="调控涨幅时间">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">调控涨幅时间间隔</label>
+                        <div class="layui-input-block">
+                            <input type="number" class="layui-input" id="tickInterval" name="tickInterval" value="{{$result->tickInterval}}" placeholder="调控涨幅时间间隔">
                         </div>
                     </div>
                 </div>
