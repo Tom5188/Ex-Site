@@ -1065,32 +1065,32 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">借款专员</label>
-                            <div class="layui-input-block">
-                                <div class="layui-input-inline">
-                                    <input type="radio" name="jie_radio" value="1" title="开启" @if (isset($setting['jie_radio'])) {{$setting['jie_radio'] == 1 ? 'checked' : ''}} @endif >
-                                    <input type="radio" name="jie_radio" value="0" title="关闭" @if (isset($setting['jie_radio'])) {{$setting['jie_radio'] == 0 ? 'checked' : ''}} @else checked @endif >
-                                </div>
-                                <div class="layui-input-block">
-                                    <input type="text" name="jie_url" placeholder="请输入链接" autocomplete="off" class="layui-input"
-                                           value="@if(isset($setting['jie_url'])){{$setting['jie_url'] ?? ''}}@endif">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">还款专员</label>
-                            <div class="layui-input-block">
-                                <div class="layui-input-inline">
-                                    <input type="radio" name="hk_radio" value="1" title="开启" @if (isset($setting['hk_radio'])) {{$setting['hk_radio'] == 1 ? 'checked' : ''}} @endif >
-                                    <input type="radio" name="hk_radio" value="0" title="关闭" @if (isset($setting['hk_radio'])) {{$setting['hk_radio'] == 0 ? 'checked' : ''}} @else checked @endif >
-                                </div>
-                                <div class="layui-input-block">
-                                    <input type="text" name="hk_url" placeholder="请输入链接" autocomplete="off" class="layui-input"
-                                           value="@if(isset($setting['hk_url'])){{$setting['hk_url'] ?? ''}}@endif">
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="layui-form-item">-->
+                        <!--    <label class="layui-form-label">借款专员</label>-->
+                        <!--    <div class="layui-input-block">-->
+                        <!--        <div class="layui-input-inline">-->
+                        <!--            <input type="radio" name="jie_radio" value="1" title="开启" @if (isset($setting['jie_radio'])) {{$setting['jie_radio'] == 1 ? 'checked' : ''}} @endif >-->
+                        <!--            <input type="radio" name="jie_radio" value="0" title="关闭" @if (isset($setting['jie_radio'])) {{$setting['jie_radio'] == 0 ? 'checked' : ''}} @else checked @endif >-->
+                        <!--        </div>-->
+                        <!--        <div class="layui-input-block">-->
+                        <!--            <input type="text" name="jie_url" placeholder="请输入链接" autocomplete="off" class="layui-input"-->
+                        <!--                   value="@if(isset($setting['jie_url'])){{$setting['jie_url'] ?? ''}}@endif">-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--</div>-->
+                        <!--<div class="layui-form-item">-->
+                        <!--    <label class="layui-form-label">还款专员</label>-->
+                        <!--    <div class="layui-input-block">-->
+                        <!--        <div class="layui-input-inline">-->
+                        <!--            <input type="radio" name="hk_radio" value="1" title="开启" @if (isset($setting['hk_radio'])) {{$setting['hk_radio'] == 1 ? 'checked' : ''}} @endif >-->
+                        <!--            <input type="radio" name="hk_radio" value="0" title="关闭" @if (isset($setting['hk_radio'])) {{$setting['hk_radio'] == 0 ? 'checked' : ''}} @else checked @endif >-->
+                        <!--        </div>-->
+                        <!--        <div class="layui-input-block">-->
+                        <!--            <input type="text" name="hk_url" placeholder="请输入链接" autocomplete="off" class="layui-input"-->
+                        <!--                   value="@if(isset($setting['hk_url'])){{$setting['hk_url'] ?? ''}}@endif">-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--</div>-->
                         <div class="layui-form-item">
                             <div class="layui-input-block">
                                 <button class="layui-btn" lay-submit lay-filter="website_submit">立即提交</button>
