@@ -16,7 +16,7 @@
                 <li>期权参数</li>
                 <li>提币参数</li>
                 <li>充币参数</li>
-                <li>拉取涨幅</li>
+                <!-- <li>拉取涨幅</li> -->
                 <!--<li>链上参数</li>-->
             </ul>
             <div class="layui-tab-content">
