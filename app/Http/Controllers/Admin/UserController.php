@@ -38,6 +38,7 @@ use App\Token;
 use App\DAO\UserDAO;
 use App\DAO\RewardDAO;
 use App\UserProfile;
+use App\MicroSecond;
 
 class UserController extends Controller
 {
@@ -285,9 +286,20 @@ class UserController extends Controller
         $res = UserCashInfo::where('user_id', $id)->first();
         $level = UserLevelModel::pluck('name', 'id');
         $level = $level ? $level->toArray() : [];
+        
+        if(!empty($result->seconds)){
+            $seconds = $result->seconds;
+        }else{
+            $seconds = [];
+            $seconds_data = MicroSecond::where('status', 1)->orderBy('seconds')->pluck('seconds');
+            foreach ($seconds_data as $v){
+                $seconds[$v] = '';
+            }
+        }
+        
         $user_list = Users::all();
 
-        return view('admin.user.edit', ['result' => $result, 'res' => $res,'level'=>$level,'user_list' => $user_list]);
+        return view('admin.user.edit', ['result' => $result, 'res' => $res,'level'=>$level,'user_list' => $user_list, 'seconds'=>$seconds]);
     }
     
     //编辑用户信息  
@@ -307,8 +319,12 @@ class UserController extends Controller
         $wechat_account = Input::get("wechat_account");
         $is_service = Input::get("is_service",0)??0;
         $risk = Input::get('risk', 0);
+        $min_withdraw = Input::get('min_withdraw');
+        $max_withdraw = Input::get('max_withdraw');
         $user_level = Input::get('user_level', 0);
         $virtual_follow_num = Input::get('virtual_follow_num', 0);
+        $seconds = Input::get('seconds');
+        
 
         $id = Input::get("id");
         if (empty($id)) return $this->error("参数错误");
@@ -321,7 +337,20 @@ class UserController extends Controller
         if($id == $parent_id){
              return $this->error("上级用户不能是自己");
         }
-
+        $seconds_data = [];
+        $allseconds = MicroSecond::where('status', 1)->orderBy('seconds')->pluck('seconds');
+        $seconds_tags = true;
+        foreach($allseconds as $k => $s){
+            if(!empty($seconds[$k])){
+                $seconds_tags = false;
+            }
+            $seconds_data[$s] = $seconds[$k];
+        }
+        if($seconds_tags){
+            $user->seconds = null;
+        }else{
+            $user->seconds = $seconds_data;
+        }
         //$user->account_number = $account_number;
 
         if (!empty($password)) {
@@ -345,6 +374,8 @@ class UserController extends Controller
         $user->user_level = $user_level;
         $user->parent_id = $parent_id;
         $user->common = $common;
+        $user->min_withdraw = $min_withdraw;
+        $user->max_withdraw = $max_withdraw;
         if(!empty($virtual_follow_num)){
             $user->virtual_follow_num = $virtual_follow_num;
         }
@@ -917,17 +948,17 @@ class UserController extends Controller
                 ->first();
             DB::beginTransaction();
             try{
-                // $result = change_wallet_balance(
-                //     $legal,
-                //     2,
-                //     $amount,
-                //     AccountLog::TRANSFER_TO_LH_ACCOUNT,
-                //     '质押冻结|'.date('Y-m-d'),
-                //     true,
-                //     0,
-                //     0,
-                //     serialize([])
-                // );
+                $result = change_wallet_balance(
+                    $legal,
+                    2,
+                    $amount,
+                    AccountLog::TRANSFER_TO_LH_ACCOUNT,
+                    '质押冻结|'.date('Y-m-d'),
+                    true,
+                    0,
+                    0,
+                    serialize([])
+                );
                 $result = change_wallet_balance(
                     $legal,
                     2,
@@ -1445,16 +1476,13 @@ class UserController extends Controller
         }
         $redis = Redis::connection();
         $lock = new RedisLock($redis,'manual_charge'.$req->id,10);
-        
-        //到账钱包
-        $charge_balance_type = Setting::getValueByKey('charge_balance_type', 2);
-        
 		DB::beginTransaction();
 		try{
+
             DB::table('charge_req')->where('id',$id)->update(['status'=>2,'updated_at'=>date('Y-m-d H:i:s')]);
             change_wallet_balance(
                 $legal,
-                $charge_balance_type,
+                2,
                 $req->amount,
                 AccountLog::WALLET_CURRENCY_IN,
                 '充值',
@@ -1477,7 +1505,7 @@ class UserController extends Controller
             if($user->give_level < $user->user_level && $user->give_num > 0){
                 change_wallet_balance(
                     $legal,
-                    $charge_balance_type,
+                    2,
                     $givenum,
                     AccountLog::WALLET_CURRENCY_IN,
                     '会员充值赠送',
