@@ -15,6 +15,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Carbon;
 
 class SmsController extends Controller
 {
@@ -446,101 +447,104 @@ class SmsController extends Controller
         $port = Setting::getValueByKey('phpMailer_port', 465);
         $mail_from_name = Setting::getValueByKey('submail_from_name', '');
         $yzm_radio = Setting::getValueByKey('yzm_radio', '');
-        //实例化phpMailer
-        try {
-            if($type_new == 1){
-                $mail = new PHPMailer(true);
-                $mail->isSMTP();
-                $mail->CharSet = "utf-8";
-                $mail->SMTPAuth = true;
-                $mail->SMTPSecure = "tsl";
-                $mail->Host = $host;
-                $mail->Port = $port;//$port;
-                $mail->Username = $username;
-                $mail->Password = $password;//去开通的qq或163邮箱中找,这里用的不是邮箱的密码，而是开通之后的一个token
-                //$mail->SMTPDebug = 2; //用于debug PHPMailer信息
-                $mail->setFrom($username, $mail_from_name);//设置邮件来源  //发件人
-                $mail->Subject = "Verification Code"; //邮件标题
-                $code = $this->createSmsCode(6);
-                if($yzm_radio == 1){
-                    // 以邮箱为 key，避免不同用户冲突
-                    Cache::put('verify_code_' . $email, $code, 600); // 保存10分钟
-                    return $this->success($code);    
+        if(Cache::has("email_".$email)){
+            return $this->error(__('massage.秒后重试', ['num' => 120]));
+        }else{
+            Cache::put("email_".$email, 1, Carbon::now()->addSeconds(120));//用户5秒只能点击一次
+            //实例化phpMailer
+            try {
+                if($type_new == 1){
+                    $mail = new PHPMailer(true);
+                    $mail->isSMTP();
+                    $mail->CharSet = "utf-8";
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPSecure = "tsl";
+                    $mail->Host = $host;
+                    $mail->Port = $port;//$port;
+                    $mail->Username = $username;
+                    $mail->Password = $password;//去开通的qq或163邮箱中找,这里用的不是邮箱的密码，而是开通之后的一个token
+                    //$mail->SMTPDebug = 2; //用于debug PHPMailer信息
+                    $mail->setFrom($username, $mail_from_name);//设置邮件来源  //发件人
+                    $mail->Subject = "Verification Code"; //邮件标题
+                    $code = $this->createSmsCode(6);
+                    if($yzm_radio == 1){
+                        // 以邮箱为 key，避免不同用户冲突
+                        Cache::put('verify_code_' . $email, $code, 600); // 保存10分钟
+                        return $this->success($code);    
+                    }
+                    $mail->MsgHTML('<!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <title>Email verification code</title>
+                        </head>
+                        <body>
+                        <div>
+                            <p style="text-align: left;font-weight: bold;font-size: 20px;">Dear user：</p>
+                            <p style="font-size: 18px;">    Hello! You are currently undergoing email verification, and the verification code for this request is：</p>
+                            <p style="font-size: 50px;font-weight: 900;text-align: center">'.$code.'</p>
+                            <p style="font-size: 18px;">    The validity period of this verification code is 10 minutes.</p>
+                        </div>
+                        </body>
+                    </html>');   //邮件内容
+                    $mail->addAddress($email);  //收件人（用户输入的邮箱）
+                    $res = $mail->send();
+                    if ($res) {
+                        Cache::put('verify_code_' . $email, $code, 600); // 保存5分钟
+                        return $this->success('发送成功');
+                    } else {
+                        return $this->error('操作错误');
+                    }
+                }else{
+                    $apikey = "B62DaGfHTaZrvoffzw0JEg==";
+                    $apisecret = "dedca92317d74f549c307028e3be8de2";
+                    $ip =$this-> getRealIp();
+                    $date = date("Y-m-d H:i:s",strtotime("-1 minute"));
+                    $recode = DB::table('send_info') -> where('ip','=',$ip)
+                            -> where('create_time','=>',$date)
+                            -> where('create_time','<',date("Y-m-d H:i:s"))
+                            -> first();
+                    if($recode){
+                        return $this->success('发送成功');
+                    }
+                    $today = DB::table('send_info')-> whereRaw("date_format(create_time,'%Y-%m-%d') ='".date("Y-m-d")."'")->count() ;
+                    if($today && $today >= 100){
+                        return $this->success('发送成功');
+                    }
+                    DB::table('send_info')->insert([
+                        'ip' => $ip,
+                        'create_time' => date("Y-m-d H:i:s")
+                    ]);
+                    date_default_timezone_set("PRC");
+                    $msg_date = date("YmdHis");
+                    $msg_sign = md5($apikey.$msg_date.$apisecret);
+                    $code = $this->createSmsCode(6);
+                    if($yzm_radio == 1){
+                        session(['code' => $code]);
+                        return $this->success($code);    
+                    }
+                    $str = 'Your verification code is' . '【' . $code . '】';
+                    $send_url = "https://api.230sms.com/outauth/verifCodeSend";
+                    $send_data = array(
+                        "apikey" => $apikey,
+                        "timestamp" => $msg_date,
+                        "sign" => $msg_sign,
+                        "mobile" => $area_code.$email,
+                        "content" => $str
+                        );
+                    $send_data = json_encode($send_data);
+                    $return_message = RPC::json_post($send_url, $send_data);
+                    if ($return_message['status'] == '000') {
+                        session(['code' => $code]);
+                        return $this->success('发送成功');
+                    } else {
+                        return $this->error('Failed to send');
+                    }
                 }
-                $mail->MsgHTML('<!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>Email verification code</title>
-                    </head>
-                    <body>
-                    <div>
-                        <p style="text-align: left;font-weight: bold;font-size: 20px;">Dear user：</p>
-                        <p style="font-size: 18px;">    Hello! You are currently undergoing email verification, and the verification code for this request is：</p>
-                        <p style="font-size: 50px;font-weight: 900;text-align: center">'.$code.'</p>
-                        <p style="font-size: 18px;">    The validity period of this verification code is 10 minutes.</p>
-                    </div>
-                    </body>
-                </html>');   //邮件内容
-                $mail->addAddress($email);  //收件人（用户输入的邮箱）
-                $res = $mail->send();
-                if ($res) {
-                    Cache::put('verify_code_' . $email, $code, 600); // 保存5分钟
-                    return $this->success('发送成功');
-                } else {
-                    return $this->error('操作错误');
-                }
-            }else{
-                $apikey = "B62DaGfHTaZrvoffzw0JEg==";
-                $apisecret = "dedca92317d74f549c307028e3be8de2";
-                $ip =$this-> getRealIp();
-                $date = date("Y-m-d H:i:s",strtotime("-1 minute"));
-                $recode = DB::table('send_info') -> where('ip','=',$ip)
-                        -> where('create_time','=>',$date)
-                        -> where('create_time','<',date("Y-m-d H:i:s"))
-                        -> first();
-                if($recode){
-                    return $this->success('发送成功');
-                }
-                $today = DB::table('send_info')-> whereRaw("date_format(create_time,'%Y-%m-%d') ='".date("Y-m-d")."'")->count() ;
-                if($today && $today >= 100){
-                    return $this->success('发送成功');
-                }
-                DB::table('send_info')->insert([
-                    'ip' => $ip,
-                    'create_time' => date("Y-m-d H:i:s")
-                ]);
-                date_default_timezone_set("PRC");
-                $msg_date = date("YmdHis");
-                $msg_sign = md5($apikey.$msg_date.$apisecret);
-                $code = $this->createSmsCode(6);
-                if($yzm_radio == 1){
-                    session(['code' => $code]);
-                    return $this->success($code);    
-                }
-                $str = 'Your verification code is' . '【' . $code . '】';
-                $send_url = "https://api.230sms.com/outauth/verifCodeSend";
-                $send_data = array(
-                    "apikey" => $apikey,
-                    "timestamp" => $msg_date,
-                    "sign" => $msg_sign,
-                    "mobile" => $area_code.$email,
-                    "content" => $str
-                    );
-                $send_data = json_encode($send_data);
-                $return_message = RPC::json_post($send_url, $send_data);
-                 if ($return_message['status'] == '000') {
-                    session(['code' => $code]);
-                    return $this->success('发送成功');
-                } else {
-                    return $this->error('Failed to send');
-                }
+            } catch (\Exception $exception) {
+                return $this->error($exception->getMessage() . $exception->getLine());
             }
-            
-        } catch (\Exception $exception) {
-            return $this->error($exception->getMessage() . $exception->getLine());
         }
-
     }
     
     

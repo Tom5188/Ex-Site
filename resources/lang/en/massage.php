@@ -325,4 +325,5 @@ return array(
     '支付通道维护,请更换支付方式' => 'Payment channel maintenance, please change the payment method',
     '您好，您的账户已被锁定，详情请咨询客服。' => "Hello, your account has been locked. Please contact customer service for details.",
     '您好，您的资金已被锁定，详情请咨询客服。' => "Hello, your funds have been locked. Please contact customer service for details.",
+    '秒后重试' => 'Please operate after :num seconds',
 );
