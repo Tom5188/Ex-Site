@@ -15,9 +15,9 @@
                 <li class="layui-this">基础参数</li>
                 <li>期权参数</li>
                 <li>提币参数</li>
-                <li>充币参数</li>
                 <!-- <li>拉取涨幅</li> -->
-                <!--<li>链上参数</li>-->
+                <!-- <li>充币参数</li>-->
+                <!-- <li>链上参数</li> -->
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
@@ -28,10 +28,10 @@
                         </div>
                         <div class="layui-form-mid layui-word-aux">请确保在交易所中该币种名称是惟一的</div>
                     </div>
-                    <div class="layui-form-item">
+                    <div class="layui-form-item" style="display:none;">
                         <label class="layui-form-label">排序</label>
                         <div class="layui-input-inline">
-                            <input type="number" class="layui-input" id="sort" name="sort" value="{{$result->sort}}" placeholder="排序为升序">
+                            <input type="number" class="layui-input" id="sort" name="sort" value="0" placeholder="排序为升序">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -51,10 +51,10 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">账户资产类型</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" name="is_legal" title="法币交易" value="1" lay-skin="primary" @if($result->is_legal ==1) checked @endif>
+                            <!--<input type="checkbox" name="is_legal" title="法币交易" value="1" lay-skin="primary" @if($result->is_legal ==1) checked @endif>-->
                             <input type="checkbox" name="is_lever" title="合约交易" value="1" lay-skin="primary" @if($result->is_lever ==1) checked @endif> 
-                            <input type="checkbox" name="is_micro" title="期权交易" value="1" lay-filter="microtrade" lay-skin="primary" @if($result->is_micro ==1) checked @endif>
-                            <input type="checkbox" name="is_match" title="闪兑交易" value="1" lay-skin="primary" @if($result->is_match ==1) checked @endif>
+                            <!--<input type="checkbox" name="is_micro" title="期权交易" value="1" lay-filter="microtrade" lay-skin="primary" @if($result->is_micro ==1) checked @endif>-->
+                            <input type="checkbox" name="is_match" title="币币交易" value="1" lay-skin="primary" @if($result->is_match ==1) checked @endif>
                         </div>
                         <div class="layui-form-mid layui-word-aux"></div>
                     </div>
@@ -134,6 +134,26 @@
                     </div>
                 </div>
                 <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">涨幅金额</label>
+                        <div class="layui-input-block">
+                            <input type="number" class="layui-input" id="floating" name="floating" value="{{$result->floating}}" placeholder="涨幅金额">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">调控涨幅时间</label>
+                        <div class="layui-input-block">
+                            <input type="number" class="layui-input" id="duration" name="duration" value="{{$result->duration}}" placeholder="调控涨幅时间">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">调控涨幅时间间隔</label>
+                        <div class="layui-input-block">
+                            <input type="number" class="layui-input" id="tickInterval" name="tickInterval" value="{{$result->tickInterval}}" placeholder="调控涨幅时间间隔">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
                     <div class="layui-form-item {{$result->id == 3 ? '' : 'hide'}}">
                         <label class="layui-form-label">充币地址trc20</label>
                         <div class="layui-input-block">
@@ -160,26 +180,6 @@
                         <label class="layui-form-label">二级密码</label>
                         <div class="layui-input-block">
                             <input type="password" class="layui-input" id="second_pwd" name="second_pwd" value="" placeholder="二级密码">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-tab-item">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">涨幅金额</label>
-                        <div class="layui-input-block">
-                            <input type="number" class="layui-input" id="floating" name="floating" value="{{$result->floating}}" placeholder="涨幅金额">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">调控涨幅时间</label>
-                        <div class="layui-input-block">
-                            <input type="number" class="layui-input" id="duration" name="duration" value="{{$result->duration}}" placeholder="调控涨幅时间">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">调控涨幅时间间隔</label>
-                        <div class="layui-input-block">
-                            <input type="number" class="layui-input" id="tickInterval" name="tickInterval" value="{{$result->tickInterval}}" placeholder="调控涨幅时间间隔">
                         </div>
                     </div>
                 </div>

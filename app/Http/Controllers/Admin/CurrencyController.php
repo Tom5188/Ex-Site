@@ -508,25 +508,7 @@ class CurrencyController extends Controller
             $all[$k]["name"]=$one->name;
             $all[$k]["legal_name"]=$legal->name;
         }
-        $str="<?php".PHP_EOL;
-        $str.='return ['.PHP_EOL;
-        $str.='"tasks_matches"=>['.PHP_EOL;
-            foreach ($all as $k=>$v){
-                if($k>0){
-                    $str.=','.PHP_EOL;
-                }
-                $str.='['.PHP_EOL;
-                $str.='"id"=>'.$v["id"].','.PHP_EOL;
-                $str.='"currency_id"=>'.$v["currency_id"].','.PHP_EOL;
-                $str.='"legal_id"=>'.$v["legal_id"].','.PHP_EOL;
-                $str.='"name"=>"'.$v["name"].'"'.','.PHP_EOL;
-                $str.='"legal_name"=>"'.$v["legal_name"].'"'.PHP_EOL;
-                $str.=']';
-            }
-             // $str.=json_encode($all).PHP_EOL;
-        $str.=']'.PHP_EOL.'];'.PHP_EOL;
-		WFile("../config/tasks_matches.php",$str);
-        
+ 
         return isset($currency_match->id) ? $this->success('添加成功') : $this->error('添加失败');
     }
 
@@ -602,24 +584,6 @@ class CurrencyController extends Controller
             $all[$k]["name"]=$one->name;
             $all[$k]["legal_name"]=$legal->name;
         }
-        $str="<?php".PHP_EOL;
-        $str.='return ['.PHP_EOL;
-        $str.='"tasks_matches"=>['.PHP_EOL;
-            foreach ($all as $k=>$v){
-                if($k>0){
-                    $str.=','.PHP_EOL;
-                }
-                $str.='['.PHP_EOL;
-                $str.='"id"=>'.$v["id"].','.PHP_EOL;
-                $str.='"currency_id"=>'.$v["currency_id"].','.PHP_EOL;
-                $str.='"legal_id"=>'.$v["legal_id"].','.PHP_EOL;
-                $str.='"name"=>"'.$v["name"].'"'.','.PHP_EOL;
-                $str.='"legal_name"=>"'.$v["legal_name"].'"'.PHP_EOL;
-                $str.=']';
-            }
-             // $str.=json_encode($all).PHP_EOL;
-        $str.=']'.PHP_EOL.'];'.PHP_EOL;
-		WFile("../config/tasks_matches.php",$str);
         return $result ? $this->success('保存成功') : $this->error('保存失败');
     }
 
@@ -635,24 +599,7 @@ class CurrencyController extends Controller
             $all[$k]["name"]=$one->name;
             $all[$k]["legal_name"]=$legal->name;
         }
-        $str="<?php".PHP_EOL;
-        $str.='return ['.PHP_EOL;
-        $str.='"tasks_matches"=>['.PHP_EOL;
-            foreach ($all as $k=>$v){
-                if($k>0){
-                    $str.=','.PHP_EOL;
-                }
-                $str.='['.PHP_EOL;
-                $str.='"id"=>'.$v["id"].','.PHP_EOL;
-                $str.='"currency_id"=>'.$v["currency_id"].','.PHP_EOL;
-                $str.='"legal_id"=>'.$v["legal_id"].','.PHP_EOL;
-                $str.='"name"=>"'.$v["name"].'"'.','.PHP_EOL;
-                $str.='"legal_name"=>"'.$v["legal_name"].'"'.PHP_EOL;
-                $str.=']';
-            }
-             // $str.=json_encode($all).PHP_EOL;
-        $str.=']'.PHP_EOL.'];'.PHP_EOL;
-		WFile("../config/tasks_matches.php",$str);
+
         return $result ? $this->success('删除成功') : $this->error('删除失败');
     }
 

@@ -65,16 +65,15 @@
                 ,cols: [[ //表头
                     {field: 'id', title: 'id', width:60, sort: true}
                     ,{field: 'name', title: '名称', width:90}
-                    ,{field: 'min_number', title: '最少提币量', width:100}
+                    ,{field: 'min_number', title: '最少提币量'}
                     ,{field: 'rate', title: '提币费率', width:100}
                     ,{field: 'get_address', title: '合约地址', width:150, hide: true}
-                    ,{field: 'sort', title: '排序', width:60}
                     ,{field: 'type', title: '基于', width:80, templet: '#typetml'}
-                    ,{field: 'is_legal', title: '法币', width:80, templet: '#legal'}
-                    ,{field: 'is_lever', title: '杠杆币', width:80, templet: '#lever'}
-                    ,{field: 'is_micro', title: '期权交易', width: 90, templet: '#micro'}
-                    ,{field: 'is_match', title: '币币', width: 90, templet: '#match'}
-                    ,{field: 'is_transfer', title: '币币划转', width: 110, templet: '#is_transfer'}
+                    // ,{field: 'is_legal', title: '法币', width:80, templet: '#legal'}
+                    ,{field: 'is_lever', title: '合约交易', width:100, templet: '#lever'}
+                    // ,{field: 'is_micro', title: '期权交易', width: 90, templet: '#micro'}
+                    ,{field: 'is_match', title: '币币交易', width:100, templet: '#match'}
+                    // ,{field: 'is_transfer', title: '币币划转', width: 110, templet: '#is_transfer'}
                     ,{field: 'floating', title: '涨幅金额', width:160}
                     ,{field: 'duration', title: '涨幅时间', width:100}
                     ,{field: 'tickInterval', title: '涨幅时间间隔', width:100}

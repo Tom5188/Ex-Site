@@ -11,18 +11,11 @@
 
 @section('page-content')
 
-    <div class="layui-fluid">
-        <div class="layui-card">
-            <div class="layui-form  layuiadmin-card-header-auto" lay-filter="layadmin-userfront-formlist">
+
+            <div class="layui-form" lay-filter="layadmin-userfront-formlist">
                 <div class="layui-form-item">
-                    <!--<div class="layui-inline">-->
-                    <!--    <label class="layui-form-label">ID</label>-->
-                    <!--    <div class="layui-input-block">-->
-                    <!--        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">-->
-                    <!--    </div>-->
-                    <!--</div>-->
                     <div class="layui-inline">
-                        <label class="layui-form-label">用户</label>
+                        <label class="layui-form-label">搜索用户</label>
                         <div class="layui-input-inline"  style="width:150px;">
                             <input type="text" placeholder="请输入用户ID,账号" name="account_number" autocomplete="off" class="layui-input" value="">
                         </div>
@@ -61,8 +54,6 @@
 
                 <table id="coin_trade" lay-filter="coin_trade"></table>
             </div>
-        </div>
-    </div>
 
 @endsection
 

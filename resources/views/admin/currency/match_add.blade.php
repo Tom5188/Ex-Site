@@ -35,7 +35,7 @@
                             <select name="category" lay-verify="required">
                                <option value='1' @if ((isset($currency_match) && $currency_match->category == 1)) selected @endif>主流区</option>
                                 <option value='2' @if ((isset($currency_match) && $currency_match->category == 2)) selected @endif>创新区</option>
-                                <option value='3' @if ((isset($currency_match) && $currency_match->category == 3)) selected @endif>DEFI区</option>
+                                <option value='3' @if ((isset($currency_match) && $currency_match->category == 3)) selected @endif>未知区</option>
                             </select>
                         </div>
                     </div>

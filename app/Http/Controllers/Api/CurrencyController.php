@@ -244,12 +244,8 @@ class CurrencyController extends Controller
         $redis = RedisService::getInstance(4);
     
         $list = Currency::with(['quotation' => function ($q) {
-                $q->where('is_display', 1);
-            }])
-            ->where('is_display', 1)
-            ->where('is_legal', 1)
-            ->orderBy('sort','asc')
-            ->get();
+                $q->where('is_display', 1)->orderBy('sort','desc');
+            }])->where('is_display', 1)->where('is_legal', 1)->get();
     
         // 转数组
         $arr = $list->toArray();
