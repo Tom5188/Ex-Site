@@ -200,15 +200,15 @@ function bc_method($method_name, $left_operand, $right_operand, $out_scale = DEC
  * @param integer $double
  * @return void
  */
-function sctonum($num, $double = DECIMAL_SCALE)
+function sctonum($num, $scale = DECIMAL_SCALE)
 {
-    if (false !== stripos($num, "e")) {
+    if (stripos($num, "e") !== false) {
         $a = explode("e", strtolower($num));
-        return bcmul($a[0], bcpow(10, $a[1], 8), 8);
-    } else {
-        return $num;
+        return bcmul($a[0], bcpow(10, $a[1], $scale), $scale);
     }
+    return $num;
 }
+
 
 /**
  * 改变钱包余额

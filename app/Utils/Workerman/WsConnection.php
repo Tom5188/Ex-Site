@@ -383,7 +383,6 @@ class WsConnection
 
     protected function onMarketKline($con, $data, $match)
     {
-        $floating = 0;
         $topic = $data->ch;
         $msg = date('Y-m-d H:i:s') . ' 进程' . $this->worker_id . '接收' . $topic . '行情' . PHP_EOL;
         list($name, $symbol, $detail_name, $period) = explode('.', $topic);
@@ -419,7 +418,6 @@ class WsConnection
             $tick->close = round($price, 4); // 模拟小波动
             $tick->high = round(max($tick->open, $tick->close), 4);
             $tick->low = round(min($tick->open, $tick->close), 4);
-            $floating = $tickPrice;
         }
         if ($currency_match->market_from == 2) {
             $market_data = [
@@ -472,7 +470,7 @@ class WsConnection
                 //追加涨副等信息
                 $daymarket_data = [
                     'type' => 'daymarket',
-                    'change' => $change,
+                    'change' => round($change, 2),
                     'now_price' => $market_data['close'],
                     'api_form' => 'huobi_websocket',
                 ];

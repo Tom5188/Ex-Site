@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Api;
-
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -14,6 +12,8 @@ use App\MarketHour;
 use App\CurrencyQuotation;
 use App\AreaCode;
 use App\UsersWallet;
+use App\Service\RedisService;
+
 class CurrencyController extends Controller
 {
     public function area_code()
@@ -240,11 +240,40 @@ class CurrencyController extends Controller
     }
     public function newQuotation()
     {
-        $BmnYXrJ = Currency::with('quotation')->whereHas('quotation', function ($query) {
-            $query->where('is_display', 1);
-        })->where('is_display', 1)->where('is_legal', 1)->orderBy('sort','asc')->get();
-        return $this->success($BmnYXrJ);
+        $redis = RedisService::getInstance(4);
+    
+        $list = Currency::with(['quotation' => function ($q) {
+                $q->where('is_display', 1);
+            }])
+            ->where('is_display', 1)
+            ->where('is_legal', 1)
+            ->orderBy('sort','asc')
+            ->get();
+    
+        // 转数组
+        $arr = $list->toArray();
+    
+        // 不用 &，直接覆盖
+        foreach ($arr as $i => $currency) {
+            if (empty($currency['quotation'])) continue;
+    
+            foreach ($currency['quotation'] as $j => $q) {
+                $raw = (string)($q['now_price'] ?? '');
+                $arr[$i]['quotation'][$j]['now_price']      = rtrim(rtrim($raw, '0'), '.');
+    
+                $redisKey  = 'kline:' . ($q['currency_name'] ?? '');
+                $redisData = json_decode($redis->get($redisKey), true) ?: [];
+    
+                $arr[$i]['quotation'][$j]['original_open']  = $redisData['open']  ?? 0;
+                $arr[$i]['quotation'][$j]['original_close'] = $redisData['close'] ?? 0;
+                $arr[$i]['quotation'][$j]['original_high']  = $redisData['high']  ?? 0;
+                $arr[$i]['quotation'][$j]['original_low']   = $redisData['low']   ?? 0;
+            }
+        }
+    
+        return $this->success($arr);
     }
+
     public function dealInfo()
     {
         $TAXjNyv = Input::get('legal_id');
