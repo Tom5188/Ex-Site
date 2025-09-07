@@ -238,6 +238,7 @@ class CurrencyController extends Controller
         }, $wjttOOQ);
         return ['code' => 1, 'msg' => 'success', 'data' => $wjttOOQ];
     }
+    
     public function newQuotation()
     {
         $redis = RedisService::getInstance(4);
@@ -258,8 +259,7 @@ class CurrencyController extends Controller
             if (empty($currency['quotation'])) continue;
     
             foreach ($currency['quotation'] as $j => $q) {
-                $raw = (string)($q['now_price'] ?? '');
-                $arr[$i]['quotation'][$j]['now_price']      = rtrim(rtrim($raw, '0'), '.');
+                $arr[$i]['quotation'][$j]['now_price']      = rtrim(rtrim($q['now_price'], '0'), '.');
     
                 $redisKey  = 'kline:' . ($q['currency_name'] ?? '');
                 $redisData = json_decode($redis->get($redisKey), true) ?: [];
