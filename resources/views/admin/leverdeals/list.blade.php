@@ -87,7 +87,6 @@
         @{{#}}}
 
     </script>
-
 @endsection
 
 @section('scripts')
@@ -129,19 +128,32 @@
                             { field: 'id', title: 'ID', width: 100}
                             ,{ field: 'user_id', title: '用户ID', width: 100}
                             ,{field: 'account_number', title: '用户名', minWidth: 150 , event : "getsons",style:"color: #fff;background-color: #5FB878;"}
-                            ,{field: 'trade_fee', title: '交易手续费', width: 120}
-                            ,{field: 'overnight_money', title: '隔夜费金额', width: 100}
+                            ,{field: 'trade_fee', title: '交易手续费', width: 120, templet: d => Math.trunc(d.trade_fee)}
+                            ,{field: 'overnight_money', title: '隔夜费金额', width: 100, templet: d => Math.trunc(d.overnight_money)}
                             ,{field: 'type', title: '交易类型', width: 90, templet: '#lockTpl'}
-                            ,{field: 'symbol', title: '交易对', width: 100}
-                            ,{field: 'status', title: '当前状态', sort: true, width: 170, templet: '#addsonTpl'}
-                            ,{field: 'origin_price', title: '原始价格', width: 120}
+                            ,{field: 'symbol', title: '交易对', width: 120}
+                            ,{field: 'status', title: '当前状态', sort: true, width: 100, templet: '#addsonTpl'}
+                            ,{field: 'origin_price', title: '原始价格', width: 120,hide:true}
                             ,{field: 'price', title: '开仓价格', width: 120}
                             ,{field: 'update_price', title: '当前价格', width: 120}
-                            ,{field: 'share', title: '手数', sort: true, width: 90}
+                            ,{title: '盈亏点差', width: 120,
+                                templet: function(d){
+                                    let diff = 0;
+                                    if (d.type === 1) { // 1=BUY，2=SELL（假设和后端一致）
+                                        diff = parseFloat(d.update_price) - parseFloat(d.price);
+                                    } else if (d.type === 2) {
+                                        diff = parseFloat(d.price) - parseFloat(d.update_price);
+                                    }
+                                    return diff.toFixed(8);
+                                }
+                            }
+                            // ,{field: 'share', title: '手数', sort: true, width: 90}
+                            ,{field: 'number', title: '购买数量', sort: true, width: 120, templet: d => Math.trunc(d.number)}
                             ,{field: 'multiple', title: '倍数', sort: true, width: 90}
-                            ,{field: 'origin_caution_money', title: '初始保证金', width: 120}
-                            ,{field: 'caution_money', title: '当前可用保证金', sort: true, width: 170}
-                            ,{field: 'profits', title: '动态盈亏', width: 120,hide:true}
+                            ,{field: 'profits', title: '动态盈亏', width: 170}
+                            // ,{field: 'origin_caution_money', title: '初始保证金', width: 120}
+                            // ,{field: 'caution_money', title: '当前可用保证金', sort: true, width: 170}
+                            ,{field: 'caution_money', title: '保证金', sort: true, width: 100, templet: function(d){return (d.caution_money || 0).toString().replace(/\.?0+$/, '');}}
                             ,{field: 'time', title: '创建时间', width: 170}
                             ,{field: 'update_time', title: '价格刷新时间', sort: true, width: 170,hide:true}
                             ,{field: 'handle_time', title: '平仓时间', sort: true, width: 170}

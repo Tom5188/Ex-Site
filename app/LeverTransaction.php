@@ -101,6 +101,12 @@ class LeverTransaction extends Model
         $handle_time = intval($this->attributes['handle_time']);
         return $handle_time != 0 ? date('Y-m-d H:i:s', $handle_time) : '';
     }
+    
+    public function getUpdateTimeAttribute()
+    {
+        $update_time = intval($this->attributes['update_time']);
+        return $update_time != 0 ? date('Y-m-d H:i:s', $update_time) : '';
+    }
 
     public function getTransactionTimeAttribute()
     {
@@ -456,10 +462,10 @@ class LeverTransaction extends Model
             $pre_result = bc_add($legal_wallet->lever_balance, $change);
             $diff = 0;
             //是否余额不够扣除
-            // if (bc_comp($pre_result, 0) < 0) {
-            //     $change = -$legal_wallet->lever_balance;
-            //     $diff = $pre_result;
-            // }
+            if (bc_comp($pre_result, 0) < 0) {
+                $change = -$legal_wallet->lever_balance;
+                $diff = $pre_result;
+            }
             $extra_data = [
                 'trade_id' => $lever_transaction->id,
                 'caution_money' => $lever_transaction->caution_money,
