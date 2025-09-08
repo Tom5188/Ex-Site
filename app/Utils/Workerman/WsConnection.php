@@ -7,7 +7,7 @@ use Workerman\Connection\AsyncTcpConnection;
 use Workerman\Lib\Timer;
 use Illuminate\Support\Facades\DB;
 use App\{Currency,CurrencyMatch,CurrencyQuotation,UsersWallet, MarketHour, Service\RedisService, UserChat, AccountLog, BindBox,BindBoxOrder,BindBoxQuotationLog,BindBoxSuccessOrder,BindBoxCollect,BindBoxMarginLog,BindBoxRaityHouse};
-use App\Jobs\{CoinTradeHandel, EsearchMarket, LeverUpdate, LeverPushPrice, SendMarket, WriteMarket, HandleMicroTrade};
+use App\Jobs\{CoinTradeHandel, EsearchMarket, LeverHandle, LeverUpdate, LeverPushPrice, SendMarket, WriteMarket, HandleMicroTrade};
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 
@@ -754,6 +754,7 @@ class WsConnection
             //价格大于0才进行任务推送
             if (bc_comp($kline_data['close'], 0) > 0) {
                 LeverUpdate::dispatch($params)->onQueue('lever:update');
+                LeverHandle::dispatch($params)->onQueue('lever:handle');
                 CoinTradeHandel::dispatch($params)->onQueue('coin:trade');
 //                LeverPushPrice::dispatch($params)->onQueue('lever:push:price');
             }

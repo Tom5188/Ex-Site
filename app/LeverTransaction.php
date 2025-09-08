@@ -292,10 +292,10 @@ class LeverTransaction extends Model
             $change = bc_add($profits_total, $caution_money_total);
             $after_balance = bc_add($legal_wallet->lever_balance, $change);
             //如果余额不够扣就抹去不够扣的金额
-//            if (bc_comp($after_balance, 0) < 0) {
-//                $diff = $after_balance;
-//                $change = -$legal_wallet->lever_balance;
-//            }
+            if (bc_comp($after_balance, 0) < 0) {
+               $diff = $after_balance;
+               $change = -$legal_wallet->lever_balance;
+            }
             $legal_name = $legal_wallet->currency_name;
             $extra_data = serialize([
                 'legal_name' => $legal_name,
