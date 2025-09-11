@@ -57,27 +57,33 @@ class UsersWallet extends Model
         return $this->belongsTo(Currency::class, 'currency', 'id');
     }
 
-
-
     public static function makeWallet($user_id)
     {
-        $currency = Currency::all();
-
-        foreach ($currency as $key => $value) {
+        // 当前系统的币种列表
+        $currency = Currency::pluck('id')->toArray();
+    
+        // 遍历系统币种，确保用户有对应钱包
+        foreach ($currency as $cid) {
             $res = self::where([
-                 'currency' => $value->id,
+                'currency' => $cid,
                 'user_id' => $user_id
-                ])->first();
-            if(!$res){
+            ])->first();
+    
+            if (!$res) {
                 self::insert([
-                     'currency' => $value->id,
-                'user_id' => $user_id,
-                'address' => null,
-                'create_time' => time()
-                    ]);
+                    'currency'    => $cid,
+                    'user_id'     => $user_id,
+                    'address'     => null,
+                    'create_time' => time(),
+                ]);
             }
-
         }
+    
+        // 删除多余的钱包（不在 currency 表里的）
+        self::where('user_id', $user_id)
+            ->whereNotIn('currency', $currency)
+            ->delete();
+    
         return true;
     }
 

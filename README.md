@@ -86,7 +86,9 @@ git clone https://github.com/Tom5188/Ex-Site.git
 php artisan storage:link
 ### 清理缓存
 php artisan config:cache
-
+### 更新钱包
+ALL:php artisan make:wallet --operate=all
+ONE:php artisan make:wallet 10888
 ### 伪静态
 location / {
     try_files $uri $uri/ /index.php?$query_string;
