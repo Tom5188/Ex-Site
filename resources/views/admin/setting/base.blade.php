@@ -190,6 +190,13 @@
                     <!--基础设置开始-->
                     <div class="layui-tab-item">
                         <div class="layui-form-item">
+                            <label class="layui-form-label">网站域名</label>
+                            <div class="layui-input-block">
+                                <textarea name="site_url" rows="10" class="layui-textarea">@if(isset($setting['site_url'])){{$setting['site_url'] ?? ''}}@endif</textarea>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux" style="margin-left: 210px;">例: cloudflare.com  一行一条域名,只填写@</div>
+                        </div>
+                        <div class="layui-form-item">
                             <label class="layui-form-label">网站名称</label>
                             <div class="layui-input-block">
                                 <input type="text" name="site_name" autocomplete="off" class="layui-input"
