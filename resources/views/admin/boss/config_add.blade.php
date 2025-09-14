@@ -27,7 +27,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">期限</label>
             <div class="layui-input-block">
-                <input type="text" name="day" id="day" required autocomplete="off" placeholder="" class="layui-input" value="30" disabled>
+                <input type="text" name="day" id="day" required autocomplete="off" placeholder="" class="layui-input" value="30">
             </div>
         </div>
         <div class="layui-form-item">
