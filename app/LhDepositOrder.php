@@ -14,7 +14,7 @@ class LhDepositOrder extends Model
             'cancel_fee'
         ];
     public static function newOrder($user_id,$currency_id,$amount,$day,$rate){
-        $LhDepositOrder = new self();
+        // $LhDepositOrder = new self();
         // $order = $LhDepositOrder::where('user_id', $user_id)->where('currency_id', $currency_id)->where('status', 1)->first();
         // if($order){
         //     $real_amount = $order->amount + $amount;
