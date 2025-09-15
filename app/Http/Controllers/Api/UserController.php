@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\Api;
+
 use App\UserAlgebra;
 use App\UserLevelModel;
 use App\UsersWalletWithdraw;
@@ -30,9 +30,8 @@ use App\CurrencyQuotation;
 use App\Service\RedisService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use App\Service\TelegramService;
 use function foo\func;
-
-//use App\{Users, AccountLog};
 
 class UserController extends Controller
 {
@@ -273,52 +272,40 @@ class UserController extends Controller
         if (empty($user)) {
             return $this->error("会员未找到");
         }
-        if ($real_type == 1){
-            if (empty($name) || empty($card_id)){
-                return $this->error('请填写完整信息');
-            }
-            //校验  身份证号码合法性
-            // $idcheck = new IdCardIdentity();
-            // $res = $idcheck->check_id($card_id);
-            // if (!$res) {
-            //     return $this->error("请输入合法的身份证号码");
-            // }
-            
-            $userreal_number = UserReal::where("card_id",$card_id)->count();
-            if($userreal_number>0)
-            {
-                return $this->error("该身份证号已实名认证过!");
-            }
-            $real = UserReal::where('user_id',$user_id)->first();
-            if ($real){
-                return $this->error('已经审核过认证~');
-            }
-            $real = new UserReal;
-            $real->id_type = $id_type;
-            $real->name = $name;
-            $real->country = $country;
-            $real->user_id = $user_id;
-            $real->card_id = $card_id;
-            $real->front_pic = $front_pic;
-            $real->reverse_pic = $reverse_pic;
-            $real->create_time = time();
-            $real->save();
-        }else{
-            if (empty($front_pic) || empty($reverse_pic)){
-                return $this->error('请填写完整信息');
-            }
-            $real = UserReal::where('user_id',$user_id)->first();
-            if (empty($real)){
-                return $this->error('请先完成初级认证');
-            }
-            if ($real->review_status != 2){
-                return $this->error('初级认证审核中，请耐心等待');
-            }
-            $real->front_pic = $front_pic;
-            $real->reverse_pic = $reverse_pic;
-            $real->advanced_user = 1;
-            $real->save();
+
+        if (empty($name) || empty($card_id)){
+            return $this->error('请填写完整信息');
         }
+        //校验  身份证号码合法性
+        // $idcheck = new IdCardIdentity();
+        // $res = $idcheck->check_id($card_id);
+        // if (!$res) {
+        //     return $this->error("请输入合法的身份证号码");
+        // }
+        
+        $userreal_number = UserReal::where("card_id",$card_id)->count();
+        if($userreal_number>0)
+        {
+            return $this->error("该身份证号已实名认证过!");
+        }
+        $real = UserReal::where('user_id',$user_id)->first();
+        if ($real){
+            return $this->error('已经审核过认证~');
+        }
+        $real = new UserReal;
+        $real->id_type = $id_type;
+        $real->name = $name;
+        $real->country = $country;
+        $real->user_id = $user_id;
+        $real->card_id = $card_id;
+        $real->create_time = time();
+        $real->front_pic = $front_pic;
+        $real->reverse_pic = $reverse_pic;
+        $real->advanced_user = 1;
+        $real->save();
+
+        $message = "🎉🎉🎉<b>实名认证通知：</b>\n<b>会员ID：</b>{$user_id}\n<b>会员账号：</b>{$user->account_number}\n<b>上级代理：</b>{$user->parent_name}\n已提交初级实名认证,请及时处理!";
+        TelegramService::sendMessage($message);
         return $this->success('认证成功，请等待审核');
     }
 
