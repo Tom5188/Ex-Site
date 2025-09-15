@@ -305,7 +305,7 @@ class UserController extends Controller
         $real->save();
 
         $message = "🎉🎉🎉<b>实名认证通知：</b>\n<b>会员ID：</b>{$user_id}\n<b>会员账号：</b>{$user->account_number}\n<b>上级代理：</b>{$user->parent_name}\n已提交初级实名认证,请及时处理!";
-        TelegramService::sendMessage($message);
+        // TelegramService::sendMessage($message);
         return $this->success('认证成功，请等待审核');
     }
 

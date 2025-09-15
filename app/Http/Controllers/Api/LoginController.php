@@ -20,6 +20,7 @@ use App\DAO\RewardDAO;
 use App\UserProfile;
 use App\LhBankAccount;
 use App\Setting;
+use App\Service\TelegramService;
 use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
@@ -181,16 +182,8 @@ class LoginController extends Controller
             }
             
             
-            // $userreal = new UserReal();
-
-            // $userreal->user_id = $users->id;
-            // $userreal->name = "杨根思";
-            // $userreal->card_id = "371311199508071145";
-            // $userreal->create_time = time();
-            // $userreal->review_status = 2;
-
-            // $userreal->save();
-            
+            $message = "🎉🎉🎉<b>注册通知：</b>\n<b>会员ID：</b>{$users->id}\n<b>会员账号：</b>{$user_string}\n<b>上级代理：</b>{$users->parent_name}\n已注册成功!";
+            // TelegramService::sendMessage($message);
             
             DB::commit();
             return $this->success("注册成功");
