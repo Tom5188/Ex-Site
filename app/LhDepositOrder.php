@@ -15,16 +15,16 @@ class LhDepositOrder extends Model
         ];
     public static function newOrder($user_id,$currency_id,$amount,$day,$rate){
         $LhDepositOrder = new self();
-        $order = $LhDepositOrder::where('user_id', $user_id)->where('currency_id', $currency_id)->where('status', 1)->first();
-        if($order){
-            $real_amount = $order->amount + $amount;
-            $config = DB::table('lh_deposit_config')->where('save_min', '<=', $real_amount)->where('save_max', '>=', $real_amount)->first();
-            $order->day_rate = $config->interest_rate / 100;
-            $order->amount += $amount;
-            $order->lock_amount += $amount;
-            $order->save();
-            return $order;
-        }else{
+        // $order = $LhDepositOrder::where('user_id', $user_id)->where('currency_id', $currency_id)->where('status', 1)->first();
+        // if($order){
+        //     $real_amount = $order->amount + $amount;
+        //     $config = DB::table('lh_deposit_config')->where('save_min', '<=', $real_amount)->where('save_max', '>=', $real_amount)->first();
+        //     $order->day_rate = $config->interest_rate / 100;
+        //     $order->amount += $amount;
+        //     $order->lock_amount += $amount;
+        //     $order->save();
+        //     return $order;
+        // }else{
             $model = new self();
             $model->user_id = $user_id;
             $model->currency_id = $currency_id;
@@ -39,7 +39,7 @@ class LhDepositOrder extends Model
             $model->end_at = date("Y-m-d",strtotime("+$day day"));
             $model->save();
             return $model;
-        }
+        // }
     }
     
     public static function unlockMoney($orderId){
