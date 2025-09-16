@@ -14,7 +14,7 @@ class LhDepositOrder extends Model
             'cancel_fee'
         ];
     public static function newOrder($user_id,$currency_id,$amount,$day,$rate){
-        // $LhDepositOrder = new self();
+        $LhDepositOrder = new self();
         // $order = $LhDepositOrder::where('user_id', $user_id)->where('currency_id', $currency_id)->where('status', 1)->first();
         // if($order){
         //     $real_amount = $order->amount + $amount;
@@ -154,8 +154,8 @@ class LhDepositOrder extends Model
                 //执行结息操作,先加钱
                 $day = date("Y-m-d",strtotime("+$i day",strtotime($startDay)));
                 //利率需要计算
-                $config = DB::table('lh_deposit_config')->where('save_min', '<=', $model->amount)->where('save_max', '>=', $model->amount)->first();
-                $model->day_rate = $config->interest_rate / 100;
+                // $config = DB::table('lh_deposit_config')->where('save_min', '<=', $model->amount)->where('save_max', '>=', $model->amount)->first();
+                // $model->day_rate = $config->interest_rate / 100;
                 $interest = bc_mul($model->amount ,$model->day_rate);
                 $totalInterest = bc_add($totalInterest,$interest);
                 // if(strpos($model->withdraw_day, $day) !== false){
@@ -192,17 +192,17 @@ class LhDepositOrder extends Model
             //最后一天 退钱
             if($model->end_at <= date('Y-m-d')){
                 //结单 退钱操作
-                // change_wallet_balance(
-                //     $legal,
-                //     2,
-                //     -$model->lock_amount,
-                //     AccountLog::MINING_BUY,
-                //     '质押解冻|'.date('Y-m-d'),
-                //     true,
-                //     0,
-                //     0,
-                //     serialize([])
-                // );
+                change_wallet_balance(
+                    $legal,
+                    2,
+                    -$model->lock_amount,
+                    AccountLog::MINING_BUY,
+                    '质押解冻|'.date('Y-m-d'),
+                    true,
+                    0,
+                    0,
+                    serialize([])
+                );
                 change_wallet_balance(
                     $legal,
                     2,
