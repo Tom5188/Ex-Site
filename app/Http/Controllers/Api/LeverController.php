@@ -332,7 +332,7 @@ class LeverController extends Controller
 
             $shoud_deduct = bc_add($caution_money, $trade_fee); //保证金+手续费
             if (bc_comp($user_lever, $shoud_deduct) < 0) {
-                throw new \Exception($currency_match->legal_name . $this->returnStr('余额不足,不能小于') . $shoud_deduct . $this->returnStr('(手续费:') . $trade_fee . ')');
+                throw new \Exception($currency_match->legal_name . ' ' . $this->returnStr('余额不足，不能少于') . number_format($shoud_deduct, 3));
             }
 
             $lever_transaction = new LeverTransaction();
