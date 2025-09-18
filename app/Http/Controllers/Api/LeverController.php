@@ -387,7 +387,7 @@ class LeverController extends Controller
                 3,
                 -$trade_fee,
                 AccountLog::LEVER_TRANSACTION_FEE,
-                '提交' . $currency_match->symbol . '合约1交易,扣除手续费',
+                '提交' . $currency_match->symbol . '合约交易,扣除手续费',
                 false,
                 0,
                 0,
