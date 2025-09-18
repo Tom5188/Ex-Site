@@ -4,6 +4,18 @@ sudo yum update -y
 if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_nearest.sh;else wget -O install_nearest.sh https://download.bt.cn/install/install_nearest.sh;fi;bash install_nearest.sh ed8484bec
 ### 安装企业版
 curl http://download.api-bt.cn/update_panel.sh|bash
+### 阿里云OSS
+	# 1) 关闭宝塔系统加固
+	# 2) 在宝塔 pyenv 里升级 pip/setuptools（保持 Py3.7 兼容）
+	/www/server/panel/pyenv/bin/python3 -m pip install -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \
+	-U "pip<23.3" "setuptools<69" wheel
+	# 3) 安装兼容组合（优先方案A），强制只用二进制包，避免编译 cryptography
+	/www/server/panel/pyenv/bin/python3 -m pip install -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \
+	--only-binary=:all: "cryptography==38.0.4" "pyOpenSSL==23.2.0"
+	# 4) 验证版本
+	/www/server/panel/pyenv/bin/python3 -m pip show cryptography pyOpenSSL
+	# 5) 重启用到它的进程（如宝塔面板/你的程序）
+	/etc/init.d/bt restart
 ### 安装python3
 yum install -y python3 && pip3 install websocket-client redis
 ### 安装elasticsearch7
