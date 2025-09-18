@@ -219,6 +219,196 @@ class LeverController extends Controller
      *
      * @return void
      */
+    public function submit()
+    {
+        $user_id = Users::getUserId();
+        $share = Input::get("share");
+        $multiple = Input::get("multiple");
+        $type = Input::get("type", "1");
+        $legal_id = Input::get("legal_id");
+        $currency_id = Input::get("currency_id");
+        $status = Input::get('status', LeverTransaction::TRANSACTION); //默认是市价交易,为0则是挂单交易
+        $target_price = Input::get('target_price', 0); //目标价格
+        $now = time();
+        $user_lever = 0;
+
+        if (empty($legal_id) || empty($currency_id) || empty($share) || empty($multiple)) {
+            return $this->error("缺少参数或传值错误");
+        }
+        $currency_match = CurrencyMatch::where('legal_id', $legal_id)
+            ->where('currency_id', $currency_id)
+            ->first();
+        if (!$currency_match) {
+            return $this->error('指定交易对不存在');
+        }
+        if ($currency_match->open_lever != 1) {
+            return $this->error('您未开通本交易对的交易功能');
+        }
+        //手数判断:大于0的整数,且在区间范围内
+        if ($share != intval($share) || !is_numeric($share) || $share <= 0) {
+            return $this->error('手数必须是大于0的整数');
+        }
+        if (bc_comp($currency_match->lever_min_share, $share) > 0) {
+            return $this->error($this->returnStr('手数不能低于') . $currency_match->lever_min_share);
+        }
+        if (bc_comp($currency_match->lever_max_share, $share) < 0 && bc_comp($currency_match->lever_max_share, 0) > 0) {
+            return $this->error($this->returnStr('手数不能高于') . $currency_match->lever_max_share);
+        }
+        //倍数判断
+        $multiples = LeverMultiple::where("type", 1)->pluck('value')->all();
+        if (!in_array($multiple, $multiples)) {
+            return $this->error('选择倍数不在系统范围');
+        }
+        $exist_close_trade = LeverTransaction::where('user_id', $user_id)->where('status', LeverTransaction::CLOSING)->count();
+        if ($exist_close_trade > 0) {
+            return $this->error('您有正在平仓中的交易,暂不能进行买卖');
+        }
+        if (!in_array($status, [LeverTransaction::ENTRUST, LeverTransaction::TRANSACTION])) {
+            return $this->error('交易类型错误');
+        }
+        if ($status == LeverTransaction::ENTRUST) {
+            $open_lever_entrust = Setting::getValueByKey('open_lever_entrust', 0);
+            if ($open_lever_entrust <= 0) {
+                return $this->error('该功能暂未开放');
+            }
+        }
+        //判断是否委托交易 (限价交易)
+        if ($status == LeverTransaction::ENTRUST && $target_price <= 0) {
+            return $this->error('限价交易价格必须大于0');
+        }
+        $overnight = $currency_match->overnight ?? 0;
+        //优先从行情取最新价格
+        $last_price = LeverTransaction::getLastPrice($legal_id, $currency_id);
+        if (bc_comp($last_price, 0) <= 0) {
+            return $this->error('当前没有获取到行情价格,请稍后重试');
+        }
+        //挂单委托(限价交易)价格取用户设置的
+        if ($status == LeverTransaction::ENTRUST) {
+            if ($type == LeverTransaction::SELL && $target_price <= $last_price) {
+                return $this->error('限价交易卖出不能低于当前价');
+            } elseif ($type == LeverTransaction::BUY && $target_price >= $last_price) {
+                return $this->error('限价交易买入价格不能高于当前价');
+            }
+            $origin_price = $target_price;
+        } else {
+            $origin_price = $last_price;
+        }
+        //交易手数转换
+
+        $lever_share_num = $currency_match->lever_share_num ?? 1;
+        $num = bc_mul($share, $lever_share_num);
+
+        //点差率 百分比
+        // $spread = $currency_match->spread;
+        // $spread_price = bc_div(bc_mul($origin_price, $spread), 100);
+        // $type == LeverTransaction::SELL && $spread_price = bc_mul(-1, $spread_price); //买入应加上点差,卖出就减去点差
+        // $fact_price = bc_add($origin_price, $spread_price); //收取点差之后的实际价格
+        // $all_money = bc_mul($fact_price, $num, 5);
+
+        //点差率 固定值
+        $spread_price = $spread = $currency_match->spread;
+        $type == LeverTransaction::SELL && $spread_price = bc_mul(-1, $spread_price); //买入应加上点差,卖出就减去点差
+        $fact_price = bc_add($origin_price, $spread_price); //收取点差之后的实际价格
+        $all_money = bc_mul($fact_price, $num, 5);
+
+        //计算手续费
+        $lever_trade_fee_rate = bc_div($currency_match->lever_trade_fee ?? 0, 100);
+        $trade_fee = bc_mul($all_money, $lever_trade_fee_rate);
+
+        DB::beginTransaction();
+        try {
+            $legal = UsersWallet::where("user_id", $user_id)
+                ->where("currency", $legal_id)
+                ->lockForUpdate()
+                ->first();
+            if (!$legal) {
+                throw new \Exception("钱包未找到,请先添加钱包");
+            }
+            $user_lever = $legal->lever_balance;
+
+            // $bzj = bc_mul($bc_mul($origin_price,$currency_match->lever_share_num),$share);
+            // $caution_money = bc_div($bzj, $multiple); // 保证金=币种价格*张数*手数/倍数
+            $caution_money = bc_div($num, $multiple); // 改为保证金=张数*手数/倍数
+
+            $shoud_deduct = bc_add($caution_money, $trade_fee); //保证金+手续费
+            if (bc_comp($user_lever, $shoud_deduct) < 0) {
+                throw new \Exception($currency_match->legal_name . $this->returnStr('余额不足,不能小于') . $shoud_deduct . $this->returnStr('(手续费:') . $trade_fee . ')');
+            }
+
+            $lever_transaction = new LeverTransaction();
+            $lever_transaction->user_id = $user_id;
+            $lever_transaction->type = $type;
+            $lever_transaction->overnight = $overnight;
+            $lever_transaction->origin_price = $origin_price;
+            $lever_transaction->price = $fact_price;
+            $lever_transaction->update_price = $last_price;
+            $lever_transaction->share = $share;
+            $lever_transaction->number = $num;
+            $lever_transaction->origin_caution_money = $caution_money;
+            $lever_transaction->caution_money = $caution_money;
+            $lever_transaction->currency = $currency_id;
+            $lever_transaction->legal = $legal_id;
+            $lever_transaction->multiple = $multiple;
+            $lever_transaction->trade_fee = $trade_fee;
+            $lever_transaction->transaction_time = $now;
+            $lever_transaction->create_time = $now;
+            $lever_transaction->status = $status;
+            
+            //追加用户的代理商关系
+            $user=Users::find($user_id);
+            $lever_transaction->agent_path =$user->agent_path;
+
+            $result = $lever_transaction->save();
+            if (!$result) {
+                throw new \Exception("提交失败");
+            }
+            //扣除保证金
+            $result = change_wallet_balance(
+                $legal,
+                3,
+                -$caution_money,
+                AccountLog::LEVER_TRANSACTION,
+                '提交' . $currency_match->symbol . '杠杆交易,价格' . $fact_price . ',扣除保证金',
+                false,
+                0,
+                0,
+                serialize([
+                    'trade_id' => $lever_transaction->id,
+                    'all_money' => $all_money,
+                    'multiple' => $multiple,
+                ])
+            );
+            if ($result !== true) {
+                throw new \Exception($this->returnStr('扣除保证金失败:') . $result);
+            }
+            //扣除手续费
+            $result = change_wallet_balance(
+                $legal,
+                3,
+                -$trade_fee,
+                AccountLog::LEVER_TRANSACTION_FEE,
+                '提交' . $currency_match->symbol . '杠杆交易,扣除手续费',
+                false,
+                0,
+                0,
+                serialize([
+                    'trade_id' => $lever_transaction->id,
+                    'all_money' => $all_money,
+                    'lever_trade_fee_rate' => $lever_trade_fee_rate,
+                ])
+            );
+            if ($result !== true) {
+                throw new \Exception($this->returnStr('扣除手续费失败:') . $result);
+            }
+            DB::commit();
+            return $this->success("提交成功");
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return $this->error($ex->getMessage());
+        }
+    }
+
+
 //    public function submit()
 //    {
 //        $user_id = Users::getUserId();
@@ -390,195 +580,6 @@ class LeverController extends Controller
 //            return $this->error($ex->getMessage());
 //        }
 //    }
-
-    public function submit()
-    {
-        $user_id = Users::getUserId();
-        $share = Input::get("share");
-        $multiple = Input::get("multiple");
-        $type = Input::get("type", "1");
-        $legal_id = Input::get("legal_id");
-        $currency_id = Input::get("currency_id");
-        $status = Input::get('status', LeverTransaction::TRANSACTION); //默认是市价交易,为0则是挂单交易
-        $target_price = Input::get('target_price', 0); //目标价格
-        $now = time();
-        $user_lever = 0;
-
-        if (empty($legal_id) || empty($currency_id) || empty($share) || empty($multiple)) {
-            return $this->error("缺少参数或传值错误");
-        }
-        $currency_match = CurrencyMatch::where('legal_id', $legal_id)
-            ->where('currency_id', $currency_id)
-            ->first();
-        if (!$currency_match) {
-            return $this->error('指定交易对不存在');
-        }
-        if ($currency_match->open_lever != 1) {
-            return $this->error('您未开通本交易对的交易功能');
-        }
-        //手数判断:大于0的整数,且在区间范围内
-        if ($share != intval($share) || !is_numeric($share) || $share <= 0) {
-            return $this->error('手数必须是大于0的整数');
-        }
-        if (bc_comp($currency_match->lever_min_share, $share) > 0) {
-            return $this->error($this->returnStr('手数不能低于') . $currency_match->lever_min_share);
-        }
-        if (bc_comp($currency_match->lever_max_share, $share) < 0 && bc_comp($currency_match->lever_max_share, 0) > 0) {
-            return $this->error($this->returnStr('手数不能高于') . $currency_match->lever_max_share);
-        }
-        //倍数判断
-        $multiples = LeverMultiple::where("type", 1)->pluck('value')->all();
-        if (!in_array($multiple, $multiples)) {
-            return $this->error('选择倍数不在系统范围');
-        }
-        //$lever_min_share->lever_max_share
-        $exist_close_trade = LeverTransaction::where('user_id', $user_id)->where('status', LeverTransaction::CLOSING)->count();
-        if ($exist_close_trade > 0) {
-            return $this->error('您有正在平仓中的交易,暂不能进行买卖');
-        }
-        if (!in_array($status, [LeverTransaction::ENTRUST, LeverTransaction::TRANSACTION])) {
-            return $this->error('交易类型错误');
-        }
-        if ($status == LeverTransaction::ENTRUST) {
-            $open_lever_entrust = Setting::getValueByKey('open_lever_entrust', 0);
-            if ($open_lever_entrust <= 0) {
-                return $this->error('该功能暂未开放');
-            }
-        }
-        //判断是否委托交易 (限价交易)
-        if ($status == LeverTransaction::ENTRUST && $target_price <= 0) {
-            return $this->error('限价交易价格必须大于0');
-        }
-        $overnight = $currency_match->overnight ?? 0;
-        //优先从行情取最新价格
-        $last_price = LeverTransaction::getLastPrice($legal_id, $currency_id);
-        if (bc_comp($last_price, 0) <= 0) {
-            return $this->error('当前没有获取到行情价格,请稍后重试');
-        }
-        //挂单委托(限价交易)价格取用户设置的
-        if ($status == LeverTransaction::ENTRUST) {
-            if ($type == LeverTransaction::SELL && $target_price <= $last_price) {
-                return $this->error('限价交易卖出不能低于当前价');
-            } elseif ($type == LeverTransaction::BUY && $target_price >= $last_price) {
-                return $this->error('限价交易买入价格不能高于当前价');
-            }
-            $origin_price = $target_price;
-        } else {
-            $origin_price = $last_price;
-        }
-        //交易手数转换
-        $lever_share_num = $currency_match->lever_share_num ?? 1;
-        $num = bc_mul($share, $lever_share_num);
-        //点差率
-//        $spread = $currency_match->spread;
-//        $spread_price = bc_div(bc_mul($origin_price, $spread), 100);
-//        $type == LeverTransaction::SELL && $spread_price = bc_mul(-1, $spread_price); //买入应加上点差,卖出就减去点差
-//        $fact_price = bc_add($origin_price, $spread_price); //收取点差之后的实际价格
-//        $all_money = bc_mul($fact_price, $num, 5);
-
-
-        //点差率  点差变成固定值 by tian
-        $spread_price = $spread = $currency_match->spread;
-        $type == LeverTransaction::SELL && $spread_price = bc_mul(-1, $spread_price); //买入应加上点差,卖出就减去点差
-        $fact_price = bc_add($origin_price, $spread_price); //收取点差之后的实际价格
-        $all_money = bc_mul($fact_price, $num, 5);
-
-        //计算手续费
-        $lever_trade_fee_rate = bc_div($currency_match->lever_trade_fee ?? 0, 100);
-        $trade_fee = bc_mul($all_money, $lever_trade_fee_rate);
-        DB::beginTransaction();
-        try {
-            $legal = UsersWallet::where("user_id", $user_id)
-                ->where("currency", $legal_id)
-                ->lockForUpdate()
-                ->first();
-            if (!$legal) {
-                throw new \Exception("钱包未找到,请先添加钱包");
-            }
-            $user_lever = $legal->lever_balance;
-            $caution_money = bc_div($all_money, $multiple); //保证金
-
-            $shoud_deduct = bc_add($caution_money, $trade_fee); //保证金+手续费
-            if (bc_comp($user_lever, $shoud_deduct) < 0) {
-                throw new \Exception($currency_match->legal_name . $this->returnStr('余额不足,不能小于') . $shoud_deduct . $this->returnStr('(手续费:') . $trade_fee . ')');
-            }
-
-            $lever_transaction = new LeverTransaction();
-            $lever_transaction->user_id = $user_id;
-            $lever_transaction->type = $type;
-            $lever_transaction->overnight = $overnight;
-            $lever_transaction->origin_price = $origin_price;
-            $lever_transaction->price = $fact_price;
-            $lever_transaction->update_price = $last_price;
-            $lever_transaction->share = $share;
-            $lever_transaction->number = $num;
-            $lever_transaction->origin_caution_money = $caution_money;
-            $lever_transaction->caution_money = $caution_money;
-            $lever_transaction->currency = $currency_id;
-            $lever_transaction->legal = $legal_id;
-            $lever_transaction->multiple = $multiple;
-            $lever_transaction->trade_fee = $trade_fee;
-            $lever_transaction->transaction_time = $now;
-            $lever_transaction->create_time = $now;
-            $lever_transaction->status = $status;
-            
-            //追加用户的代理商关系
-            $user=Users::find($user_id);
-            $lever_transaction->agent_path =$user->agent_path;
-
-            $result = $lever_transaction->save();
-            if (!$result) {
-                throw new \Exception("提交失败");
-            }
-            //扣除保证金
-            $result = change_wallet_balance(
-                $legal,
-                3,
-                -$caution_money,
-                AccountLog::LEVER_TRANSACTION,
-                '提交' . $currency_match->symbol . '杠杆交易,价格' . $fact_price . ',扣除保证金',
-                false,
-                0,
-                0,
-                serialize([
-                    'trade_id' => $lever_transaction->id,
-                    'all_money' => $all_money,
-                    'multiple' => $multiple,
-                ])
-            );
-            if ($result !== true) {
-                throw new \Exception($this->returnStr('扣除保证金失败:') . $result);
-            }
-            //扣除手续费
-            $result = change_wallet_balance(
-                $legal,
-                3,
-                -$trade_fee,
-                AccountLog::LEVER_TRANSACTION_FEE,
-                '提交' . $currency_match->symbol . '杠杆交易,扣除手续费',
-                false,
-                0,
-                0,
-                serialize([
-                    'trade_id' => $lever_transaction->id,
-                    'all_money' => $all_money,
-                    'lever_trade_fee_rate' => $lever_trade_fee_rate,
-                ])
-            );
-            if ($result !== true) {
-                throw new \Exception($this->returnStr('扣除手续费失败:') . $result);
-            }
-            DB::commit();
-//            var_dump($lever_transaction->toArray());
-            //推荐奖:手续费结算
-//            $PP=event(new LeverSubmitOrder($lever_transaction));
-//            var_dump($PP);die;
-            return $this->success("提交成功");
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            return $this->error($ex->getMessage());
-        }
-    }
 
     /**
      * 设置止盈止亏
