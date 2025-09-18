@@ -5,17 +5,30 @@ if [ -f /usr/bin/curl ];then curl -sSO https://download.bt.cn/install/install_ne
 ### 安装企业版
 curl http://download.api-bt.cn/update_panel.sh|bash
 ### 阿里云OSS
-	# 1) 关闭宝塔系统加固
-	# 2) 在宝塔 pyenv 里升级 pip/setuptools（保持 Py3.7 兼容）
+	# 0) 确认是在宝塔面板自带的 Python 3.7 环境
+	/www/server/panel/pyenv/bin/python3 -V
+
+	# 1) 先升级 aliyun Python SDK Core，解除旧依赖的束缚
 	/www/server/panel/pyenv/bin/python3 -m pip install -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \
-	-U "pip<23.3" "setuptools<69" wheel
-	# 3) 安装兼容组合（优先方案A），强制只用二进制包，避免编译 cryptography
+	"aliyun-python-sdk-core>=2.16.0"
+
+	# 2) 强制“干净”重装 cryptography 与 pyOpenSSL（只用二进制 wheel，避免编译/Rust）
 	/www/server/panel/pyenv/bin/python3 -m pip install -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \
-	--only-binary=:all: "cryptography==38.0.4" "pyOpenSSL==23.2.0"
-	# 4) 验证版本
-	/www/server/panel/pyenv/bin/python3 -m pip show cryptography pyOpenSSL
-	# 5) 重启用到它的进程（如宝塔面板/你的程序）
-	/etc/init.d/bt restart
+	--only-binary=:all: --no-cache-dir --force-reinstall \
+	"cryptography==38.0.4" "pyOpenSSL==23.2.0"
+
+	# 3)（可选）顺手把 OSS SDK 升到新版本
+	/www/server/panel/pyenv/bin/python3 -m pip install -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \
+	-U "oss2"
+
+	# 4) 验证（用 import，绕过你刚才遇到的 pip show 元数据异常）
+	/www/server/panel/pyenv/bin/python3 - <<'PY'
+	import cryptography, OpenSSL, pkgutil, sys
+	print("cryptography:", cryptography.__version__)
+	print("pyOpenSSL:", OpenSSL.__version__)
+	print("has aliyun core:", bool(pkgutil.find_loader("aliyunsdkcore")))
+	print("Python:", sys.version)
+	PY
 ### 安装python3
 yum install -y python3 && pip3 install websocket-client redis
 ### 安装elasticsearch7
