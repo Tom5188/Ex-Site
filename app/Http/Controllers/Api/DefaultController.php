@@ -239,11 +239,22 @@ class DefaultController extends Controller
     public function getSiteConfig(Request $request) {
         $model = Setting::whereIn('key', ['site_name', 'site_logo','site_pc_logo', 'down_logo','open_url'
             ,'zxkf_radio','zxkf_url','telegram_url','telegram_radio','skype_radio','skype_url','whatsApp_radio'
-            ,'whatsApp_url','line_radio','line_url','jie_radio','jie_url','hk_radio','hk_url','bank_flag','image_server_url','tk_radio','yzm_radio','ios_apk_download_url','apk_download_url'
+            ,'whatsApp_url','line_radio','line_url','jie_radio','jie_url','hk_radio','hk_url','bank_flag','image_server_url','tk_radio','yzm_radio','ios_apk_download_url','apk_download_url','charge_balance_type','cashb_balance_type'
         ])->get();
         $settings = [];
         foreach ($model as $setting) {
-            $settings[$setting->key] = $setting->value;
+            if($setting->key == 'charge_balance_type' || $setting->key == 'cashb_balance_type'){
+                $fields = [
+                    '',
+                    'legal_balance',
+                    'change_balance',
+                    'lever_balance',
+                    'micro_balance',
+                ];
+                $settings[$setting->key] = $fields[$setting->value];
+            }else{
+                $settings[$setting->key] = $setting->value;
+            }
         }
         return $this->success($settings);
     }
