@@ -18,7 +18,7 @@ use App\LtcBuy;
 use App\TransactionComplete;
 use App\NewsCategory;
 use App\CoinTrade;
-use App\Address;
+use App\UsersWalletWithdraw;
 use App\AccountLog;
 use App\Setting;
 use App\Users;
@@ -237,7 +237,7 @@ class WalletController extends Controller
     public function addressDel()
     {
         $user_id = Users::getUserId();
-        $address_id = Input::get("address_id", '');
+        $address_id = Input::get("id", '');
 
         if (empty($user_id) || empty($address_id)) {
             return $this->error("参数错误");
@@ -246,7 +246,7 @@ class WalletController extends Controller
         if (empty($user)) {
             return $this->error("用户未找到");
         }
-        $address = Address::find($address_id);
+        $address = UsersWalletWithdraw::find($address_id);
 
         if (empty($address)) {
             return $this->error("此提币地址不存在");
@@ -256,12 +256,15 @@ class WalletController extends Controller
         }
 
         try {
-            $address->delete();
+            $address->isdelete = 1;
+            $address->delete_time = date('Y-m-d H:i:s');
+            $address->save();
             return $this->success("删除提币地址成功");
         } catch (\Exception $ex) {
             return $this->error($ex->getMessage());
         }
     }
+    
 	public function chargeReq(){
 		$user_id = Users::getUserId();
 

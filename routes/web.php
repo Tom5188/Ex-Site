@@ -248,9 +248,10 @@ Route::group(['middleware' => ['lang']], function () {
         // 用户认证信息
         Route::get('real/state', 'Api\UserController@realState');
         Route::post('user/real', 'Api\UserController@saveUserReal');
-        // 用户钱包操作相关
+        // 用户提币地址操作相关
         Route::get('user/wallet/list', 'Api\UserController@userWalletList');
         Route::post('user/wallet/save', 'Api\UserController@userWalletSave');
+        Route::post('user/del/wallet', 'Api\WalletController@addressDel');
         Route::any('/bank/bankList',
         'Api\BankInfoController@bankList')->middleware(['cross']);
         // 用户个人中心
