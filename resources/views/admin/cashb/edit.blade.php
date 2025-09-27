@@ -47,18 +47,18 @@
                         </td>
                     </tr>
                     <tr>
-                        @if($walletout_type == 0)
+                        @if($wallet_out->type == 0)
                         <td colspan="2">
                             提币地址：{{$wallet_out->address}}
                         </td>
                         @endif
-                        @if($walletout_type == 1 )
+                        @if($wallet_out->type == 1 )
                         <td colspan="2">
                             人民币价格：{{$wallet_out->real_rmb}}元
                         </td>
                         @endif
                     </tr>
-                    @if($walletout_type == 1)
+                    @if($wallet_out->type == 1)
                     <tr>
                         <td>
                             真实姓名：{{$wallet_out->real_name}}
@@ -76,7 +76,7 @@
                         </td>
                     </tr>
                     @endif
-                    @if($walletout_type == 2 )
+                    @if($wallet_out->type == 2 )
                     @foreach ($card_info_data as $key => $item)
                     <tr>
                         <td colspan="2">
