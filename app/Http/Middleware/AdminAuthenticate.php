@@ -93,6 +93,7 @@ class AdminAuthenticate
             }
             if ($v['action'] == 'admin/user/charge_req') {
                 $arr[] = 'admin/user/charge_list';
+                $arr[] = 'admin/user/charge_show';
             }
             if ($v['action'] == 'admin/wallet/index') {
                 $arr[] = 'admin/wallet/list';
