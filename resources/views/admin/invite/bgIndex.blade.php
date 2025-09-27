@@ -13,7 +13,7 @@
     <div class="layui-form">
         <table id="accountlist" lay-filter="accountlist"></table>
         <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
             <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
         </script>
         <script type="text/html" id="FcardTpl">
@@ -52,7 +52,7 @@
                                     , {field:'pic',title: '背景图',minWidth: 200,templet:'#FcardTpl'}
                                     
                                     , {field:'create_time',title:'创建时间', minWidth:300}
-                                  ,{fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
+                                  ,{fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

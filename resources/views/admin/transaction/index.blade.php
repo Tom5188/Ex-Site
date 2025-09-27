@@ -68,7 +68,7 @@
 
         <script type="text/html" id="barDemo">
             <a class="layui-btn layui-btn-xs" lay-event="conf">调节账户</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
         </script>
         <script type="text/html" id="typetml">
         @{{d.type==1 ? '<span class="layui-badge layui-bg-green">'+'法币交易'+'</span>' : '' }}
@@ -107,18 +107,18 @@
                                 ,page: true
                                 ,limit: 20
                                 ,cols: [[
-                                    {field: 'id', title: 'ID', width: 100}
+                                    {field: 'id', title: 'ID', minWidth: 100}
                                     ,{field:'from_account',title: '转出用户',width: 150}
-                                    ,{field:'to_account',title:'转入用户', width:150}
-                                    ,{field:'price',title:'单价', width:100}
-                                    ,{field:'number',title:'数量', width:100}
-                                    ,{field:'total',title:'交易金额', width:100}
-                                    ,{field:'remarks',title:'备注', width:200}
-                                    ,{field:'time',title:'时间', width:200}
-                                    ,{field: 'currency_name', title: '交易币', width:80}
-                                    ,{field: 'type', title: '交易类型', width:100, templet: '#typetml'}
-                                    ,{field: 'status', title: '交易状态', width:100, templet: '#statustml'}
-//                                    , {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
+                                    ,{field:'to_account',title:'转入用户', minWidth:150}
+                                    ,{field:'price',title:'单价', minWidth:100}
+                                    ,{field:'number',title:'数量', minWidth:100}
+                                    ,{field:'total',title:'交易金额', minWidth:100}
+                                    ,{field:'remarks',title:'备注', minWidth:200}
+                                    ,{field:'time',title:'时间', minWidth:200}
+                                    ,{field: 'currency_name', title: '交易币', minWidth:80}
+                                    ,{field: 'type', title: '交易类型', minWidth:100, templet: '#typetml'}
+                                    ,{field: 'status', title: '交易状态', minWidth:100, templet: '#statustml'}
+//                                    , {fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

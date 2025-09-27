@@ -90,7 +90,7 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:60, sort: true}
+                    {field: 'id', title: 'ID', minWidth:60, sort: true}
                     ,{field: 'mobile', title: '用户', minWidth:150}
                     ,{field: 'user_name', title: '姓名', minWidth:80}
                     ,{field: 'insurance_type_type', title: '保险类型', minWidth:80,templet:"#insurance_type_t"}

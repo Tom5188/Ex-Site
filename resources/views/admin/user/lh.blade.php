@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="form">立即提交</button>
+            <div style="margin-left:2.5rem">
+                <button class="layui-btn" lay-submit lay-filter="form">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>

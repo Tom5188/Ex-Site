@@ -154,7 +154,7 @@
     <table id="demo" lay-filter="test"></table>
     <!-- <script type="text/html" id="barDemo">
        
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script> -->
 
@@ -187,26 +187,26 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'legal_deal_send_id', title: '交易需求id', width:150}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'legal_deal_send_id', title: '交易需求id', minWidth:150}
                     
-                    ,{field: 'account_number', title: '用户交易账号', width:120}
-                    ,{field: 'user_realname', title: '真实姓名', width:120}
-                    ,{field: 'seller_name', title: '商家名称', width:120}
-                    ,{field: 'type', title: '买入/卖出', width:100, templet: '#type'}
-                    ,{field: 'way_name', title: '支付方式', width:100}
+                    ,{field: 'account_number', title: '用户交易账号', minWidth:120}
+                    ,{field: 'user_realname', title: '真实姓名', minWidth:120}
+                    ,{field: 'seller_name', title: '商家名称', minWidth:120}
+                    ,{field: 'type', title: '买入/卖出', minWidth:100, templet: '#type'}
+                    ,{field: 'way_name', title: '支付方式', minWidth:100}
 
-                    ,{field: 'price', title: '单价', width:100 }
-                    ,{field: 'number', title: '交易数量', width:100}
-                    // ,{field: 'surplus_number', title: '剩余数量', width:100}
-                    ,{field: 'currency_name', title: '交易币', width:100}
-                    ,{field: 'deal_money', title: '交易总金额', width:100}
+                    ,{field: 'price', title: '单价', minWidth:100 }
+                    ,{field: 'number', title: '交易数量', minWidth:100}
+                    // ,{field: 'surplus_number', title: '剩余数量', minWidth:100}
+                    ,{field: 'currency_name', title: '交易币', minWidth:100}
+                    ,{field: 'deal_money', title: '交易总金额', minWidth:100}
 
-                    // ,{field: 'limitation', title: '限额', width:100, templet: '#limitation'}
-                    ,{field: 'is_sure', title: '交易状态', width:100, templet: '#is_sure'}
+                    // ,{field: 'limitation', title: '限额', minWidth:100, templet: '#limitation'}
+                    ,{field: 'is_sure', title: '交易状态', minWidth:100, templet: '#is_sure'}
 
-                    ,{field: 'format_create_time', title: '交易时间', width:180}
-                    ,{field: 'format_update_time', title: '确认时间', width:180}
+                    ,{field: 'format_create_time', title: '交易时间', minWidth:180}
+                    ,{field: 'format_update_time', title: '确认时间', minWidth:180}
 
 
                     // ,{title:'操作',minWidth:100,toolbar: '#barDemo'}

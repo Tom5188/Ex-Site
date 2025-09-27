@@ -18,8 +18,8 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
     </script>
     <script>
          $('#add_project').click(function() {
@@ -51,14 +51,14 @@
                 ,page: true
                 ,cols: [[
                     {type: 'radio'}
-                    ,{field: 'id', title: 'id', width: 70}
-                    ,{field: 'currency_name', title: '交易币', width: 80}
-                    ,{field: 'day', title: '期限', width: 80}
-                    ,{field: 'interest_rate', title: '利息（%）', width: 150}
-                    ,{field: 'intro', title: '文案', width: 150}
-                    ,{field: 'save_min', title: '最少存币数', width: 300}
-                    ,{field: 'created_at', title: '创建时间', width: 200}
-                    ,{fixed: 'right', title: '操作', width: 190, align: 'center', toolbar: '#barDemo'}
+                    ,{field: 'id', title: 'id', minWidth: 70}
+                    ,{field: 'currency_name', title: '交易币', minWidth: 80}
+                    ,{field: 'day', title: '期限', minWidth: 80}
+                    ,{field: 'interest_rate', title: '利息（%）', minWidth: 150}
+                    ,{field: 'intro', title: '文案', minWidth: 150}
+                    ,{field: 'save_min', title: '最少存币数', minWidth: 300}
+                    ,{field: 'created_at', title: '创建时间', minWidth: 200}
+                    ,{fixed: 'right', title: '操作', minWidth: 190, align: 'center', toolbar: '#barDemo'}
                 ]]
             });
             table.on('tool(data_table)', function (obj) {

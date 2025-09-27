@@ -12,7 +12,7 @@
 
         <script type="text/html" id="barDemo">
             <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">提币地址管理</a> -->
-            <a class="layui-btn layui-btn-xs" lay-event="conf">调节账户</a>
+            <a class="layui-btn layui-btn-xs" lay-event="conf"><i class="layui-icon layui-icon-rmb"></i> 调节</a>
             <!-- @{{d.currency_name=='BTC' || d.currency_name=='USDT'? '<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="balance">余额归拢</a>' : '' }}
             @{{d.currency_name=='BTC' ? '<a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="btc">打入BTC</a>' : '' }} -->
             
@@ -57,25 +57,17 @@
                                 ,limit: 50
                                 , cols: [
                                     [
-                                        {field: 'id', title: 'ID'}
-                                        ,{field:'currency_name',title: '币种'}
-                                        // ,{field:'address',title:'充币地址', width:200}
-    
-                                        ,{field:'micro_balance',title:'期权余额', templet:'#handle_micro_balance'}
-                                        ,{field:'lock_micro_balance',title:'期权锁定余额'}
-    
-                                        ,{field:'lever_balance',title:'杠杆余额', templet:'#handle_lever_balance'}
-                                        ,{field:'lock_lever_balance',title:'杠杆锁定余额'}
-                                        
-                                        ,{field:'change_balance',title:'币币余额', templet:'#handle_change_balance'}
-                                        ,{field:'lock_change_balance',title:'币币锁定余额'}
-    
-                                        ,{field:'legal_balance',title:'法币余额', templet:'#handle_legal_balance'}
-                                        ,{field:'lock_legal_balance',title:'法币锁定余额'}
-                                        
-                                        // ,{field:'old_balance',title:'链上余额', width:150}
-                                        // ,{field:'create_time',title:'时间', width:200}
-                                        ,{fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
+                                        {field: 'id', title: 'ID', minWidth:100}
+                                        ,{field:'currency_name',title: '币种', minWidth:100}
+                                        ,{field:'micro_balance',title:'期权余额', minWidth:100, templet:'#handle_micro_balance'}
+                                        ,{field:'lock_micro_balance',title:'期权锁定余额', minWidth:100}
+                                        ,{field:'lever_balance',title:'合约余额', minWidth:100, templet:'#handle_lever_balance'}
+                                        ,{field:'lock_lever_balance',title:'合约锁定余额', minWidth:100}
+                                        ,{field:'change_balance',title:'币币余额', minWidth:100, templet:'#handle_change_balance'}
+                                        ,{field:'lock_change_balance',title:'币币锁定余额', minWidth:100}
+                                        // ,{field:'legal_balance',title:'法币余额', minWidth:100, templet:'#handle_legal_balance'}
+                                        // ,{field:'lock_legal_balance',title:'法币锁定余额', minWidth:100}
+                                        ,{title: '操作', align: 'center', toolbar: '#barDemo', minWidth:100}
                                     ]
                                 ],
                                 done: function(res, curr, count) {
@@ -138,11 +130,11 @@
                                 });
                             } else if (layEvent === 'conf') { 
                                 var index = layer.open({
-                                    title: '调节账户'
+                                    title: '调节余额'
                                     , type: 2
                                     , content: '{{url('/admin/user/conf')}}?id=' + data.id
                                     , maxmin: true
-                                    , area:["100%", "100%"]
+                                    , area:["80%", "80%"]
                                 });
                                 layer.full(index);
                             } else if (layEvent === 'edit') { //编辑

@@ -157,24 +157,24 @@
             ,totalRow: true
             ,cols: [
                 [
-                    {field: 'id', title: 'id', width: 70, rowspan: 2}
-                    ,{field: 'account_number', title: '账号', width: 120, rowspan: 2}
-                    ,{field: 'currency_name', title: '币种', width: 100, totalRowText: '小计', rowspan: 2}
-                    ,{field: 'address', title: '地址', width: 380, rowspan: 2,edit:"editNum"}
-                    ,{field: 'address_2', title: '地址2', width: 380, rowspan: 2,edit:"editNum"}
-                    ,{field: 'old_balance', title: '链上余额', width: 150, totalRow: true, rowspan: 2}
-                    ,{title: '法币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    ,{title: '币币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    ,{title: '杠杆币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    ,{field: 'gl_time_str', title: '归拢时间', width: 170, hide: true, rowspan: 2}
-                    ,{field: 'operate', fixed: 'right', title: '操作', width: 260, toolbar: '#toolbar', rowspan: 2}
+                    {field: 'id', title: 'id', minWidth: 70, rowspan: 2}
+                    ,{field: 'account_number', title: '账号', minWidth: 120, rowspan: 2}
+                    ,{field: 'currency_name', title: '币种', minWidth: 100, totalRowText: '小计', rowspan: 2}
+                    ,{field: 'address', title: '地址', minWidth: 380, rowspan: 2,edit:"editNum"}
+                    ,{field: 'address_2', title: '地址2', minWidth: 380, rowspan: 2,edit:"editNum"}
+                    ,{field: 'old_balance', title: '链上余额', minWidth: 150, totalRow: true, rowspan: 2}
+                    ,{title: '法币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    ,{title: '币币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    ,{title: '杠杆币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    ,{field: 'gl_time_str', title: '归拢时间', minWidth: 170, hide: true, rowspan: 2}
+                    ,{field: 'operate', fixed: 'right', title: '操作', minWidth: 260, toolbar: '#toolbar', rowspan: 2}
                 ], [
-                    {field: 'legal_balance', title: '余额', width: 130, totalRow: true}
-                    ,{field: 'lock_legal_balance', title: '冻结', width: 130, totalRow: true}
-                    ,{field: 'change_balance', title: '余额', width: 130, totalRow: true}
-                    ,{field: 'lock_change_balance', title: '冻结', width: 130, totalRow: true}
-                    ,{field: 'lever_balance', title: '余额', width: 130, totalRow: true}
-                    ,{field: 'lock_lever_balance', title: '冻结', width: 130, totalRow: true} 
+                    {field: 'legal_balance', title: '余额', minWidth: 130, totalRow: true}
+                    ,{field: 'lock_legal_balance', title: '冻结', minWidth: 130, totalRow: true}
+                    ,{field: 'change_balance', title: '余额', minWidth: 130, totalRow: true}
+                    ,{field: 'lock_change_balance', title: '冻结', minWidth: 130, totalRow: true}
+                    ,{field: 'lever_balance', title: '余额', minWidth: 130, totalRow: true}
+                    ,{field: 'lock_lever_balance', title: '冻结', minWidth: 130, totalRow: true} 
                 ]
             ],
             done: function(res, curr, count) {

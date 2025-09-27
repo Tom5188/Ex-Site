@@ -108,14 +108,14 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width: 90, sort: true}
-                    ,{field: 'currency_name', title: '交易币', width: 90}
-                    ,{field: 'legal_name', title: '法币', width: 90}
-                    ,{field: 'account_number', title: '买家', width: 120}
-                    ,{field: 'from_number', title: '卖家', width: 120}
-                    ,{field: 'price', title: '价格', width: 120}
-                    ,{field: 'number', title: '数量', width: 100}
-                    ,{field: 'time', title: '创建时间', width: 180}
+                    {field: 'id', title: 'ID', minWidth: 90, sort: true}
+                    ,{field: 'currency_name', title: '交易币', minWidth: 90}
+                    ,{field: 'legal_name', title: '法币', minWidth: 90}
+                    ,{field: 'account_number', title: '买家', minWidth: 120}
+                    ,{field: 'from_number', title: '卖家', minWidth: 120}
+                    ,{field: 'price', title: '价格', minWidth: 120}
+                    ,{field: 'number', title: '数量', minWidth: 100}
+                    ,{field: 'time', title: '创建时间', minWidth: 180}
                 ]], done: function(res){
                     $("#sum").text(res.extra_data);
                 }

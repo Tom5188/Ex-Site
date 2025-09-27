@@ -86,7 +86,7 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:60, sort: true}
+                    {field: 'id', title: 'ID', minWidth:60, sort: true}
                     ,{field: 'mobile', title: '用户', minWidth:80}
                     ,{field: 'user_name', title: '姓名', minWidth:80}
                     ,{field: 'user_insurance_id', title: '保险单', minWidth:80}

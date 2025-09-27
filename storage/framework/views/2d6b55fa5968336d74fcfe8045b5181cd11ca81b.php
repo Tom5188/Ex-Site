@@ -114,15 +114,15 @@
                                     {field: 'id', title: 'ID',  width: 110}
                                     ,{field:'account',title: '用户账号',width: 130}
                                     ,{field:'account_number',title: '交易账号',width: 150, hide: true}
-                                    ,{field:'before',title:'变动前', width:150}
+                                    ,{field:'before',title:'变动前', minWidth:150}
                                     ,{field:'value',title:'变动量', minWidth:160}
-                                    ,{field:'after',title:'变动后', width:150}
-                                    ,{field:'transaction_info',title:'交易信息', width:100}
-                                    ,{field:'currency_name',title:'币种', width:100}
+                                    ,{field:'after',title:'变动后', minWidth:150}
+                                    ,{field:'transaction_info',title:'交易信息', minWidth:100}
+                                    ,{field:'currency_name',title:'币种', minWidth:100}
                                     ,{field:'info',title:'记录', minWidth:300}
-                                    //,{field:'type',title:'类型', width:100}
-                                    ,{field:'created_time',title:'创建时间', width:170}
-//                                    , {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
+                                    //,{field:'type',title:'类型', minWidth:100}
+                                    ,{field:'created_time',title:'创建时间', minWidth:170}
+//                                    , {fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                                 ]]
                                 ,parseData: function(res){ //res 即为原始返回的数据
                                    $('#statistics').html(res.sum);

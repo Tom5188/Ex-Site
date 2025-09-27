@@ -77,7 +77,7 @@
         </div>
         <table id="bindlist" lay-filter="bindlist"></table>
         <script type="text/html" id="barBind">
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
         </script>
         <!--<script type="text/html" id="bindTpl">-->
@@ -158,14 +158,14 @@
                 ,limit: 20
                 ,limits: [20, 50, 100, 200, 500, 1000]
                 ,cols: [[ //表头
-                    {field: 'check', type: 'checkbox', width: 40}
-                    // ,{field: 'id', title: 'ID', width:70, sort: true}
+                    {field: 'check', type: 'checkbox', minWidth: 40}
+                    // ,{field: 'id', title: 'ID', minWidth:70, sort: true}
                     ,{field: 'code', title: '哈希值', minWidth:110}
                     ,{field: 'currency_name', title: '交易币种', minWidth:85}
                     ,{field: 'pay_type', title: '交易类型', minWidth:100, templet: '#bindTransaction'}
                     ,{field: 'per_increase', title:'竞拍每次加价', minWidth:120,}
                     ,{field: 'name', title: '名称', minWidth:110}
-                    // ,{field: 'number', title: '数量', Width:30}
+                    // ,{field: 'number', title: '数量', minWidth:30}
                     // ,{field: 'description', title: '资产详情', minWidth:80}
                     ,{field: 'author', title: '作者ID', minWidth:80}
                     // ,{field: 'author_description', title: '关于艺术家', minWidth:80}

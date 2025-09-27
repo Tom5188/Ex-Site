@@ -31,7 +31,7 @@
     <a class="layui-btn layui-btn-xs" lay-event="users_wallet">钱包</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lock_user">锁定</a>
     
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="score">积分</a>
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="licai" hide>理财账户</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" >删除</a>
@@ -96,7 +96,7 @@
                 ,{field: 'status', title: '状态', minWidth: 80, templet:"#status_t"}
                 ,{field: 'cash_info', title: '银行卡', minWidth: 80, templet:"#cash_info"}
                 ,{field: 'cash_info_international', title: '钱包地址', minWidth: 80, templet:"#cash_info_international"}
-                // ,{field:'status', title:'是否锁定', width:90, templet: '#switchTpl'}
+                // ,{field:'status', title:'是否锁定', minWidth:90, templet: '#switchTpl'}
                 ,{field:'is_bind_box_author', title:'开通盲盒作者', minWidth:120, templet: '#bind_box'}
                 ,{field:'is_trader', title:'是否为交易员', minWidth:120, templet: '#is_trader'}
                 ,{field:'time', title:'注册时间', minWidth:150}

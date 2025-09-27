@@ -30,7 +30,7 @@
 @endsection
 @section('scripts')
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
 </script>
 <script>
 let url=window.location.href;
@@ -52,13 +52,13 @@ if(url.indexOf("id")!=-1){
             ,page: true
             ,cols: [[
                 {type: 'radio'}
-                ,{field: 'id', title: 'id', width: 70}
-                ,{field: 'name', title: '交易币', width: 80}
-                ,{field: 'day', title: '期限', width: 80}
-                ,{field: 'total_interest_rate', title: '利率(%)', width: 80}
-                ,{field: 'save_min', title: '最少存币数', width: 80}
-                ,{field: 'created_at', title: '创建时间', width: 180}
-                // ,{fixed: 'right', title: '操作', width: 190, align: 'center', toolbar: '#barDemo'}
+                ,{field: 'id', title: 'id', minWidth: 70}
+                ,{field: 'name', title: '交易币', minWidth: 80}
+                ,{field: 'day', title: '期限', minWidth: 80}
+                ,{field: 'total_interest_rate', title: '利率(%)', minWidth: 80}
+                ,{field: 'save_min', title: '最少存币数', minWidth: 80}
+                ,{field: 'created_at', title: '创建时间', minWidth: 180}
+                // ,{fixed: 'right', title: '操作', minWidth: 190, align: 'center', toolbar: '#barDemo'}
             ]]
         });
          table.on('tool(data_table)', function (obj) {

@@ -8,7 +8,7 @@
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
      <!--   
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a> -->
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 @endsection
@@ -25,8 +25,8 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', Width:60, sort: true}
-                    ,{field: 'currency_name', title: '行情名称', Width:80}
+                    {field: 'id', title: 'ID', minWidth:60, sort: true}
+                    ,{field: 'currency_name', title: '行情名称', minWidth:80}
                     ,{field: 'legal_name', title: '法币', minWidth:80}
                     ,{field: 'start_price', title: '开盘价格', minWidth:80}
                     ,{field: 'end_price', title: '收盘价格', minWidth:80}

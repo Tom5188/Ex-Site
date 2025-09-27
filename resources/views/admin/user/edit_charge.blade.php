@@ -5,10 +5,19 @@
 @endsection
 
 @section('page-content')
+<style>
+    .status_bg_1{
+        background: #1E9FFF;
+    }
+    .status_bg_2{
+        background: #5fb878;
+    }
+    .status_bg_3{
+        background: #ff5722;
+    }
+</style>
     <form class="layui-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">充值信息</label>
-            <div class="layui-input-block">
                <table class="layui-table">
                 <tbody>
                     <tr>
@@ -28,7 +37,7 @@
                                 充值方式：银行卡
                             @endif
                             @if($charge_info->type == 0 )
-                                充值方式：在线充值
+                                充值方式：区块链
                             @endif
                         </td>
                     </tr>
@@ -43,7 +52,13 @@
                     @if($charge_info->type == 0 )
                         <tr>
                             <td>
-                                类型：{{$charge_info->sub_type}}
+                                当前状态：@if($charge_info->status==1) 
+                                    <span class="layui-badge status_bg_1">申请充值</span>
+                                @elseif($charge_info->status==2)
+                                    <span class="layui-badge status_bg_2">充值完成</span>
+                                @elseif($charge_info->status==3) 
+                                    <span class="layui-badge status_bg_3">申请拒绝</span>
+                                @endif
                             </td>
                              <td>
                                 地址：{{$charge_info -> address}}
@@ -76,22 +91,109 @@
                             </td>
                         </tr>
                      @endif
-                      <tr>
-                        <td colspan="2">
-                            备注：{{$charge_info->desc}}
+                    <tr>
+                        <td  colspan="2">
+                            <textarea  class="layui-textarea" name="desc" placeholder="请输入拒绝理由">{{$charge_info->desc}}</textarea>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td  colspan="2">
+                            <input type="hidden" name='id' value='{{$charge_info->id}}'>
+                            @if($charge_info->status==1)
+                                <button class="layui-btn" lay-submit lay-filter="demo1">通过</button>
+                                <button class="layui-btn layui-btn-danger" lay-submit lay-filter="demo2">拒绝</button>
+                            @endif
                         </td>
                     </tr>
                 </tbody>
             </table>
-            </div>
         </div>
-        
-        
     </form>
 
 @endsection
 
 @section('scripts')
-    
+    <script>
+        layui.use(['form','laydate'],function () {
+            var form = layui.form
+                ,$ = layui.jquery
+                ,laydate = layui.laydate
+                ,index = parent.layer.getFrameIndex(window.name);
+            $('#get_code').click(function () {
+                var that_btn = $(this);
+                $.ajax({
+                    url: '/admin/safe/verificationcode'
+                    ,type: 'GET'
+                    ,success: function (res) {
+                        if (res.type == 'ok') {
+                            that_btn.attr('disabled', true);
+                            that_btn.toggleClass('layui-btn-disabled');
+                        }
+                        layer.msg(res.message, {
+                            time: 3000
+                        });
+                    }
+                    ,error: function () {
+                        layer.msg('网络错误');
+                    }
+                });
+            });
+            //监听提交
+            form.on('submit(demo1)', function(data) {
+                var data = data.field;
+                // console.log(data);
+                // if (data.verificationcode == '') {
+                //     layer.msg('请填写安全验证码');
+                //     return false;
+                // }
+                layer.confirm('确定允许充币?', function (index) {
+                    var loading = layer.load(1, {time: 30 * 1000});
+                    layer.close(index);
+                    $.ajax({
+                        url: '{{url('admin/user/pass_req')}}'
+                        ,type: 'post'
+                        ,dataType: 'json'
+                        ,data : data
+                        ,success: function(res) {
+                            if (res.type=='error') {
+                                layer.msg(res.message);
+                            } else {
+                                layer.msg(res.message);
+                                parent.layer.close(index);
+                                parent.window.location.reload();
+                            }
+                        }
+                        ,complete: function () {
+                            layer.close(loading);
+                        }
+                    });
+                });
+                return false;
+            });
+            form.on('submit(demo2)', function(data){
+                var data = data.field;
+                if (data.desc == '') {
+                    layer.msg('请填写拒绝理由');
+                    return false;
+                }
+                $.ajax({
+                    url:'{{url('admin/user/refuse_req')}}'
+                    ,type:'post'
+                    ,dataType:'json'
+                    ,data : data
+                    ,success:function(res){
+                        if(res.type=='error'){
+                            layer.msg(res.message);
+                        }else{
+                            parent.layer.close(index);
+                            parent.window.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
 
 @endsection

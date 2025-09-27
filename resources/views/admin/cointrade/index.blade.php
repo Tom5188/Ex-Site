@@ -77,23 +77,23 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
                     ,{field: 'u_id', title: '用户ID'}
-                    ,{field: 'account_number', title: '用户名', width:200}
-                    ,{ title: '交易类型', width:200,templet:function(d){
+                    ,{field: 'account_number', title: '用户名', minWidth:200}
+                    ,{ title: '交易类型', minWidth:200,templet:function(d){
                         if(d.type==1){
                              return "<span style='color:#00c087'>买</span>";
                         }else if(d.type==2){
                             return "<span style='color:#f00'>卖</span>";
                         }
                     }}
-                    ,{ title: '交易对', width:200,templet:function(d){
+                    ,{ title: '交易对', minWidth:200,templet:function(d){
                         return d.currency_name+"/"+d.legal_name;
                     }}
-                    ,{ title: '委托价', width:100,templet:function(d){
+                    ,{ title: '委托价', minWidth:100,templet:function(d){
                         return (parseFloat(d.target_price).toFixed(4));
                     }}
-                    ,{ title: '委托量', width:120,templet:function(d){
+                    ,{ title: '委托量', minWidth:120,templet:function(d){
                         return (parseFloat(d.trade_amount).toFixed(4));
                     }}
                     // ,{field: 'charge_fee', title: '手续费'}

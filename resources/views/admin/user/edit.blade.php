@@ -1,48 +1,37 @@
 @extends('admin._layoutNew')
 
 @section('page-head')
-<style>
-    .layui-form-label {
-        width: 150px;
-    }
-    .layui-input-block {
-        margin-left: 180px;
-    }
-</style>
+
 @endsection
 
 @section('page-content')
     <form class="layui-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">账号</label>
+            <label class="layui-form-label">头像</label>
             <div class="layui-input-block">
-                <input type="text" name="account_number" autocomplete="off" placeholder="" class="layui-input" value="{{$result->account_number}}" disabled>
+                <img src="{{$result->head_portrait}}" style="width: 5rem; height: 5rem;">
             </div>
         </div>
-        
-        <!-- <div class="layui-form-item">
-            <label class="layui-form-label">手机号</label>
-            <div class="layui-input-block">
-                <input type="text" name="phone" autocomplete="off" placeholder="" class="layui-input" value="{{$result->phone}}" disabled>
-            </div>
-        </div>
-        
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-block">
                 <input type="text" name="email" autocomplete="off" placeholder="" class="layui-input" value="{{$result->email}}" disabled>
             </div>
-        </div> -->
-        
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" autocomplete="off" placeholder="" class="layui-input" value="{{$result->phone}}" disabled>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">
                 <input type="text" name="common" autocomplete="off" placeholder="" class="layui-input" value="{{$result->common}}">
             </div>
         </div>
-
         <div class="layui-form-item">
-            <label class="layui-form-label">用户等级</label>
+            <label class="layui-form-label">会员等级</label>
             <div class="layui-input-block">
                 <select name="user_level" lay-verify="required" lay-filter="">
                     <option value=""></option>
@@ -94,14 +83,14 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">提款最小金额</label>
+            <label class="layui-form-label">最小提款</label>
             <div class="layui-input-block">
                 <input type="text" name="min_withdraw" autocomplete="off" placeholder="" class="layui-input" value="{{$result->min_withdraw}}" >
             </div>
         </div>
         
         <div class="layui-form-item">
-            <label class="layui-form-label">提款最大金额</label>
+            <label class="layui-form-label">最大提款</label>
             <div class="layui-input-block">
                 <input type="text" name="max_withdraw" autocomplete="off" placeholder="" class="layui-input" value="{{$result->max_withdraw}}" >
             </div>
@@ -109,7 +98,7 @@
         
         @foreach($seconds as $k => $v)
             <div class="layui-form-item">
-                <label class="layui-form-label">{{ $k }}秒最小金额</label>
+                <label class="layui-form-label">{{ $k }} S最小值</label>
                 <div class="layui-input-block">
                     <input type="text" name="seconds[]" autocomplete="off" placeholder="" class="layui-input" value="{{ $v }}">
                 </div>
@@ -181,8 +170,8 @@
         </div> -->
         <input type="hidden" name="id" value="{{$result->id}}">
         <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <div style="margin-left: 2.5rem">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>

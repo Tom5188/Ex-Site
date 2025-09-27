@@ -29,7 +29,7 @@
 
         <script type="text/html" id="barDemo">
             <a class="layui-btn layui-btn-xs" lay-event="users_wallet">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
         </script>
 
 @endsection
@@ -64,11 +64,11 @@
                                 , page: true
                                 ,limit: 20
                                 , cols: [[
-                                    { field: 'id', title: 'ID', width: 50}
-                                    , {field:'address',title:'地址', width:300}
-                                    , {field:'price',title:'金额', width:100}
-                                    , {field:'time',title:'时间', width:200}
-                                    , {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
+                                    { field: 'id', title: 'ID', minWidth: 50}
+                                    , {field:'address',title:'地址', minWidth:300}
+                                    , {field:'price',title:'金额', minWidth:100}
+                                    , {field:'time',title:'时间', minWidth:200}
+                                    , {fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

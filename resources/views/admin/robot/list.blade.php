@@ -28,7 +28,7 @@
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
 
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         {{--<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="execute">执行上币脚本</a>--}}
     </script>
@@ -49,8 +49,8 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', Width:50, sort: true}
-                    ,{field: 'sell_user_info', title: '卖家', Width:150}
+                    {field: 'id', title: 'ID', minWidth:50, sort: true}
+                    ,{field: 'sell_user_info', title: '卖家', minWidth:150}
                     ,{field: 'buy_user_info', title: '买家', minWidth:150}
                     ,{field: 'currency_info', title: '交易币', minWidth:50}
                     ,{field: 'legal_info', title: '法币', minWidth:50}

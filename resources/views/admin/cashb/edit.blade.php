@@ -6,10 +6,20 @@
 @endsection
 
 @section('page-content')
+<style>
+    .status_bg_1{
+        background: #1E9FFF;
+    }
+    .status_bg_2{
+        background: #5fb878;
+    }
+    .status_bg_3{
+        background: #ff5722;
+    }
+</style>
 <form class="layui-form" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">提币信息</label>
-        <div class="layui-input-block">
+
             <table class="layui-table">
                 <tbody>
                     <tr>
@@ -38,12 +48,12 @@
                     </tr>
                     <tr>
                         @if($walletout_type == 0)
-                        <td>
+                        <td colspan="2">
                             提币地址：{{$wallet_out->address}}
                         </td>
                         @endif
                         @if($walletout_type == 1 )
-                        <td>
+                        <td colspan="2">
                             人民币价格：{{$wallet_out->real_rmb}}元
                         </td>
                         @endif
@@ -91,23 +101,35 @@
                             申请时间：{{$wallet_out->create_time}}
                         </td>
                         <td>
-                            当前状态：@if($wallet_out->status==1) 提交申请
-                            @elseif($wallet_out->status==2) 提币成功
-                            @elseif($wallet_out->status==3) 提币失败
-                            @else
+                            当前状态：@if($wallet_out->status==1) 
+                                    <span class="layui-badge status_bg_1">申请提币</span>
+                                @elseif($wallet_out->status==2)
+                                    <span class="layui-badge status_bg_2">提币完成</span>
+                                @elseif($wallet_out->status==3) 
+                                    <span class="layui-badge status_bg_3">申请拒绝</span>
+                                @endif
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td  colspan="2">
+                            <textarea  class="layui-textarea" name="notes" placeholder="请输入拒绝理由">{{$wallet_out->notes}}</textarea>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td  colspan="2">
+                            <input type="hidden" name='id' value='{{$wallet_out->id}}'>
+                            @if($wallet_out->status==1)
+                                <button class="layui-btn" lay-submit lay-filter="demo1">通过</button>
+                                <button class="layui-btn layui-btn-danger" lay-submit lay-filter="demo2">拒绝</button>
                             @endif
                         </td>
                     </tr>
 
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">反馈信息</label>
-        <div class="layui-input-block">
-            <textarea name="notes" id="" cols="90" rows="5">{{$wallet_out->notes}}</textarea>
-        </div>
+
     </div>
     @if($wallet_out->status==1)
     <!--<div class="layui-form-item">-->
@@ -118,16 +140,6 @@
     <!--    <button type="button" class="layui-btn layui-btn-primary" id="get_code">获取验证码</button>-->
     <!--</div>-->
     @endif
-    <input type="hidden" name="id" value="">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <input type="hidden" name='id' value='{{$wallet_out->id}}'>
-            @if($wallet_out->status==1)
-            <button class="layui-btn" lay-submit="" lay-filter="demo1" name='method' value="done">确认提币</button>
-            <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo2">退回申请</button>
-            @endif
-        </div>
-    </div>
 </form>
 
 @endsection
@@ -192,6 +204,10 @@
             });
             form.on('submit(demo2)', function(data){
                 var data = data.field;
+                if (data.notes == '') {
+                    layer.msg('请填写拒绝理由');
+                    return false;
+                }
                 $.ajax({
                     url:'{{url('admin/cashb_done')}}'
                     ,type:'post'

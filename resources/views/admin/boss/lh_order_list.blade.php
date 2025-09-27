@@ -69,14 +69,14 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: '订单ID', width:100, sort: true}
-                    ,{field: 'user_id', title: '用户ID', width:100}
-                    ,{field: 'account_number', title: '用户名', width:200}
+                    {field: 'id', title: '订单ID', minWidth:100, sort: true}
+                    ,{field: 'user_id', title: '用户ID', minWidth:100}
+                    ,{field: 'account_number', title: '用户名', minWidth:200}
                     ,{field:'currency_name',title:'币种',width:100}
-                    ,{field:'day_rate',title: '日利率', width:100}
-                    ,{field: 'amount', title: '存币数量', width:200}
-                    ,{field: 'total_interest', title: '总利息', width:100}
-                    ,{field: 'start_at', title: '开始时间', width:120}
+                    ,{field:'day_rate',title: '日利率', minWidth:100}
+                    ,{field: 'amount', title: '存币数量', minWidth:200}
+                    ,{field: 'total_interest', title: '总利息', minWidth:100}
+                    ,{field: 'start_at', title: '开始时间', minWidth:120}
                     ,{field: 'end_at', title: '到期时间',}
                     ,{ title: '状态',templet:function(d){
                             if(d.is_cancel){

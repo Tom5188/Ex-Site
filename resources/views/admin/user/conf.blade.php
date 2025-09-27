@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">调节值</label>
+                <label class="layui-form-label">调节金额</label>
                 <div class="layui-input-block">
                     <input type="text" name="conf_value" required  lay-verify="required" placeholder="请输入需要调节的数值" autocomplete="off" class="layui-input">
                 </div>
@@ -68,14 +68,10 @@
                     <textarea name="info" placeholder="请输入内容" class="layui-textarea" lay-verify=""></textarea>
                 </div>
             </div>
-
-
-
-
-            <input type="hidden" name="id" value="{{$results['id']}}">
             <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="user_submit">立即提交</button>
+                <div style="margin-left:2.5rem">
+                    <input type="hidden" name="id" value="{{$results['id']}}">
+                    <button class="layui-btn" lay-submit lay-filter="user_submit">提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>

@@ -104,12 +104,12 @@
                 , url: '/agent/user/huazhuan_lists?parent_id=' + parent_id //模拟接口
                 , cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'id', width: 60, title: 'ID', sort: true}
+                    , {field: 'id', minWidth: 60, title: 'ID', sort: true}
                     , {field: 'account_number', title: '用户名', minWidth: 150}
                     , {field: 'number', title: '划转数量', minWidth: 150}
                     , {field: 'type', title: '划转类型', minWidth: 150, templet: '#lockTpl'}
-                    , {field: 'add_time', title: '划转时间', sort: true, width: 170}
-//                    , {title: '操作', width: 100, align: 'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
+                    , {field: 'add_time', title: '划转时间', sort: true, minWidth: 170}
+//                    , {title: '操作', minWidth: 100, align: 'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
                 ]]
                 , page: true
                 , limit: 30

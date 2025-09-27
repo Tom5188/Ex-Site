@@ -63,15 +63,22 @@
                 layer.full(index);
             },100)
         }else {
+            // layer.open({
+            //     type: 2,
+            //     area: [w + 'px', h + 'px'],
+            //     fix: false, //不固定
+            //     maxmin: true,
+            //     shade: 0.4,
+            //     title: title,
+            //     content: url,
+            //     offset: '10px',
+            // });
             layer.open({
-                type: 2,
-                area: [w + 'px', h + 'px'],
-                fix: false, //不固定
-                maxmin: true,
-                shade: 0.4,
-                title: title,
-                content: url,
-                offset: '10px',
+                title: title
+                ,type: 2
+                ,content: url
+                ,maxmin: true
+                ,area:["80%", "80%"],
             });
         }
     }

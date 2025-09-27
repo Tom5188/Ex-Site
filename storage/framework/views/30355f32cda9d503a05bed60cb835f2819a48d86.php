@@ -34,14 +34,14 @@
                         ,totalRow: true
                         ,height: 'full-100'
                         ,cols: [[
-                                {field: 'id', title: '币种id', width: 70}
-                                ,{field: 'name', title: '币种', width: 100, totalRowText: '小计'}
+                                {field: 'id', title: '币种id', minWidth: 70}
+                                ,{field: 'name', title: '币种', minWidth: 100, totalRowText: '小计'}
                                 
-                                ,{field: '_ru', title: '入金', width: 150, totalRow: true}
-                                ,{field: '_chu', title: '出金', width: 150, totalRow: true}
-                                ,{field: '_caution_money', title: '杠杆可用保证金', width: 150, totalRow: true}
-                                ,{field: '_zongyue', title: '总余额', width: 150, totalRow: true}
-                                // ,{field: '_zongyue', title: '总余额', width: 150,templet:function(d){
+                                ,{field: '_ru', title: '入金', minWidth: 150, totalRow: true}
+                                ,{field: '_chu', title: '出金', minWidth: 150, totalRow: true}
+                                ,{field: '_caution_money', title: '杠杆可用保证金', minWidth: 150, totalRow: true}
+                                ,{field: '_zongyue', title: '总余额', minWidth: 150, totalRow: true}
+                                // ,{field: '_zongyue', title: '总余额', minWidth: 150,templet:function(d){
                                 //     return d._zongyue.change_balance*1+d._zongyue.lock_change_balance*1+d._zongyue.legal_balance*1+d._zongyue.lock_legal_balance*1+d._zongyue.lever_balance+d._zongyue.lock_lever_balance+d._zongyue.lock_micro_balance*1+d._zongyue.micro_balance*1;
                                 // }}
                                                              

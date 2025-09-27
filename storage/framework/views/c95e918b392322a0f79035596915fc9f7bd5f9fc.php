@@ -80,23 +80,23 @@
             ,page: true
             ,totalRow: true
             ,cols: [[
-                {field: 'id', title: 'id', width: 80, totalRowText: '小计:'}
-                ,{field: 'symbol', title: '交易对', width: 110}
-                ,{field: 'type_name', title: '方式', width: 80}
-                ,{field: 'account_number', title: '交易账号', width: 130}
-                ,{field: 'price', title: '开仓价格', width: 130, templet: '<div><p class="number"><span>{{ Number(d.price).toFixed(6) }}</span></p></div>'}
-                ,{field: 'update_price', title: '当前价格', width: 130, templet: '<div><p class="number"><span>{{ Number(d.update_price).toFixed(6) }}</span></p></div>'}
-                ,{field: 'share', title: '手数', width: 90, hide: true}
-                ,{field: 'multiple', title: '倍数', width: 90}
-                ,{field: 'number', title: '数量', width: 90}
-                ,{field: 'caution_money', title: '保证金', width: 130, totalRow: true}
-                ,{field: 'profits', title: '盈亏', width: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>{{ Number(d.profits).toFixed(4) }}</span></p></div>'}
+                {field: 'id', title: 'id', minWidth: 80, totalRowText: '小计:'}
+                ,{field: 'symbol', title: '交易对', minWidth: 110}
+                ,{field: 'type_name', title: '方式', minWidth: 80}
+                ,{field: 'account_number', title: '交易账号', minWidth: 130}
+                ,{field: 'price', title: '开仓价格', minWidth: 130, templet: '<div><p class="number"><span>{{ Number(d.price).toFixed(6) }}</span></p></div>'}
+                ,{field: 'update_price', title: '当前价格', minWidth: 130, templet: '<div><p class="number"><span>{{ Number(d.update_price).toFixed(6) }}</span></p></div>'}
+                ,{field: 'share', title: '手数', minWidth: 90, hide: true}
+                ,{field: 'multiple', title: '倍数', minWidth: 90}
+                ,{field: 'number', title: '数量', minWidth: 90}
+                ,{field: 'caution_money', title: '保证金', minWidth: 130, totalRow: true}
+                ,{field: 'profits', title: '盈亏', minWidth: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>{{ Number(d.profits).toFixed(4) }}</span></p></div>'}
                 ,{fixed: 'right', title: '操作', toolbar: '#operate_bar'}
-                //,{field: 'profits_total', title: '盈亏总额', width: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>{{ Number(d.profits_total).toFixed(4) }}</span></p></div>'}
-                //,{field: 'caution_money_total', title: '保证金总额', width: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>{{ Number(d.caution_money_total).toFixed(4) }}</span></p></div>'}
-                //,{field: 'hazard_rate', title: '风险率', width: 150, sort: true, templet: '<div><p class="number"><span>{{ d.hazard_rate }}</span><span>%</span></p></div>'}
-                //,{field: '', title: '爆仓价', width: 120}
-                //,{fixed: 'right', title: '操作', width: 120}
+                //,{field: 'profits_total', title: '盈亏总额', minWidth: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>{{ Number(d.profits_total).toFixed(4) }}</span></p></div>'}
+                //,{field: 'caution_money_total', title: '保证金总额', minWidth: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>{{ Number(d.caution_money_total).toFixed(4) }}</span></p></div>'}
+                //,{field: 'hazard_rate', title: '风险率', minWidth: 150, sort: true, templet: '<div><p class="number"><span>{{ d.hazard_rate }}</span><span>%</span></p></div>'}
+                //,{field: '', title: '爆仓价', minWidth: 120}
+                //,{fixed: 'right', title: '操作', minWidth: 120}
             ]]
             ,where : {
                 user_id: user_id

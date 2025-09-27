@@ -77,15 +77,15 @@
             ,url: '/agent/jie/list'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'id', width: 60, title: 'ID', sort: true }
+                ,{field: 'id', minWidth: 60, title: 'ID', sort: true }
                 ,{field: 'user_name', title: '下级用户名', minWidth: 150}
-                ,{field: 'agent_level', title: '下级用户等级', width: 150}
-                ,{field: 'type', title: '结算类型', width: 90, templet: '#lockTpl'}
-                ,{field: 'before', title: '初始账户金额',sort: true, width: 170,style:"color: #fff;background-color: #01AAED;"}
-                ,{field: 'change', title: '贡献收益', sort: true, width: 170,style:"color: #fff;background-color: #FF5722;"}
-                ,{field: 'after', title: '最终账户金额', sort: true, width: 170,style:"color: #fff;background-color: #01AAED;"}
-                ,{field: 'memo', title: '变动备注', width: 200}
-                ,{title: '操作', width: 120, align:'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
+                ,{field: 'agent_level', title: '下级用户等级', minWidth: 150}
+                ,{field: 'type', title: '结算类型', minWidth: 90, templet: '#lockTpl'}
+                ,{field: 'before', title: '初始账户金额',sort: true, minWidth: 170,style:"color: #fff;background-color: #01AAED;"}
+                ,{field: 'change', title: '贡献收益', sort: true, minWidth: 170,style:"color: #fff;background-color: #FF5722;"}
+                ,{field: 'after', title: '最终账户金额', sort: true, minWidth: 170,style:"color: #fff;background-color: #01AAED;"}
+                ,{field: 'memo', title: '变动备注', minWidth: 200}
+                ,{title: '操作', minWidth: 120, align:'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
             ]]
             ,page: true
             ,limit: 30

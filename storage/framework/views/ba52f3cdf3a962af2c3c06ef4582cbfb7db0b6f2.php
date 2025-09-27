@@ -41,7 +41,7 @@
             
            
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">查看</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
         </script>
       
         <script type="text/html" id="switchTpl">
@@ -91,15 +91,15 @@
                                 , page: true
                                 ,limit: 20
                                 , cols: [[
-                                    { field: 'id', title: 'ID', width: 100}
+                                    { field: 'id', title: 'ID', minWidth: 100}
                                     , {field:'account',title: '用户账号',width: 280}
                                     , {field:'type',title: '证件类型',width: 100,align:'center',templet:'#idTypeTpl'}
                                     , {field:'name',title: '真实姓名',width: 150}
                                     , {field:'card_id',title: '证件号码',width: 150}
-                                    , {field:'review_status', title:'是否审核', width:150, templet: '#switchTpl'}
+                                    , {field:'review_status', title:'是否审核', minWidth:150, templet: '#switchTpl'}
                                     , {field:'examine',title: '高级认证',width: 150, templet: '#switchTplAdvanced'}
-                                    , {field:'create_time',title:'申请时间', width:200} 
-                                    , {fixed: 'right', title: '操作', width: 180, align: 'center', toolbar: '#barDemo'}
+                                    , {field:'create_time',title:'申请时间', minWidth:200} 
+                                    , {fixed: 'right', title: '操作', minWidth: 180, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

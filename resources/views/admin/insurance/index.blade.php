@@ -10,7 +10,7 @@
 
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
@@ -45,10 +45,10 @@
                 ,height: 'full-100'
                 ,id: 'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'name', title: '名称', width: 100}
-                    ,{field: 'currency_name', title: '币种', width: 100}
-                    ,{field: 'type_name', title: '类型', width: 100}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'name', title: '名称', minWidth: 100}
+                    ,{field: 'currency_name', title: '币种', minWidth: 100}
+                    ,{field: 'type_name', title: '类型', minWidth: 100}
                     ,{field: 'auto_claim', title: '自动赔付', minWidth: 100,templet:'#auto_claim'}
                     ,{field: 'status', title: '状态', minWidth: 100, templet:'#status'}
                     ,{field: 'is_t_add_1', title: 'T+1生效', minWidth: 100, templet:'#is_t_add_1_t'}

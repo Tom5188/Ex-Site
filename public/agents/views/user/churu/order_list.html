@@ -76,7 +76,7 @@
             elem: '#order-list'
             , url: '/agent/lever_transaction/lists?user_id=' + router.search.user_id //模拟接口
             , cols: [[
-                {field: 'id', width: 60, title: 'ID', sort: true}
+                {field: 'id', minWidth: 60, title: 'ID', sort: true}
                 , {field: 'price', title: '价格', minWidth: 150,}
                 , {field: 'status_name', title: '状态', minWidth: 150,}
                 , {field: 'type_name', title: '交易类型', minWidth: 150,}
@@ -85,7 +85,7 @@
                 , {field: 'multiple', title: '倍数', minWidth: 150}
                 , {field: 'number', title: '数量', minWidth: 150}
                 , {field: 'trade_fee', title: '手续费', minWidth: 150}
-                , {field: 'time', title: '创建时间', sort: true, width: 170}
+                , {field: 'time', title: '创建时间', sort: true, minWidth: 170}
             ]]
             , page: true
             , limit: 30

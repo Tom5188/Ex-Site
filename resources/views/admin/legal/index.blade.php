@@ -101,20 +101,20 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'seller_name', title: '商家名称', width:120}
-                    ,{field: 'type', title: '出售/求购', width:100, templet: '#type'}
-                    ,{field: 'way_name', title: '支付方式', width:100}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'seller_name', title: '商家名称', minWidth:120}
+                    ,{field: 'type', title: '出售/求购', minWidth:100, templet: '#type'}
+                    ,{field: 'way_name', title: '支付方式', minWidth:100}
 
-                    ,{field: 'price', title: '单价', width:100 }
-                    ,{field: 'total_number', title: '数量', width:100}
-                    ,{field: 'surplus_number', title: '剩余数量', width:100}
-                    ,{field: 'currency_name', title: '交易币', width:80}
+                    ,{field: 'price', title: '单价', minWidth:100 }
+                    ,{field: 'total_number', title: '数量', minWidth:100}
+                    ,{field: 'surplus_number', title: '剩余数量', minWidth:100}
+                    ,{field: 'currency_name', title: '交易币', minWidth:80}
 
-                    // ,{field: 'limitation', title: '限额', width:100, templet: '#limitation'}
-                    ,{field: 'is_done', title: '是否完成', width:100, templet: '#is_done'}
+                    // ,{field: 'limitation', title: '限额', minWidth:100, templet: '#limitation'}
+                    ,{field: 'is_done', title: '是否完成', minWidth:100, templet: '#is_done'}
 
-                    ,{field: 'create_time', title: '创建时间', width:180}
+                    ,{field: 'create_time', title: '创建时间', minWidth:180}
 
                     ,{title:'操作',minWidth:300,toolbar: '#barDemo'}
 

@@ -70,9 +70,9 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'user_name', title: '用户名', width:220}
-                    ,{field: 'currency_name', title: '虚拟币', width:80}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'user_name', title: '用户名', minWidth:220}
+                    ,{field: 'currency_name', title: '虚拟币', minWidth:80}
                     ,{field: 'number', title: '提币数量', minWidth:110}
                     ,{field: 'rate', title: '手续费', minWidth:80}
                     ,{field: 'real_number', title: '实际提币', minWidth:110}

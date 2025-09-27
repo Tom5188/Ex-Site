@@ -150,14 +150,14 @@
             ,page: true
             ,totalRow: true
             ,cols: [[
-                {field: 'id', title: 'id', width: 80}
-                ,{field: 'to_user_name', title: '用户', width: 120, totalRowText: '小计:'}
-                ,{field: 'scene_name', title: '奖励场景', width: 140}
-                ,{field: 'reward_type', title: '奖励类型', width: 90, hide: true}
-                ,{field: 'reward_qty', title: '奖励数量', width: 110, totalRow: true, templet: '#reward_qty'}
-                ,{field: 'memo', title: '奖励说明', width: 400}
-                ,{field: 'from_user_name', title: '触发用户', width: 120}
-                ,{field: 'create_time', title: '奖励时间', width: 170}
+                {field: 'id', title: 'id', minWidth: 80}
+                ,{field: 'to_user_name', title: '用户', minWidth: 120, totalRowText: '小计:'}
+                ,{field: 'scene_name', title: '奖励场景', minWidth: 140}
+                ,{field: 'reward_type', title: '奖励类型', minWidth: 90, hide: true}
+                ,{field: 'reward_qty', title: '奖励数量', minWidth: 110, totalRow: true, templet: '#reward_qty'}
+                ,{field: 'memo', title: '奖励说明', minWidth: 400}
+                ,{field: 'from_user_name', title: '触发用户', minWidth: 120}
+                ,{field: 'create_time', title: '奖励时间', minWidth: 170}
             ]],
             done: function (res, curr, count) {
                 $('#data_count .num-value').text(count);

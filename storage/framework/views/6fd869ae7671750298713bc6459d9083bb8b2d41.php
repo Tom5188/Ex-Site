@@ -16,7 +16,7 @@
 
 <?php $__env->startSection('scripts'); ?>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         {{# if (d.is_legal == 1) { }}
         <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="match">交易对</a>
         {{# } }}
@@ -61,22 +61,22 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'id', width:60, sort: true}
-                    ,{field: 'name', title: '名称', width:90}
-                    ,{field: 'min_number', title: '最少提币量', width:60}
-                    ,{field: 'rate', title: '提币费率', width:100}
-                    ,{field: 'get_address', title: '合约地址', width:150, hide: true}
-                    ,{field: 'sort', title: '排序', width:60}
-                    ,{field: 'type', title: '基于', width:80, templet: '#typetml'}
-                    ,{field: 'is_legal', title: '法币', width:80, templet: '#legal'}
-                    ,{field: 'is_lever', title: '杠杆币', width:80, templet: '#lever'}
-                    ,{field: 'is_micro', title: '期权交易', width: 90, templet: '#micro'}
-                    ,{field: 'is_match', title: '币币', width: 90, templet: '#match'}
-                    ,{field: 'is_transfer', title: '币币划转', width: 110, templet: '#is_transfer'}
+                    {field: 'id', title: 'id', minWidth:60, sort: true}
+                    ,{field: 'name', title: '名称', minWidth:90}
+                    ,{field: 'min_number', title: '最少提币量', minWidth:60}
+                    ,{field: 'rate', title: '提币费率', minWidth:100}
+                    ,{field: 'get_address', title: '合约地址', minWidth:150, hide: true}
+                    ,{field: 'sort', title: '排序', minWidth:60}
+                    ,{field: 'type', title: '基于', minWidth:80, templet: '#typetml'}
+                    ,{field: 'is_legal', title: '法币', minWidth:80, templet: '#legal'}
+                    ,{field: 'is_lever', title: '杠杆币', minWidth:80, templet: '#lever'}
+                    ,{field: 'is_micro', title: '期权交易', minWidth: 90, templet: '#micro'}
+                    ,{field: 'is_match', title: '币币', minWidth: 90, templet: '#match'}
+                    ,{field: 'is_transfer', title: '币币划转', minWidth: 110, templet: '#is_transfer'}
                     
                     ,{field: 'insurancable', title: '是否购买保险', minWidth: 40, templet: '#insurancable'}
-                    ,{field:'is_display', title:'显示', width:85, templet: '#switchTpl', unresize: true}
-                    //,{field: 'create_time', title: '添加时间', width:160}
+                    ,{field:'is_display', title:'显示', minWidth:85, templet: '#switchTpl', unresize: true}
+                    //,{field: 'create_time', title: '添加时间', minWidth:160}
                     ,{title:'操作',width:340,toolbar: '#barDemo'}
                 ]]
             });

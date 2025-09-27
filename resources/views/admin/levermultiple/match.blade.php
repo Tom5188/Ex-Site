@@ -32,14 +32,14 @@
             ,page: true
             ,cols: [[
                 {type: 'radio'}
-                ,{field: 'id', title: 'id', width: 70}
-                ,{field: 'legal_name', title: '法币', width: 80}
-                ,{field: 'currency_name', title: '交易币', width: 80}
-                ,{field: 'is_display', title: '显示', width: 90, templet: '#is_display'}
-                ,{field: 'open_transaction', title: '撮合交易', width: 100, templet: '#open_transaction'}
-                ,{field: 'open_lever', title: '杠杆交易', width: 100, templet: '#open_lever'}
-                ,{field: 'market_from_name', title: '行情来自', width: 110}
-                ,{field: 'create_time', title: '创建时间', width: 180}
+                ,{field: 'id', title: 'id', minWidth: 70}
+                ,{field: 'legal_name', title: '法币', minWidth: 80}
+                ,{field: 'currency_name', title: '交易币', minWidth: 80}
+                ,{field: 'is_display', title: '显示', minWidth: 90, templet: '#is_display'}
+                ,{field: 'open_transaction', title: '撮合交易', minWidth: 100, templet: '#open_transaction'}
+                ,{field: 'open_lever', title: '杠杆交易', minWidth: 100, templet: '#open_lever'}
+                ,{field: 'market_from_name', title: '行情来自', minWidth: 110}
+                ,{field: 'create_time', title: '创建时间', minWidth: 180}
             ]]
         });
         table.on('toolbar(data_table)', function (obj) {

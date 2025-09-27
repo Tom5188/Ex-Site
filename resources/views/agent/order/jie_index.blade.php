@@ -144,22 +144,22 @@
                 ,url: '/agent/jie/list'
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field: 'id', width: 60, title: 'ID', sort: true }
+                    ,{field: 'id', minWidth: 60, title: 'ID', sort: true }
                     ,{field: 'jie_agent_name', title: '代理商', minWidth: 100}
                     ,{field: 'jie_agent_level', title: '代理商等级', minWidth: 100}
                     ,{field: 'user_name', title: '用户名', minWidth: 100}
-                    //,{field: 'agent_level', title: '用户等级', width: 150}
+                    //,{field: 'agent_level', title: '用户等级', minWidth: 150}
 
-                    ,{field: 'relate_id', title: '杠杆订单id', width: 100}
-                    ,{field: 'type', title: '结算类型', width: 90, templet: '#lockTpl'}
-                    ,{field: 'status', title: '是否到账', width: 90, templet: '#statusTpl'}
-                    ,{field: 'legal_name', title: '结算币种', width: 100}
-                    //,{field: 'before', title: '初始账户金额',sort: true, width: 170,style:"color: #fff;background-color: #01AAED;"}
-                    ,{field: 'change', title: '结算收益', sort: true, width: 170,style:"color: #fff;background-color: #FF5722;"}
-                    //,{field: 'after', title: '最终账户金额', sort: true, width: 170,style:"color: #fff;background-color: #01AAED;"}
-                    ,{field: 'memo', title: '备注', width:150}
+                    ,{field: 'relate_id', title: '杠杆订单id', minWidth: 100}
+                    ,{field: 'type', title: '结算类型', minWidth: 90, templet: '#lockTpl'}
+                    ,{field: 'status', title: '是否到账', minWidth: 90, templet: '#statusTpl'}
+                    ,{field: 'legal_name', title: '结算币种', minWidth: 100}
+                    //,{field: 'before', title: '初始账户金额',sort: true, minWidth: 170,style:"color: #fff;background-color: #01AAED;"}
+                    ,{field: 'change', title: '结算收益', sort: true, minWidth: 170,style:"color: #fff;background-color: #FF5722;"}
+                    //,{field: 'after', title: '最终账户金额', sort: true, minWidth: 170,style:"color: #fff;background-color: #01AAED;"}
+                    ,{field: 'memo', title: '备注', minWidth:150}
 
-                    ,{title: '操作', width: 220, align:'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
+                    ,{title: '操作', minWidth: 220, align:'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
                 ]]
                 ,page: true
                 ,limit: 30

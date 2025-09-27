@@ -21,8 +21,8 @@
         <script type="text/html" id="barDemo">
             
            
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
         </script>
       
         <script type="text/html" id="switchTpl">
@@ -67,21 +67,21 @@
                                 , page: true
                                 ,limit: 20
                                 , cols: [[
-                                    { field: 'id', title: 'ID', width: 100}
+                                    { field: 'id', title: 'ID', minWidth: 100}
                                     
-                                    , {field:'title',title:'标题', width:150}
-                                    , {field:'describe',title:'描述', width:150}
+                                    , {field:'title',title:'标题', minWidth:150}
+                                    , {field:'describe',title:'描述', minWidth:150}
                                     , {field:'pic',title: '广告图片',width: 100,templet:'#FcardTpl'}
-                                    , {field:'url',title:'链接', width:150}
-                                    , {field:'start_time',title:'开始时间', width:150}
-                                    , {field:'end_time',title:'结束时间', width:150}
-                                    , {field:'position_name',title:'位置', width:100}
-                                    , {field:'sort',title:'排序', width:100}
+                                    , {field:'url',title:'链接', minWidth:150}
+                                    , {field:'start_time',title:'开始时间', minWidth:150}
+                                    , {field:'end_time',title:'结束时间', minWidth:150}
+                                    , {field:'position_name',title:'位置', minWidth:100}
+                                    , {field:'sort',title:'排序', minWidth:100}
                                     
                                     
-                                    ,{field:'is_show', title:'是否显示', width:90, templet: '#switchTpl'}
+                                    ,{field:'is_show', title:'是否显示', minWidth:90, templet: '#switchTpl'}
                                    
-                                    , {fixed: 'right', title: '操作', width: 280, align: 'center', toolbar: '#barDemo'}
+                                    , {fixed: 'right', title: '操作', minWidth: 280, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

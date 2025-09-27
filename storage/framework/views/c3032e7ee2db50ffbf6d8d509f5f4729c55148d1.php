@@ -66,7 +66,7 @@
     
         <table id="bindOrderlist" lay-filter="bindOrderlist"></table>
         <!--<script type="text/html" id="barBind">-->
-        <!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+        <!--    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>-->
         <!--</script>-->
         <!--<script type="text/html" id="bindTpl">-->
         <!--    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="sexDemo" {{ d.status == 1 ? 'checked' : '' }}>-->
@@ -109,7 +109,7 @@
                     ,{field: 'currency_name', title:'交易币种', minWidth:80}
                     // ,{field: 'updated', title:'修改时间', minWidth:150}
                     ,{field: 'created', title:'成交时间', minWidth:150}
-                    // ,{title: '操作',fixed: 'right', Width:50, toolbar: '#barBind'}
+                    // ,{title: '操作',fixed: 'right', minWidth:50, toolbar: '#barBind'}
                 ]]
             });
             // //监听热卖操作

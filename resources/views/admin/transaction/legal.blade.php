@@ -56,7 +56,7 @@
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
         {{--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">调节账户</a>--}}
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 <script type="text/html" id="type">
@@ -85,18 +85,18 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'account_number', title: '用户名', width:120}
-                    ,{field: 'type', title: '买入/卖出', width:100, templet: '#type'}
-                    ,{field: 'price', title: '单价', width:100 }
-                    ,{field: 'number', title: '数量', width:100}
-                    ,{field: 'currency_name', title: '交易币', width:80}
-                    ,{field: 'min_amount', title: '最低交易额', width:100}
-                    ,{field: 'max_amount', title: '最高交易额', width:100}
-                    ,{field: 'is_check', title: '是否设限', width:180, templet: '#is_check'}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'account_number', title: '用户名', minWidth:120}
+                    ,{field: 'type', title: '买入/卖出', minWidth:100, templet: '#type'}
+                    ,{field: 'price', title: '单价', minWidth:100 }
+                    ,{field: 'number', title: '数量', minWidth:100}
+                    ,{field: 'currency_name', title: '交易币', minWidth:80}
+                    ,{field: 'min_amount', title: '最低交易额', minWidth:100}
+                    ,{field: 'max_amount', title: '最高交易额', minWidth:100}
+                    ,{field: 'is_check', title: '是否设限', minWidth:180, templet: '#is_check'}
                     // ,{field: 'money', title: '交易额度', minWidth:100}
                     // ,{field: 'sure_name', title: '交易状态', minWidth:100}
-                    ,{field: 'create_time', title: '创建时间', width:180}
+                    ,{field: 'create_time', title: '创建时间', minWidth:180}
                     // ,{field: 'update_time', title: '确认时间', minWidth:180}
                     // ,{field: 'create_time', title: '添加时间', minWidth:80}
                     // ,{field: 'wechat_nickname', title: '微信昵称', minWidth:80}

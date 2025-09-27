@@ -73,21 +73,21 @@
             ,totalRow: true
             ,cols: [[
                 {type: 'checkbox'}
-                ,{field: 'id', title: 'id', width: 80, totalRowText: '小计:'}
-                ,{field: 'type_name', title: '方式', width: 150}
-                ,{field: 'mobile', title: '电话', width: 120}
-                ,{field: 'account_number', title: '交易账号', width: 150}
-                ,{field: 'symbol', title: '交易账号', width: 150}
-                ,{field: 'price', title: '价格', width: 150}
-                ,{field: 'share', title: '手数', width: 90}
-                ,{field: 'multiple', title: '倍数', width: 90}
-                ,{field: 'caution_money', title: '保证金', width: 130}
-                ,{field: 'profits', title: '盈亏', width: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>@{{ Number(d.profits).toFixed(4) }}</span></p></div>'}
-                ,{field: 'profits_total', title: '盈亏总额', width: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>@{{ Number(d.profits_total).toFixed(4) }}</span></p></div>'}
-                ,{field: 'caution_money_total', title: '保证金总额', width: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>@{{ Number(d.caution_money_total).toFixed(4) }}</span></p></div>'}
-                ,{field: 'hazard_rate', title: '风险率', width: 150, sort: true, templet: '<div><p class="number"><span>@{{ d.hazard_rate }}</span><span>%</span></p></div>'}
-                //,{field: '', title: '爆仓价', width: 120}
-                //,{fixed: 'right', title: '操作', width: 120}
+                ,{field: 'id', title: 'id', minWidth: 80, totalRowText: '小计:'}
+                ,{field: 'type_name', title: '方式', minWidth: 150}
+                ,{field: 'mobile', title: '电话', minWidth: 120}
+                ,{field: 'account_number', title: '交易账号', minWidth: 150}
+                ,{field: 'symbol', title: '交易账号', minWidth: 150}
+                ,{field: 'price', title: '价格', minWidth: 150}
+                ,{field: 'share', title: '手数', minWidth: 90}
+                ,{field: 'multiple', title: '倍数', minWidth: 90}
+                ,{field: 'caution_money', title: '保证金', minWidth: 130}
+                ,{field: 'profits', title: '盈亏', minWidth: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>@{{ Number(d.profits).toFixed(4) }}</span></p></div>'}
+                ,{field: 'profits_total', title: '盈亏总额', minWidth: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>@{{ Number(d.profits_total).toFixed(4) }}</span></p></div>'}
+                ,{field: 'caution_money_total', title: '保证金总额', minWidth: 150, sort: true, totalRow: true, templet: '<div><p class=""><span>@{{ Number(d.caution_money_total).toFixed(4) }}</span></p></div>'}
+                ,{field: 'hazard_rate', title: '风险率', minWidth: 150, sort: true, templet: '<div><p class="number"><span>@{{ d.hazard_rate }}</span><span>%</span></p></div>'}
+                //,{field: '', title: '爆仓价', minWidth: 120}
+                //,{fixed: 'right', title: '操作', minWidth: 120}
             ]]
         });
         form.on('submit(submit)', function (data) {

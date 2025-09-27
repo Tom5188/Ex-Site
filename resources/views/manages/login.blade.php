@@ -1,213 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>登入 - 内容管理后台</title>
-    <meta name="renderer" content="webkit">
+    <meta charset="UTF-8">
+    <title>管理后台 - 登录</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
-    <link rel="stylesheet" href="/layuiadmin/style/login.css" media="all">
     <style>
-    html, body {
-	position:fixed;
-  top:0px;
-  left:0px;
-  height:100%;
-  width:100%;
-  
-  /*Fallback if gradeints don't work */
-  background: #141e6e;
-  /*Linear gradient... */
-  background: 
-    radial-gradient(
-     at center, #0075c3, #000b61
-    );
-}
-
-.apImgTitle {
-	position: fixed;
-	width: 42%;
-	left: 30%;
-	top: 30%;
-}
-
-.apTitle {
-    font-size: 40px;
-    color: #fff;
-    position: fixed;
-    top: 32%;
-    width: 100%;
-    text-align: center;
-}
-
-.logcon {
-position: fixed;
-    width: 100%;
-    top: 47%;
-    text-align: center;
-}
-
-.logcon input {
-	padding: 10px 15px;
-	border-radius: 3px;
-	border: none;
-	margin-right: 10px;
-	width: 220px;
-}
-
-.logcon button {
-	padding: 7px 20px 10px 20px;
-	border: none;
-	background: #fff;
-	border-radius: 3px;
-}
-
-.logcon button:hover {
-	cursor: pointer;
-}
-
-canvas {
-	display: block;
-	vertical-align: bottom;
-}
-
-#particles-js {
-	width: 100%;
-	height: 100%;
-
-	background-size: cover;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-    .login-in{
-        background: #fff;
-        width: 700px;
-        margin: 0 auto;
-        box-sizing: border-box;
-        border-radius: 6px;
-        border: 1px solid #614bf8;
-        display: flex;
-        border: 1px solid #333;
-        display: flex;
-        justify-content: space-between;
-        box-shadow: 0px 5px 16px 7px rgba(0, 0, 0, .2);
-    }
-    .login-in .pic{
-        width: 375px;
-        height: 333px;
-    }
-    .layadmin-user-login-main{
-        background: #fff;
-        width: 375px;
-        margin: 0 auto;
-        box-sizing: border-box;
-        /*padding: 40px;*/
-        border-radius: 6px;
-        /*border: 1px solid #614bf8;*/
-    }
-    .login-btn{
-        background: #3c21f7;
-    }
+        .main-body {top:50%;left:50%;position:absolute;-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);-o-transform:translate(-50%,-50%);transform:translate(-50%,-50%);overflow:hidden;}
+        .login-main .login-bottom .center .item input {display:inline-block;width:227px;height:22px;padding:0;position:absolute;border:0;outline:0;font-size:14px;letter-spacing:0;}
+        .login-main .login-bottom .center .item .icon-1 {background:url(/layuiadmin/images/icon-login.png) no-repeat 1px 0;}
+        .login-main .login-bottom .center .item .icon-2 {background:url(/layuiadmin/images/icon-login.png) no-repeat -54px 0;}
+        .login-main .login-bottom .center .item .icon-3 {background:url(/layuiadmin/images/icon-login.png) no-repeat -106px 0;}
+        .login-main .login-bottom .center .item .icon-4 {background:url(/layuiadmin/images/icon-login.png) no-repeat 0 -43px;position:absolute;right:-10px;cursor:pointer;}
+        .login-main .login-bottom .center .item .icon-5 {background:url(/layuiadmin/images/icon-login.png) no-repeat -55px -43px;}
+        .login-main .login-bottom .center .item .icon-6 {background:url(/layuiadmin/images/icon-login.png) no-repeat 0 -93px;position:absolute;right:-10px;margin-top:8px;cursor:pointer;}
+        .login-main .login-bottom .tip .icon-nocheck {display:inline-block;width:10px;height:10px;border-radius:2px;border:solid 1px #9abcda;position:relative;top:2px;margin:1px 8px 1px 1px;cursor:pointer;}
+        .login-main .login-bottom .tip .icon-check {margin:0 7px 0 0;width:14px;height:14px;border:none;background:url(/layuiadmin/images/icon-login.png) no-repeat -111px -48px;}
+        .login-main .login-bottom .center .item .icon {display:inline-block;width:33px;height:22px;}
+        .login-main .login-bottom .center .item {width:288px;height:35px;border-bottom:1px solid #dae1e6;margin-bottom:35px;}
+        .login-main {width:428px;position:relative;float:left;}
+        .login-main .login-top {height:117px;background-color:#148be4;border-radius:12px 12px 0 0;font-family:SourceHanSansCN-Regular;font-size:30px;font-weight:400;font-stretch:normal;letter-spacing:0;color:#fff;line-height:117px;text-align:center;overflow:hidden;-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0);}
+        .login-main .login-top .bg1 {display:inline-block;width:74px;height:74px;background:#fff;opacity:.1;border-radius:0 74px 0 0;position:absolute;left:0;top:43px;}
+        .login-main .login-top .bg2 {display:inline-block;width:94px;height:94px;background:#fff;opacity:.1;border-radius:50%;position:absolute;right:-16px;top:-16px;}
+        .login-main .login-bottom {width:428px;background:#fff;border-radius:0 0 12px 12px;padding-bottom:53px;}
+        .login-main .login-bottom .center {width:288px;margin:0 auto;padding-top:40px;padding-bottom:15px;position:relative;}
+        .login-main .login-bottom .tip {clear:both;height:16px;line-height:16px;width:288px;margin:0 auto;}
+        body {background:url(/layuiadmin/images/loginbg.png) 0% 0% / cover no-repeat;position:static;font-size:12px;}
+        input::-webkit-input-placeholder {color:#a6aebf;}
+        input::-moz-placeholder {/* Mozilla Firefox 19+ */            color:#a6aebf;}
+        input:-moz-placeholder {/* Mozilla Firefox 4 to 18 */            color:#a6aebf;}
+        input:-ms-input-placeholder {/* Internet Explorer 10-11 */            color:#a6aebf;}
+        input:-webkit-autofill {/* 取消Chrome记住密码的背景颜色 */            -webkit-box-shadow:0 0 0 1000px white inset !important;}
+        html {height:100%;}
+        .login-main .login-bottom .tip {clear:both;height:16px;line-height:16px;width:288px;margin:0 auto;}
+        .login-main .login-bottom .tip .login-tip {font-family:MicrosoftYaHei;font-size:12px;font-weight:400;font-stretch:normal;letter-spacing:0;color:#9abcda;cursor:pointer;}
+        .login-main .login-bottom .tip .forget-password {font-stretch:normal;letter-spacing:0;color:#1391ff;text-decoration:none;position:absolute;right:62px;}
+        .login-main .login-bottom .login-btn {width:288px;height:40px;background-color:#1E9FFF;border-radius:16px;margin:24px auto 0;text-align:center;line-height:40px;color:#fff;font-size:14px;letter-spacing:0;cursor:pointer;border:none;}
+        .login-main .login-bottom .center .item .validateImg {position:absolute;right:1px;cursor:pointer;height:36px;border:1px solid #e6e6e6;}
+        .footer {left:0;bottom:0;color:#fff;width:100%;position:absolute;text-align:center;line-height:30px;padding-bottom:10px;text-shadow:#000 0.1em 0.1em 0.1em;font-size:14px;}
+        .padding-5 {padding:5px !important;}
+        .footer a,.footer span {color:#fff;}
+        @media screen and (max-width:428px) {.login-main {width:360px !important;}
+            .login-main .login-top {width:360px !important;}
+            .login-main .login-bottom {width:360px !important;}
+        }
     </style>
 </head>
 <body>
+<div class="main-body">
+    <div class="login-main">
+        <div class="login-top">
+            <span>管理后台 - 登录</span>
+            <span class="bg1"></span>
+            <span class="bg2"></span>
+        </div>
+        <div class="layui-form login-bottom">
+            <div class="center">
+                <div class="item">
+                    <span class="icon layui-icon layui-icon-username"></span>
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入登录账号" maxlength="24" />
+                </div>
 
-<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
-    
-    <div id="particles-js" style="display: flex;align-items: center;justify-content: center">
-		<canvas class="particles-js-canvas-el" style="width: 100%; height: 100%;" width="472" height="625"></canvas>
-	</div>
-		
-	<div class="login-in">
-	    <div class="pic">
-	        <img src="/layuiadmin/layui/images/new/bg_share.png"> 
-	    </div>
-        <div class="layadmin-user-login-main">
-        
-        
-            <div class="layadmin-user-login-box layadmin-user-login-header">
-                <h2>内容管理后台</h2>
-            </div>
-            
-            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-                    <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+                <div class="item">
+                    <span class="icon layui-icon layui-icon-password"></span>
+                    <input type="password" name="password" lay-verify="required" placeholder="请输入密码" maxlength="20" />
+                    <span class="bind-password icon icon-4"></span>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+                
+                <div class="item">
+                    <span class="icon layui-icon layui-icon-vercode"></span>
+                    <input type="text" name="vercode" placeholder="请输入谷歌验证码" maxlength="6" />
                 </div>
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                    <input type="text" name="vercode" id="LAY-user-login-vercode"  placeholder="谷歌验证码" class="layui-input">
-                </div>
-                <!--<div class="layui-form-item">-->
-                <!--    <div class="layui-row">-->
-                <!--        <div class="layui-col-xs7">-->
-                <!--            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>-->
-                <!--            <input type="text" name="vercode" id="LAY-user-login-vercode"  placeholder="图形验证码" class="layui-input">-->
-                <!--        </div>-->
-                <!--        <div class="layui-col-xs5">-->
-                <!--            <div style="margin-left: 10px;">-->
-                <!--                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">-->
-                <!--            </div>-->
-                <!--        </div>-->
-                <!--    </div>-->
+                
+                <!--<div id="validatePanel" class="item" style="width: 137px;">-->
+                <!--    <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4">-->
+                <!--    <img id="refreshCaptcha" class="validateImg"  src="../images/captcha.jpg" >-->
                 <!--</div>-->
-                <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid login-btn" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
-                </div>
-    
+
+            </div>
+            <div class="tip">
+                <span class="icon-nocheck"></span>
+                <span class="login-tip">保持登录</span>
+                <a href="javascript:" class="forget-password">忘记密码？</a>
+            </div>
+            <div class="layui-form-item" style="text-align:center; width:100%;height:100%;margin:0px;">
+                <button class="login-btn" lay-submit lay-filter="login">立即登录</button>
             </div>
         </div>
     </div>
-        
 </div>
-
-<script src="/layuiadmin/layui/layui.js"></script>
-<!--<script src="/layuiadmin/layui/bg1.js"></script>-->
-<!--<script src="/layuiadmin/layui/bg2.js"></script>-->
+<!--<div class="footer">-->
+<!--    ©版权所有 2014-2018 叁贰柒工作室<span class="padding-5">|</span><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备16006642号-2</a>-->
+<!--</div>-->
+<script src="/layuiadmin/layui/layui.js" charset="utf-8"></script>
 <script>
-    // $(document).ready(function () {
-    // 	if (window != top) {
-    // 		top.location.href = location.href;
-    // 	}
-    // });
-    layui.config({
-        base: '/manages/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'user'], function(){
-        var $ = layui.$
-            ,setter = layui.setter
-            ,admin = layui.admin
-            ,form = layui.form
-            ,router = layui.router()
-            ,search = router.search;
+    layui.use(['form','jquery'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer,
+            router = layui.router(),
+            search = router.search;
 
-        form.render();
-        //提交
-        form.on('submit(LAY-user-login-submit)', function(obj){
-            //请求登入接口
-            admin.req({
-                url: '/manages/login'
-                ,type: 'POST'
-                ,data: obj.field
-                ,done: function (res) {
-                    layer.msg(res.msg, {icon: 1, time: 1000}, function () {
-                        location.href = '/manages/index'; //
+        // 登录过期的时候，跳出ifram框架
+        if (top.location != self.location) top.location = self.location;
+
+        $('.bind-password').on('click', function () {
+            if ($(this).hasClass('icon-5')) {
+                $(this).removeClass('icon-5');
+                $("input[name='password']").attr('type', 'password');
+            } else {
+                $(this).addClass('icon-5');
+                $("input[name='password']").attr('type', 'text');
+            }
+        });
+
+        $('.icon-nocheck').on('click', function () {
+            if ($(this).hasClass('icon-check')) {
+                $(this).removeClass('icon-check');
+            } else {
+                $(this).addClass('icon-check');
+            }
+        });
+
+        // 进行登录操作
+        form.on('submit(login)', function (obj) {
+            var data = obj.field;  // 正确拿表单数据
+        
+            if (!data.username) { layer.msg('用户名不能为空'); return false; }
+            if (!data.password) { layer.msg('密码不能为空'); return false; }
+        
+            // 用 jQuery Ajax 提交
+            $.ajax({
+                url: '/manages/login',
+                type: 'POST',
+                data: data,
+                success: function (res) {
+                    // 这里按你的后端返回结构处理
+                    // 假设 res.msg 存在
+                    layer.msg(res.msg || '登录成功', {icon: 1, time: 1000}, function () {
+                        location.href = '/manages/index';
                     });
+                },
+                error: function (xhr) {
+                    layer.msg('登录失败：' + (xhr.responseJSON?.msg || xhr.statusText || '服务器异常'), {icon: 2});
                 }
             });
-        });
+        
+            return false; // ✅ 阻止表单默认提交
+          });
     });
 </script>
 </body>

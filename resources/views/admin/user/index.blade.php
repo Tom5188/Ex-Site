@@ -19,25 +19,23 @@
     </div>
     <div class="layui-inline" style="margin-left: 10px">
         <div class="layui-input-inline">
-            <button class="layui-btn" lay-submit="" lay-filter="mobile_search"><i class="layui-icon">&#xe615;</i></button>
-            <!--<button class="layui-btn layui-btn-normal layui-btn-radius" id="add_user_info">添加新用户</button>-->
+            <button class="layui-btn" lay-submit="" lay-filter="mobile_search"><i class="layui-icon layui-icon-search"></i></button>
+            <button class="layui-btn layui-btn-normal" id="add_user_info"><i class="layui-icon layui-icon-add-circle"></i></button>
         </div>
     </div>
-    <button class="layui-btn layui-btn-normal layui-btn-radius" id="add_user_info">添加新用户</button>
 </form>
 <table id="userlist" lay-filter="userlist"></table>
 @endsection
 
 @section('scripts')
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="users_wallet">钱包</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lock_user">锁定</a>
-    
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="lh">储蓄</a>
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="score">积分</a>
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="licai" hide>理财账户</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" >删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lock_user"><i class="layui-icon layui-icon-password"></i> 锁定</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="users_wallet"><i class="layui-icon layui-icon-rmb"></i> 钱包</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="score"><i class="layui-icon layui-icon-diamond"></i> 积分</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="lh"><i class="layui-icon layui-icon-dollar"></i> 储蓄</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="licai" hide><i class="layui-icon layui-icon-screen-full"></i> 理财账户</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" hide><i class="layui-icon layui-icon-screen-delete"></i> 删除</a>
 </script>
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="status" value="@{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="status" @{{ d.status == 1 ? 'checked' : '' }}>
@@ -74,6 +72,7 @@
             ,table = layui.table
             ,$ = layui.$
             ,form = layui.form
+            
         var user_table = table.render({
             elem: '#userlist'
             ,toolbar: true
@@ -84,29 +83,29 @@
             ,height: 'full-60'
             ,cols: [[
                 {field: '', type: 'checkbox'}
-                ,{field: 'id', title: '用户ID', minWidth: 100}
-                ,{field:'userreal_name', title:'真实姓名', minWidth:120}
-                ,{field:'level_text', title:'用户等级', minWidth:110}
-                ,{field:'score', title:'积分', minWidth:100}
-                ,{field:'account_number', title:'交易账号', minWidth:150, hide: true}
-                ,{field:'email', title:'邮箱', minWidth:150}
+                ,{field: 'id', title: 'ID', minWidth: 100}
+                ,{field:'account_number', title:'账号', minWidth:150}
+                ,{field:'email', title:'邮箱', minWidth:150, hide: true}
+                ,{field:'common', title:'备注', minWidth:150}
+                ,{field:'userreal_name', title:'姓名', minWidth:120}
                 ,{field:'card_id', title: '身份证号',minWidth: 180, hide: true}
                 ,{field:'parent_id', title:'上级ID', minWidth:80}
                 ,{field:'extension_code', title:'邀请码', minWidth:80}
                 ,{field: 'risk_name', title: '期权控制', minWidth: 90}
                 ,{field: 'status', title: '状态', minWidth: 80, templet:"#status_t"}
-                ,{field: 'cash_info', title: '银行卡', minWidth: 80, templet:"#cash_info"}
-                ,{field: 'cash_info_international', title: '钱包地址', minWidth: 80, templet:"#cash_info_international"}
+                ,{field:'level_text', title:'会员等级', minWidth:110}
+                ,{field:'score', title:'积分', minWidth:100}
+                // ,{field: 'cash_info', title: '银行卡', minWidth: 80, templet:"#cash_info"}
+                // ,{field: 'cash_info_international', title: '钱包地址', minWidth: 80, templet:"#cash_info_international"}
                 ,{field:'time', title:'注册时间', minWidth:150}
                 ,{field:'last_login_ip', title:'登录IP', minWidth:150}
-                ,{field:'last_login_time', title: '登录时间', width: 200}
-                ,{field:'ip_address', title: '登录地区', width: 200}
-                ,{field:'common', title:'备注', minWidth:150}
+                ,{field:'last_login_time', title: '登录时间', minWidth: 200}
+                ,{field:'ip_address', title: '登录地区', minWidth: 200}
                 // ,{field:'phone', title:'手机号', minWidth:150}
-                // ,{field:'status', title:'是否锁定', width:90, templet: '#switchTpl'}
+                // ,{field:'status', title:'是否锁定', minWidth:90, templet: '#switchTpl'}
                 // ,{field:'is_bind_box_author', title:'开通盲盒作者', minWidth:120, templet: '#bind_box'}
                 // ,{field:'is_trader', title:'是否为交易员', minWidth:120, templet: '#is_trader'}
-                ,{fixed:'right', title: '操作', minWidth:330, align: 'center', toolbar: '#barDemo'}
+                ,{title: '操作', minWidth:400, align: 'center', toolbar: '#barDemo'}
             ]]
         });
 
@@ -173,7 +172,7 @@
             var ids = [];
             try {
                 if (checkStatus.data.length <= 0) {
-                    throw '请先选择用户';
+                    throw '请先选择会员';
                 }
                 if (risk <= -2) {
                     throw '请选择输赢类型';
@@ -239,52 +238,50 @@
                     });
                 });
             } else if (layEvent === 'edit') { //编辑
-                var index = layer.open({
-                    title: '编辑会员'
-                    ,type: 2
-                    ,content: '/admin/user/edit?id=' + data.id
-                    ,maxmin: true
-                    ,area:["100%", "100%"],
+                layer.open({
+                    type: 2,
+                    title: '编辑会员',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['80%', '80%'],
+                    content: '/admin/user/edit?id=' + data.id
                 });
-                layer.full(index);
             } else if (layEvent === 'users_wallet') {
-                var index = layer.open({
-                    title: '钱包管理'
-                    ,type: 2
-                    ,content: '/admin/user/users_wallet?id=' + data.id
-                    ,maxmin: true
-                    ,area:["100%", "100%"],
+                layer.open({
+                    type: 2,
+                    title: '钱包管理',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['80%', '80%'],
+                    content: '/admin/user/users_wallet?id=' + data.id
                 });
-                layer.full(index);
             } else if (layEvent == 'candy_change') {
-                var index = layer.open({
+                layer.open({
                     title: '通证调节'
                     ,type: 2
                     ,content: '/admin/user/candy_conf/' + data.id
                     ,maxmin: true
+                    ,area:["80%", "80%"]
                 });
-                layer.full(index);
             }else if (layEvent == 'score') {
-                var index = layer.open({
+                layer.open({
                     title: '积分调节'
                     ,type: 2
                     ,content: '/admin/user/score?id=' + data.id
                     ,maxmin: true
                     ,area:["80%", "80%"],
                 });
-                // layer.full(index);
             }else if (layEvent == 'lh') {
-                var index = layer.open({
+                layer.open({
                     title: '智能储蓄'
                     ,type: 2
                     ,content: '/admin/user/lh?id=' + data.id
                     ,maxmin: true
                     ,area:["80%", "80%"],
                 });
-                // layer.full(index);
             } else if (layEvent === 'lock_user') {
-                var index = layer.open({
-                    title: '用户锁定'
+                layer.open({
+                    title: '账号锁定'
                     ,type: 2
                     ,content: '/admin/user/lock?id=' + data.id
                     ,maxmin: true
@@ -300,7 +297,7 @@
                     },
                     success: function (res) {
                         if(res.message){
-                            var index = layer.open({
+                            layer.open({
                                 title: '编辑理财账户'
                                 ,type: 2
                                 ,content: '/admin/ybb/account/edit/view?id=' + data.id+"&account="+data.account_number
@@ -313,7 +310,7 @@
                     }
                 });
             }else if (layEvent == 'edit_cash_info') {
-                var index = layer.open({
+                layer.open({
                     title: '银行卡'
                     ,type: 2
                     ,content: '/admin/user/cash_info?id=' + data.id
@@ -321,7 +318,7 @@
                     ,area:["80%", "80%"],
                 });
             }else if (layEvent == 'edit_cash_info_international') {
-                var index = layer.open({
+                layer.open({
                     title: '钱包地址'
                     ,type: 2
                     ,content: '/admin/user/userWalletList?id=' + data.id

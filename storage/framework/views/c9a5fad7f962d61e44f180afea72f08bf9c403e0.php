@@ -124,25 +124,25 @@
                         ,toolbar:true
                         ,limit: 20
                         , cols: [[
-                            { field: 'id', title: 'ID', width: 100}
+                            { field: 'id', title: 'ID', minWidth: 100}
                             ,{field: 'account_number', title: '用户名', minWidth: 150 , event : "getsons",style:"color: #fff;background-color: #5FB878;"}
-                            ,{field: 'trade_fee', title: '交易手续费', width: 120}
-                            ,{field: 'overnight_money', title: '隔夜费金额', width: 100}
-                            ,{field: 'type', title: '交易类型', width: 90, templet: '#lockTpl'}
-                            ,{field: 'symbol', title: '交易对', width: 100}
-                            ,{field: 'status', title: '当前状态', sort: true, width: 170, templet: '#addsonTpl'}
-                            ,{field: 'origin_price', title: '原始价格', width: 120}
-                            ,{field: 'price', title: '开仓价格', width: 120}
-                            ,{field: 'update_price', title: '当前价格', width: 120}
-                            ,{field: 'share', title: '手数', sort: true, width: 90}
-                            ,{field: 'multiple', title: '倍数', sort: true, width: 90}
-                            ,{field: 'origin_caution_money', title: '初始保证金', width: 120}
-                            ,{field: 'caution_money', title: '当前可用保证金', sort: true, width: 170}
-                            ,{field: 'profits', title: '动态盈亏', width: 120,hide:true}
-                            ,{field: 'time', title: '创建时间', width: 170}
-                            ,{field: 'update_time', title: '价格刷新时间', sort: true, width: 170,hide:true}
-                            ,{field: 'handle_time', title: '平仓时间', sort: true, width: 170}
-                            ,{field: 'complete_time', title: '完成时间', width: 170}
+                            ,{field: 'trade_fee', title: '交易手续费', minWidth: 120}
+                            ,{field: 'overnight_money', title: '隔夜费金额', minWidth: 100}
+                            ,{field: 'type', title: '交易类型', minWidth: 90, templet: '#lockTpl'}
+                            ,{field: 'symbol', title: '交易对', minWidth: 100}
+                            ,{field: 'status', title: '当前状态', sort: true, minWidth: 170, templet: '#addsonTpl'}
+                            ,{field: 'origin_price', title: '原始价格', minWidth: 120}
+                            ,{field: 'price', title: '开仓价格', minWidth: 120}
+                            ,{field: 'update_price', title: '当前价格', minWidth: 120}
+                            ,{field: 'share', title: '手数', sort: true, minWidth: 90}
+                            ,{field: 'multiple', title: '倍数', sort: true, minWidth: 90}
+                            ,{field: 'origin_caution_money', title: '初始保证金', minWidth: 120}
+                            ,{field: 'caution_money', title: '当前可用保证金', sort: true, minWidth: 170}
+                            ,{field: 'profits', title: '动态盈亏', minWidth: 120,hide:true}
+                            ,{field: 'time', title: '创建时间', minWidth: 170}
+                            ,{field: 'update_time', title: '价格刷新时间', sort: true, minWidth: 170,hide:true}
+                            ,{field: 'handle_time', title: '平仓时间', sort: true, minWidth: 170}
+                            ,{field: 'complete_time', title: '完成时间', minWidth: 170}
                         ]]
                     });
                 }

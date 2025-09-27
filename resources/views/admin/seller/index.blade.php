@@ -34,7 +34,7 @@
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
         {{--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">调节账户</a>--}}
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
@@ -73,7 +73,7 @@
                     // ,{field: 'ali_account', title: '支付宝账号', minWidth:80}
                     // ,{field: 'bank_name', title: '银行名称', minWidth:80}
                     // ,{field:'is_recommend', title:'热卖', minWidth:85, templet: '#switchTpl', unresize: true}
-                    //,{field: 'status', title: '是否审核通过', width:80, templet: '#status'}
+                    //,{field: 'status', title: '是否审核通过', minWidth:80, templet: '#status'}
                     ,{title:'操作',minWidth:100,toolbar: '#barDemo'}
 
                 ]]

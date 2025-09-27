@@ -54,7 +54,7 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:60, sort: true}
+                    {field: 'id', title: 'ID', minWidth:60, sort: true}
                     ,{field: 'account_number', title: '账号', minWidth:80}
                     ,{field: 'amount', title: '存款数量', minWidth:80}
                     ,{field: 'total_interest', title: '已产生利息', minWidth:80}
@@ -78,7 +78,7 @@
                         }
                        
                     }}
-                    //,{field: 'create_time', title: '添加时间', width:160}
+                    //,{field: 'create_time', title: '添加时间', minWidth:160}
                     // ,{title:'操作',width:240,toolbar: '#barDemo'}
                 ]]
             });

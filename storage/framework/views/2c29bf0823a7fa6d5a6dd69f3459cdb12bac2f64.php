@@ -58,7 +58,7 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
                     ,{field: 'account_number', title: '用户名', ninWidth:100}
                     ,{field: 'content', title: '提交内容', ninWidth:100}
                     ,{field: 'create_time', title: '提交时间', ninWidth:80}

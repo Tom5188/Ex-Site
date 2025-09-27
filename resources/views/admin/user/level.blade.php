@@ -15,7 +15,7 @@
 @section('scripts')
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
 </script>
 <script type="text/html" id="pic">
 
@@ -39,13 +39,13 @@
             ,page: false
             ,method:'post'
             ,cols: [[
-                {field: 'id', title: 'ID', width: 60}
-                ,{field:'name', title:'级别名称', width:120}
-                ,{field:'pic', title:'级别徽章', width:120,templet:"#pic"}
-                ,{field:'amount', title:'升级金额', width:120}
-                ,{field:'give', title:'赠送比例(%)', width:120}
-                ,{field:'updated_at', title:'更新时间', width:180}
-                ,{fixed: 'right', title: '操作', width:100, align: 'center', toolbar: '#barDemo'}
+                {field: 'id', title: 'ID', minWidth: 60}
+                ,{field:'name', title:'级别名称', minWidth:120}
+                ,{field:'pic', title:'级别徽章', minWidth:120,templet:"#pic"}
+                ,{field:'amount', title:'升级金额', minWidth:120}
+                ,{field:'give', title:'赠送比例(%)', minWidth:120}
+                ,{field:'updated_at', title:'更新时间', minWidth:180}
+                ,{fixed: 'right', title: '操作', minWidth:100, align: 'center', toolbar: '#barDemo'}
             ]]
         });
 

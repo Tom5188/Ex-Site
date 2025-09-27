@@ -95,9 +95,9 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'account_name', title: '用户名', width:200}
-                    ,{field: 'currency_name', title: '虚拟币', width:80}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'account_name', title: '用户名', minWidth:200}
+                    ,{field: 'currency_name', title: '虚拟币', minWidth:80}
                     // ,{field: 'user_account', title: '支付账号', minWidth:110}
                     // ,{field: 'user_account', title: '支付凭证', minWidth:110,templet:"#acc"}
                     ,{field: 'user_account', title: '充值凭证', minWidth:110, templet:"#acc"}

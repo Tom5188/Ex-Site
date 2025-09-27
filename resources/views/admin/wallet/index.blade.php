@@ -181,17 +181,17 @@
             ,totalRow: false
             ,cols: [
                 [
-                    {field: 'user_id', title: '用户ID', width: 120, rowspan: 2}
-                    ,{field: 'account_number', title: '账号', width: 200, rowspan: 2}
-                    ,{field: 'currency_name', title: '币种', width: 100, totalRowText: '小计', rowspan: 2}
-                    // ,{field: 'old_balance', title: '链上余额', width: 150, totalRow: true, rowspan: 2}
-                    ,{title: '币币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    ,{title: '杠杆币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    ,{title: '期权币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    ,{title: '法币', width: 380, colspan: 2, rowspan: 1, align: "center"}
-                    // ,{field: 'gl_time_str', title: '归拢时间', width: 170, hide: true, rowspan: 2}
-                    // ,{field: 'address', title: '地址', width: 380, rowspan: 2,edit:"editNum"}
-                    // ,{field: 'address_2', title: '地址2', width: 380, rowspan: 2,edit:"editNum"}
+                    {field: 'user_id', title: '用户ID', minWidth: 120, rowspan: 2}
+                    ,{field: 'account_number', title: '账号', minWidth: 200, rowspan: 2}
+                    ,{field: 'currency_name', title: '币种', minWidth: 100, totalRowText: '小计', rowspan: 2}
+                    // ,{field: 'old_balance', title: '链上余额', minWidth: 150, totalRow: true, rowspan: 2}
+                    ,{title: '币币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    ,{title: '杠杆币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    ,{title: '期权币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    ,{title: '法币', minWidth: 380, colspan: 2, rowspan: 1, align: "center"}
+                    // ,{field: 'gl_time_str', title: '归拢时间', minWidth: 170, hide: true, rowspan: 2}
+                    // ,{field: 'address', title: '地址', minWidth: 380, rowspan: 2,edit:"editNum"}
+                    // ,{field: 'address_2', title: '地址2', minWidth: 380, rowspan: 2,edit:"editNum"}
                 ], [
                     {field: 'change_balance', title: '余额',  totalRow: true, templet:'#handle_change_balance'}
                     ,{field: 'lock_change_balance', title: '冻结',  totalRow: true}

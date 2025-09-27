@@ -54,7 +54,7 @@
         {{d.status==1 ? '<span class="">'+'已开启'+'</span>' : '' }}
     </script>
     <script type="text/html" id="barBindbox">
-        {{d.status==0 ? '<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>' : '' }}
+        {{d.status==0 ? '<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>' : '' }}
     </script>
     <script type="text/html" id="bindRarity">
         {{d.rarity=="N" ? "<span style='color:lightgray;font-weight:bold'>"+"N"+"</span>" : "" }}
@@ -110,13 +110,13 @@
                 ,limit: 20
                 ,limits: [20, 50, 100, 200, 500, 1000]
                 ,cols: [[ //表头
-                    {field: 'id', title: '盲盒ID', width:110, sort: true}
-                    ,{field: 'name', title: '名称', width:150}
-                    ,{field: 'file', title: '文件内容', width:150, templet:'#bindBoxfile'}
-                    // ,{field: 'rarity', title: '稀有度', width:85, templet: '#bindRarity'}
-                    ,{field: 'status', title: '状态', width:85, templet:"#bindBoxstatus"}
-                    ,{field: 'created', title: '创建时间', width:180}
-                    ,{title: '操作',fixed: 'right', width:100, toolbar: '#barBindbox'}
+                    {field: 'id', title: '盲盒ID', minWidth:110, sort: true}
+                    ,{field: 'name', title: '名称', minWidth:150}
+                    ,{field: 'file', title: '文件内容', minWidth:150, templet:'#bindBoxfile'}
+                    // ,{field: 'rarity', title: '稀有度', minWidth:85, templet: '#bindRarity'}
+                    ,{field: 'status', title: '状态', minWidth:85, templet:"#bindBoxstatus"}
+                    ,{field: 'created', title: '创建时间', minWidth:180}
+                    ,{title: '操作',fixed: 'right', minWidth:100, toolbar: '#barBindbox'}
                 ]]
             });
 

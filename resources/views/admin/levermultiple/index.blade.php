@@ -21,8 +21,8 @@
         <script type="text/html" id="barDemo">
             {{--<a class="layui-btn layui-btn-xs" lay-event="users_wallet">账户管理</a>--}}
            
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
         </script>
       
         <script type="text/html" id="switchTpl">
@@ -68,11 +68,11 @@
                                 , page: true
                                 ,limit: 20
                                 , cols: [[
-                                    { field: 'id', title: 'ID', width: 100}
-                                    ,{field:'type',title:'类型', width:100}
-                                    ,{field:'value',title:'数值', width:150}
-                                    ,{field:'currency_name',title:'币种', width:150}
-                                    ,{fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
+                                    { field: 'id', title: 'ID', minWidth: 100}
+                                    ,{field:'type',title:'类型', minWidth:100}
+                                    ,{field:'value',title:'数值', minWidth:150}
+                                    ,{field:'currency_name',title:'币种', minWidth:150}
+                                    ,{fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

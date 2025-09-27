@@ -25,11 +25,11 @@
             </div>
             <div class="layui-inline" style="margin-left: 10px">
                 <div class="layui-input-inline">
-                    <button class="layui-btn" lay-submit="" lay-filter="mobile_search"><i class="layui-icon">&#xe615;</i></button>
+                    <button class="layui-btn" lay-submit="" lay-filter="mobile_search"><i class="layui-icon layui-icon-search"></i></button>
                 </div>
             </div>
         </form>
-        <button class="layui-btn layui-btn-normal" style="margin-left: 10px" onclick="javascrtpt:window.location.href='{{url('/admin/cashb/csv')}}'">导出提币记录</button>
+        <button class="layui-btn layui-btn-normal" style="margin-left: 10px" onclick="javascrtpt:window.location.href='{{url('/admin/cashb/csv')}}'"><i class="layui-icon layui-icon-share"></i></button>
     </div>
 
     <script type="text/html" id="switchTpl">
@@ -38,14 +38,14 @@
 
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
-    
-    <a class="layui-btn layui-btn-xs" lay-event="show">查看</a>
-    
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="show">
+            <i class="layui-icon layui-icon-screen-full"></i> 查看
+        </button>
     </script>
     <script type="text/html" id="statustml">
         @{{d.status==1 ? '<span class="layui-badge status_bg_1">'+'申请提币'+'</span>' : '' }}
         @{{d.status==2 ? '<span class="layui-badge status_bg_2">'+'提币完成'+'</span>' : '' }}
-        @{{d.status==3 ? '<span class="layui-badge status_bg_3">'+'申请失败'+'</span>' : '' }}
+        @{{d.status==3 ? '<span class="layui-badge status_bg_3">'+'申请拒绝'+'</span>' : '' }}
 
     </script>
 @endsection
@@ -64,38 +64,23 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: '订单ID', width:80, sort: true}
-                    ,{field: 'user_id', title: '用户ID', width:220}
-                    ,{field: 'user_name', title: '用户名', width:220}
-                    ,{field: 'currency_name', title: '虚拟币', width:80}
+                    {field: 'id', title: '订单ID', minWidth:100, sort: true}
+                    ,{field: 'user_id', title: '用户ID', minWidth:220}
+                    ,{field: 'user_name', title: '用户名', minWidth:220}
+                    ,{field: 'currency_name', title: '虚拟币', minWidth:100}
                     ,{field: 'number', title: '提币数量', minWidth:110}
-                    ,{field: 'rate', title: '手续费', minWidth:80}
+                    ,{field: 'rate', title: '手续费', minWidth:100}
                     ,{field: 'real_number', title: '实际提币', minWidth:110}
                     // ,{field: 'address', title: '提币地址', minWidth:100}
-                    ,{field: 'status', title: '状态', minWidth:80, templet: '#statustml'}
+                    ,{field: 'status', title: '状态', minWidth:100, templet: '#statustml'}
                     // ,{field: 'hes_account', title: '承兑商交易账号', minWidth:180}
                     // ,{field: 'money', title: '交易额度', minWidth:100}
                     // ,{field: 'sure_name', title: '交易状态', minWidth:100}
                     ,{field: 'create_time', title: '提币时间', minWidth:180}
-                    ,{title:'操作',minWidth:90,toolbar: '#barDemo'}
+                    ,{title:'操作', minWidth:100, toolbar: '#barDemo'}
 
                 ]]
             });
-            //监听热卖操作
-            // form.on('switch(sexDemo)', function(obj){
-            //     var id = this.value;
-            //     $.ajax({
-            //         url:'{{url('admin/product_hot')}}',
-            //         type:'post',
-            //         dataType:'json',
-            //         data:{id:id},
-            //         success:function (res) {
-            //             if(res.error != 0){
-            //                 layer.msg(res.msg);
-            //             }
-            //         }
-            //     });
-            // });
 
             table.on('tool(test)', function(obj){
                 var data = obj.data;
@@ -119,9 +104,14 @@
 
                     });
                 } else if(obj.event === 'show'){
-                    layer_show('确认提币','{{url('admin/cashb_show')}}?id='+data.id,800,600);
-                } else if(obj.event === 'back'){
-                    layer_show('退回申请','{{url('admin/adjust_account')}}?id='+data.id,800,600);
+                    layer.open({
+                        type: 2,
+                        title: '提币信息',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['80%', '80%'],
+                        content: '{{url('admin/cashb_show')}}?id='+data.id
+                    });
                 }
             });
 

@@ -227,29 +227,29 @@
       , method: 'post'
       , url: '/agent/micro/list'
       , cols: [[
-        { field: '', type: 'checkbox', width: 60 }
-        , { field: '', title: '序号', type: "numbers", width: 90 }
-        , { field: 'id', title: 'ID', width: 100 }
-        , { field: 'account', title: '用户账号', width: 130, sort: true, totalRowText: '小计' }
-        , { field: 'real_name', title: '真实姓名', width: 100 }
-        , { field: 'parent_agent_name', title: '所属代理商', width: 120 }
-        , { field: 'symbol_name', title: '合约', width: 140, sort: true, templet: '#symbol_name' }
-        , { field: 'currency_name', title: '币种', width: 80, sort: true }
-        , { field: 'type_name', title: '类型', width: 80, templet: '#type_name', sort: true }
-        , { field: 'seconds', title: '秒数', width: 80, templet: '#seconds', sort: true, hide: true }
-        , { field: 'status_name', title: '交易状态', width: 100, sort: true, templet: '#status_name' }
-        , { field: 'number', title: '数量', width: 90, templet: '<div><div style="text-align: right;">{{Number.parseInt(d.number)}}</div></div>', totalRow: true }
-        , { field: 'fee', title: '手续费', width: 100, totalRow: true, templet: '<div><div style="text-align: right;"><span>{{Number(d.fee).toFixed(2)}}</span></div></div>' }
-//        , { field: 'pre_profit_result_name', title: '预设', width: 90, sort: true, templet: '#pre_profit_result_name', hide: false }
-        , { field: 'profit_result_name', title: '结果', width: 90, sort: true, templet: '#profit_result_name', hide: false }
-        , { field: 'fact_profits', title: '盈利', width: 100, sort: true, totalRow: true, templet: '#fact_profits' }
-        , { field: 'open_price', title: '开仓价', width: 100, templet: '<div><div style="text-align: right;"><span>{{Number(d.open_price).toFixed(4)}}</span></div></div>' }
-        , { field: 'end_price', title: '平仓价', width: 100, templet: '<div><div style="text-align: right;"><span>{{Number(d.end_price).toFixed(4)}}</span></div></div>' }
-        , { field: 'created_at', title: '下单时间', width: 170, sort: true }
-        , { field: 'updated_at', title: '更新日期', width: 170, sort: true, hide: true }
-        , { field: 'handled_at', title: '平仓时间', width: 170, sort: true, hide: true }
-        , { field: 'complete_at', title: '完成时间', width: 170, sort: true, hide: true }
-        //,{fixed: 'right', title: '操作', width: 100, align: 'center', toolbar: '#barDemo'}
+        { field: '', type: 'checkbox', minWidth: 60 }
+        , { field: '', title: '序号', type: "numbers", minWidth: 90 }
+        , { field: 'id', title: 'ID', minWidth: 100 }
+        , { field: 'account', title: '用户账号', minWidth: 130, sort: true, totalRowText: '小计' }
+        , { field: 'real_name', title: '真实姓名', minWidth: 100 }
+        , { field: 'parent_agent_name', title: '所属代理商', minWidth: 120 }
+        , { field: 'symbol_name', title: '合约', minWidth: 140, sort: true, templet: '#symbol_name' }
+        , { field: 'currency_name', title: '币种', minWidth: 80, sort: true }
+        , { field: 'type_name', title: '类型', minWidth: 80, templet: '#type_name', sort: true }
+        , { field: 'seconds', title: '秒数', minWidth: 80, templet: '#seconds', sort: true, hide: true }
+        , { field: 'status_name', title: '交易状态', minWidth: 100, sort: true, templet: '#status_name' }
+        , { field: 'number', title: '数量', minWidth: 90, templet: '<div><div style="text-align: right;">{{Number.parseInt(d.number)}}</div></div>', totalRow: true }
+        , { field: 'fee', title: '手续费', minWidth: 100, totalRow: true, templet: '<div><div style="text-align: right;"><span>{{Number(d.fee).toFixed(2)}}</span></div></div>' }
+//        , { field: 'pre_profit_result_name', title: '预设', minWidth: 90, sort: true, templet: '#pre_profit_result_name', hide: false }
+        , { field: 'profit_result_name', title: '结果', minWidth: 90, sort: true, templet: '#profit_result_name', hide: false }
+        , { field: 'fact_profits', title: '盈利', minWidth: 100, sort: true, totalRow: true, templet: '#fact_profits' }
+        , { field: 'open_price', title: '开仓价', minWidth: 100, templet: '<div><div style="text-align: right;"><span>{{Number(d.open_price).toFixed(4)}}</span></div></div>' }
+        , { field: 'end_price', title: '平仓价', minWidth: 100, templet: '<div><div style="text-align: right;"><span>{{Number(d.end_price).toFixed(4)}}</span></div></div>' }
+        , { field: 'created_at', title: '下单时间', minWidth: 170, sort: true }
+        , { field: 'updated_at', title: '更新日期', minWidth: 170, sort: true, hide: true }
+        , { field: 'handled_at', title: '平仓时间', minWidth: 170, sort: true, hide: true }
+        , { field: 'complete_at', title: '完成时间', minWidth: 170, sort: true, hide: true }
+        //,{fixed: 'right', title: '操作', minWidth: 100, align: 'center', toolbar: '#barDemo'}
       ]]
       , page: true
       , limit: 20

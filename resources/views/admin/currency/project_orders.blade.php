@@ -86,14 +86,14 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
 
-                    ,{field: 'account_number', title: '用户', width:150}
-                     ,{field: 'coin_amount', title: '申购数量', width:100}
-                     ,{field: 'price', title: '价格', width:100}
-                    ,{field:'total_price',title: '扣除余额', width:100}
-                    ,{field: 'type_text', title: '类型', width:100}
-                    ,{field: 'status_text', title: '状态', width:130}
+                    ,{field: 'account_number', title: '用户', minWidth:150}
+                     ,{field: 'coin_amount', title: '申购数量', minWidth:100}
+                     ,{field: 'price', title: '价格', minWidth:100}
+                    ,{field:'total_price',title: '扣除余额', minWidth:100}
+                    ,{field: 'type_text', title: '类型', minWidth:100}
+                    ,{field: 'status_text', title: '状态', minWidth:130}
                     ,{field: 'created_at', title: '创建时间',width:150}
                     ,{field: 'end_at', title: '到期时间',width:150}
                      ,{title:'操作',minWidth:100,toolbar: '#barDemo'}

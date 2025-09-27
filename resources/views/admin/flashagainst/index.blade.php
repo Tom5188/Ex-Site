@@ -71,7 +71,7 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:60, sort: true}
+                    {field: 'id', title: 'ID', minWidth:60, sort: true}
                     ,{field: 'mobile', title: '手机号', minWidth:80}
                     ,{field: 'l_currency', title: '转出币种', minWidth:80}
                     ,{field: 'r_currency', title: '转入币种', minWidth:80}
@@ -83,7 +83,7 @@
                     ,{field: 'create_time', title: '创建时间', minWidth:80}
                     ,{field: 'review_time', title: '更新时间', minWidth:80}
 
-                    //,{field: 'create_time', title: '添加时间', width:160}
+                    //,{field: 'create_time', title: '添加时间', minWidth:160}
                     ,{title:'操作',width:240,toolbar: '#barDemo'}
                 ]]
             });

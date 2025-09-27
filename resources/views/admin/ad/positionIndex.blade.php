@@ -13,8 +13,8 @@
         <script type="text/html" id="barDemo">
             
            
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i> 删除</a>
         </script>
       
         <script type="text/html" id="switchTpl">
@@ -49,17 +49,17 @@
                                 , page: true
                                 ,limit: 20
                                 , cols: [[
-                                    { field: 'id', title: 'ID', width: 100}
+                                    { field: 'id', title: 'ID', minWidth: 100}
                                     
-                                    , {field:'name',title:'名称', width:150}
-                                    , {field:'describe',title:'描述', width:150}
+                                    , {field:'name',title:'名称', minWidth:150}
+                                    , {field:'describe',title:'描述', minWidth:150}
                                     
-                                    , {field:'create_time',title:'添加时间', width:200}
+                                    , {field:'create_time',title:'添加时间', minWidth:200}
 
                                     
-                                    ,{field:'is_show', title:'是否显示', width:90, templet: '#switchTpl'}
+                                    ,{field:'is_show', title:'是否显示', minWidth:90, templet: '#switchTpl'}
                                    
-                                    , {fixed: 'right', title: '操作', width: 280, align: 'center', toolbar: '#barDemo'}
+                                    , {fixed: 'right', title: '操作', minWidth: 280, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

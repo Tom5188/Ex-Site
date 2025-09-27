@@ -240,24 +240,24 @@
             , url: '/agent/order/list'
             , cols: [[
                 { type: 'checkbox', fixed: 'left' }
-                , { field: 'id', width: 60, title: 'ID', sort: true }
+                , { field: 'id', minWidth: 60, title: 'ID', sort: true }
                 , { field: 'user_name', title: '用户名', minWidth: 150, event: "getsons", style: "color: #fff;background-color: #5FB878;" }
-                , { field: 'parent_agent_name', title: '上级代理商', width: 120 }
-                , { field: 'agent_level', title: '等级', width: 100 }
-                , { field: 'type', title: '交易类型', width: 90, templet: '#lockTpl' }
-                , { field: 'status', title: '当前状态', sort: true, width: 170, templet: '#addsonTpl' }
-                , { field: 'origin_price', title: '原始价格', width: 120 }
-                , { field: 'price', title: '开仓价格', width: 120 }
-                , { field: 'update_price', title: '当前价格', width: 120 }
-                , { field: 'fact_profits', title: '最终盈亏', width: 120 }
-                , { field: 'share', title: '手数', sort: true, width: 90 }
-                , { field: 'multiple', title: '倍数', sort: true, width: 90 }
-                , { field: 'origin_caution_money', title: '初始保证金', width: 120 }
-                , { field: 'caution_money', title: '当前可用保证金', sort: true, width: 170 }
-                , { field: 'create_time', title: '创建时间', width: 170 }
-                , { field: 'update_time', title: '价格刷新时间', sort: true, width: 170 }
-                , { field: 'handle_time', title: '平仓时间', sort: true, width: 170 }
-                , { field: 'complete_time', title: '完成时间', width: 170 }
+                , { field: 'parent_agent_name', title: '上级代理商', minWidth: 120 }
+                , { field: 'agent_level', title: '等级', minWidth: 100 }
+                , { field: 'type', title: '交易类型', minWidth: 90, templet: '#lockTpl' }
+                , { field: 'status', title: '当前状态', sort: true, minWidth: 170, templet: '#addsonTpl' }
+                , { field: 'origin_price', title: '原始价格', minWidth: 120 }
+                , { field: 'price', title: '开仓价格', minWidth: 120 }
+                , { field: 'update_price', title: '当前价格', minWidth: 120 }
+                , { field: 'fact_profits', title: '最终盈亏', minWidth: 120 }
+                , { field: 'share', title: '手数', sort: true, minWidth: 90 }
+                , { field: 'multiple', title: '倍数', sort: true, minWidth: 90 }
+                , { field: 'origin_caution_money', title: '初始保证金', minWidth: 120 }
+                , { field: 'caution_money', title: '当前可用保证金', sort: true, minWidth: 170 }
+                , { field: 'create_time', title: '创建时间', minWidth: 170 }
+                , { field: 'update_time', title: '价格刷新时间', sort: true, minWidth: 170 }
+                , { field: 'handle_time', title: '平仓时间', sort: true, minWidth: 170 }
+                , { field: 'complete_time', title: '完成时间', minWidth: 170 }
             ]]
             , page: true
             , limit: 30

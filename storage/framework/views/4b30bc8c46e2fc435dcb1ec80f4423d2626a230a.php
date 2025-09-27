@@ -40,11 +40,11 @@
             ,page: true
             ,cols: [[
                 {type: 'checkbox'}
-                ,{field: 'id', title: 'id', width: 70}
-                ,{field: 'legal_name', title: '法币', width: 80}
-                ,{field: 'currency_name', title: '交易币', width: 80}
-                ,{field: 'risk_group_result_name', title: '输赢结果', width: 100}
-                ,{field: 'create_time', title: '创建时间', width: 180}
+                ,{field: 'id', title: 'id', minWidth: 70}
+                ,{field: 'legal_name', title: '法币', minWidth: 80}
+                ,{field: 'currency_name', title: '交易币', minWidth: 80}
+                ,{field: 'risk_group_result_name', title: '输赢结果', minWidth: 100}
+                ,{field: 'create_time', title: '创建时间', minWidth: 180}
             ]]
         });
         form.on('submit(search)', function(data){

@@ -69,7 +69,7 @@
                         {field: 'phone', title: '用户', minWidth: 150},
                         {field: 'number', title: '划转数量', minWidth: 150},
                         {field: 'type', title: '类型', minWidth: 150},
-                        {field:'status',title:'状态', width:250, templet: '#statustpl'},
+                        {field:'status',title:'状态', minWidth:250, templet: '#statustpl'},
                         {field: 'add_time', title: '购买时间', minWidth: 150},
                         {fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                     ]]

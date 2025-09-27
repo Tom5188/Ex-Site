@@ -62,9 +62,9 @@
                                     , {field:'account_number',title: '用户交易号',minWidth: 150}
                                     , {field:'value',title:'返佣值', minWidth:100}
                                     , {field:'info',title:'记录备注', minWidth:300}
-//                                    , {field:'type',title:'类型', width:100}
+//                                    , {field:'type',title:'类型', minWidth:100}
                                     , {field:'created_time',title:'创建时间', minWidth:300}
-                                  ,{fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
+                                  ,{fixed: 'right', title: '操作', minWidth: 150, align: 'center', toolbar: '#barDemo'}
                                 ]]
                             });
                         }

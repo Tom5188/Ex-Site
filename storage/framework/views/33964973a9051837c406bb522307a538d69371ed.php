@@ -102,17 +102,17 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'user_id', title: '用户ID', width:100}
-                    ,{field: 'country_code', title: '国家', width:80}
-                    ,{field: 'currency_code', title: '币种', width:80}
-                    ,{field: 'payment_type', title: '支付通道', width:150}
-                    ,{field: 'payment_amount', title: '订单金额', width:200}
-                    ,{field: 'rate', title: '费率', width:150}
-                    ,{field: 'order_id', title: '订单编号', width:200}
-                    ,{field: 'status', title: '状态', width:200,templet:"#statustml"}
-                    ,{field: 'create_time', title: '创建时间', width:200}
-                    // ,{field: 'currency_name', title: '虚拟币', width:80}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'user_id', title: '用户ID', minWidth:100}
+                    ,{field: 'country_code', title: '国家', minWidth:80}
+                    ,{field: 'currency_code', title: '币种', minWidth:80}
+                    ,{field: 'payment_type', title: '支付通道', minWidth:150}
+                    ,{field: 'payment_amount', title: '订单金额', minWidth:200}
+                    ,{field: 'rate', title: '费率', minWidth:150}
+                    ,{field: 'order_id', title: '订单编号', minWidth:200}
+                    ,{field: 'status', title: '状态', minWidth:200,templet:"#statustml"}
+                    ,{field: 'create_time', title: '创建时间', minWidth:200}
+                    // ,{field: 'currency_name', title: '虚拟币', minWidth:80}
                     // ,{field: 'user_account', title: '支付账号', minWidth:110}
                     // ,{field: 'user_account', title: '支付凭证', minWidth:110,templet:"#acc"}
                     // ,{field: 'user_account', title: '封面图', minWidth:110, templet:"#acc"}

@@ -10,7 +10,7 @@
 
     <table id="demo" lay-filter="test"></table>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
@@ -39,8 +39,8 @@
                 ,height: 'full-100'
                 ,id: 'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
-                    ,{field: 'insurance_name', title: '险种', width: 80}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
+                    ,{field: 'insurance_name', title: '险种', minWidth: 80}
                     ,{field: 'amount', title: '金额', minWidth: 80}
                     ,{field: 'place_an_order_max', title: '单笔最大金额限', minWidth: 80}
                     ,{field: 'existing_number', title: '持仓笔数', minWidth: 80}

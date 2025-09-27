@@ -81,13 +81,13 @@
             ,totalRow: true
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'id', width: 60, title: 'ID', sort: true }
-                ,{field: 'currency_name', title: '币种', width: 90}
-                ,{field: 'account_number', title: '用户名', width: 120, totalRowText: '小计'}
-                ,{field: 'belong_agent_name', title: '所属代理', width: 120}
-                ,{field: 'value', title: '充币数量', width: 150, totalRow: true}
-                ,{field: 'info', title: '说明', width: 200}
-                ,{field: 'created_time', title: '到账时间', width: 170}
+                ,{field: 'id', minWidth: 60, title: 'ID', sort: true }
+                ,{field: 'currency_name', title: '币种', minWidth: 90}
+                ,{field: 'account_number', title: '用户名', minWidth: 120, totalRowText: '小计'}
+                ,{field: 'belong_agent_name', title: '所属代理', minWidth: 120}
+                ,{field: 'value', title: '充币数量', minWidth: 150, totalRow: true}
+                ,{field: 'info', title: '说明', minWidth: 200}
+                ,{field: 'created_time', title: '到账时间', minWidth: 170}
             ]]
             ,page: true
             ,limit: 30

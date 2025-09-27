@@ -82,15 +82,15 @@
                 ,page: true //开启分页
                 ,id:'mobileSearch'
                 ,cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true}
+                    {field: 'id', title: 'ID', minWidth:80, sort: true}
                     
-                    ,{field: 'account_number', title: '用户', width:150}
-                     ,{field: 'currency_name', title: '币种', width:100}
-                    ,{field:'day_rate',title: '日利率(%)', width:100,}
-                    ,{field: 'total_rate', title: '总利率(%)', width:100}
-                    ,{field: 'amount', title: '存币数量', width:130}
-                    ,{field: 'total_interest', title: '总利息', width:130}
-                    ,{field: 'start_at', title: '开始时间', width:150}
+                    ,{field: 'account_number', title: '用户', minWidth:150}
+                     ,{field: 'currency_name', title: '币种', minWidth:100}
+                    ,{field:'day_rate',title: '日利率(%)', minWidth:100,}
+                    ,{field: 'total_rate', title: '总利率(%)', minWidth:100}
+                    ,{field: 'amount', title: '存币数量', minWidth:130}
+                    ,{field: 'total_interest', title: '总利息', minWidth:130}
+                    ,{field: 'start_at', title: '开始时间', minWidth:150}
                     ,{field: 'end_at', title: '到期时间',width:150}
                     ,{field: 'created_at', title: '创建时间',width:150}
                     ,{ title: '状态',templet:function(d){
