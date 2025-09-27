@@ -88,8 +88,7 @@ class CashbController extends Controller
             }
         }
         $use_chain_api = Setting::getValueByKey('use_chain_api', 0);
-        return view('admin.cashb.edit', ['use_chain_api' => $use_chain_api, 'card_info'=>$card_info, 'card_info_data' => $card_info_data, 'wallet_out' => $walletout, 
-        "walletout_type" => $walletoutType]);
+        return view('admin.cashb.edit', ['use_chain_api' => $use_chain_api, 'card_info'=>$card_info, 'card_info_data' => $card_info_data, 'wallet_out' => $walletout]);
         
     }
 
